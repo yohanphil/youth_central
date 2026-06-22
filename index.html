@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070816" />
+  <title>Youth Central CRM | TGC Youth Hub</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#070816;--bg2:#0b1020;--glass:rgba(14,20,40,.74);--glass2:rgba(255,255,255,.075);
+      --line:rgba(255,255,255,.12);--line2:rgba(255,255,255,.2);--text:#f8fafc;--soft:#cbd5e1;--muted:#94a3b8;
+      --cyan:#22d3ee;--blue:#60a5fa;--purple:#a855f7;--pink:#ec4899;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444;
+      --shadow:0 28px 90px rgba(0,0,0,.46);--radius:30px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{min-height:100vh;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:var(--text);background:
+      radial-gradient(circle at 7% 6%,rgba(34,211,238,.26),transparent 30%),
+      radial-gradient(circle at 92% 11%,rgba(168,85,247,.27),transparent 31%),
+      radial-gradient(circle at 72% 90%,rgba(236,72,153,.19),transparent 32%),
+      linear-gradient(135deg,#050713 0%,#0b1020 50%,#070816 100%);overflow-x:hidden}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.032) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.032) 1px,transparent 1px);background-size:54px 54px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.78),transparent 82%);z-index:-3}
+    .blob{position:fixed;width:440px;height:440px;border-radius:999px;filter:blur(54px);opacity:.32;z-index:-2;animation:float 13s ease-in-out infinite alternate}
+    .b1{background:var(--cyan);top:-130px;left:-110px}.b2{background:var(--purple);top:-40px;right:-120px;animation-delay:2s}.b3{background:var(--pink);bottom:-170px;right:18%;animation-delay:4s}
+    @keyframes float{to{transform:translate(45px,48px) scale(1.14)}}
+    .app{width:min(1500px,96%);margin:auto;padding:22px 0 55px;display:grid;grid-template-columns:300px 1fr;gap:20px}
+    .sidebar{position:sticky;top:22px;height:calc(100vh - 44px);border:1px solid var(--line);border-radius:34px;background:rgba(7,10,22,.66);backdrop-filter:blur(28px);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;overflow:hidden}
+    .brand{display:flex;align-items:center;gap:13px;padding:10px 10px 18px;border-bottom:1px solid var(--line);margin-bottom:14px}
+    .logo{width:58px;height:58px;border-radius:21px;display:grid;place-items:center;flex:none;background:linear-gradient(135deg,var(--cyan),var(--purple) 56%,var(--pink));box-shadow:0 18px 45px rgba(34,211,238,.2);position:relative;overflow:hidden}
+    .logo::after{content:"";position:absolute;inset:-45%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.62),transparent);transform:rotate(28deg) translateX(-80%);animation:shine 4.5s ease-in-out infinite}
+    @keyframes shine{55%,100%{transform:rotate(28deg) translateX(95%)}}
+    .logo svg{position:relative;z-index:1}.brand h1{font-size:19px;letter-spacing:-.04em;line-height:1}.brand p{color:var(--muted);font-size:12px;margin-top:5px}
+    .nav{display:grid;gap:8px;overflow:auto;padding-right:2px}
+    .nav-btn{width:100%;border:1px solid transparent;background:transparent;color:var(--soft);padding:13px 14px;border-radius:18px;display:flex;align-items:center;gap:12px;cursor:pointer;font-weight:900;text-align:left;transition:.28s ease}
+    .nav-btn:hover{background:rgba(255,255,255,.07);color:white;transform:translateX(4px)}
+    .nav-btn.active{color:white;background:linear-gradient(135deg,rgba(34,211,238,.18),rgba(168,85,247,.18));border-color:rgba(255,255,255,.14)}
+    .nav-icon{width:32px;height:32px;border-radius:13px;display:grid;place-items:center;background:rgba(255,255,255,.08);flex:none}
+    .sidebar-footer{margin-top:auto;padding:16px;border-radius:24px;background:linear-gradient(135deg,rgba(34,211,238,.13),rgba(168,85,247,.14));border:1px solid var(--line)}
+    .live-pill{display:inline-flex;align-items:center;gap:8px;font-weight:900;color:#cffafe;font-size:12px;margin-bottom:8px}
+    .pulse{width:8px;height:8px;background:var(--green);border-radius:999px;box-shadow:0 0 0 0 rgba(34,197,94,.8);animation:pulse 1.8s infinite}
+    @keyframes pulse{70%{box-shadow:0 0 0 12px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+    .sidebar-footer p{font-size:12px;line-height:1.6;color:var(--muted)}
+    .main{min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 2px 18px}
+    .mobile-menu{display:none;border:1px solid var(--line);background:rgba(255,255,255,.08);color:white;width:46px;height:46px;border-radius:16px;cursor:pointer;font-size:22px}
+    .hero{position:relative;overflow:hidden;min-height:250px;padding:30px;border-radius:38px;margin-bottom:20px;background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.055)),radial-gradient(circle at 14% 0%,rgba(34,211,238,.23),transparent 40%),radial-gradient(circle at 80% 12%,rgba(168,85,247,.21),transparent 43%);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(24px)}
+    .hero::before{content:"";position:absolute;right:-140px;bottom:-210px;width:500px;height:500px;border-radius:999px;background:conic-gradient(from 180deg,rgba(34,211,238,.3),rgba(168,85,247,.25),rgba(236,72,153,.24),rgba(34,211,238,.3));animation:spin 14s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .hero-content{position:relative;z-index:2;display:grid;grid-template-columns:1.35fr .65fr;gap:24px;align-items:end}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;color:#cffafe;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.2);font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+    .hero h2{font-size:clamp(36px,5vw,66px);line-height:.95;letter-spacing:-.08em;max-width:780px}.hero h2 span{background:linear-gradient(90deg,#fff,#bff7ff,#f0abfc);-webkit-background-clip:text;color:transparent}
+    .hero p{color:var(--soft);max-width:760px;margin-top:16px;line-height:1.7;font-size:15px}.quick-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    button,.btn{border:none;outline:none;cursor:pointer;font:inherit;font-weight:900;padding:12px 16px;border-radius:16px;color:#06111f;background:linear-gradient(135deg,var(--cyan),var(--blue));transition:.25s ease;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap}
+    button:hover,.btn:hover{transform:translateY(-2px);filter:saturate(1.15);box-shadow:0 12px 32px rgba(34,211,238,.18)}
+    .btn-ghost{color:white;background:rgba(255,255,255,.08);border:1px solid var(--line)}.btn-danger{background:rgba(239,68,68,.17);color:#fecaca;border:1px solid rgba(239,68,68,.25)}.btn-green{background:linear-gradient(135deg,#22c55e,#86efac);color:#03120a}.btn-yellow{background:linear-gradient(135deg,#f59e0b,#fde68a);color:#1a1000}.btn-purple{background:linear-gradient(135deg,#a855f7,#f0abfc);color:#160022}.mini-btn{padding:8px 10px;border-radius:12px;font-size:12px}
+    .page{display:none;animation:pageIn .45s ease both}.page.active{display:block}@keyframes pageIn{from{opacity:0;transform:translateY(12px) scale(.992);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+    .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:20px}
+    .stat-card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:28px;padding:22px;background:rgba(15,23,42,.72);backdrop-filter:blur(22px);box-shadow:0 14px 48px rgba(0,0,0,.23);transition:.3s ease}
+    .stat-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.22)}.stat-card::after{content:"";position:absolute;right:-54px;top:-54px;width:130px;height:130px;border-radius:999px;background:var(--glow,rgba(34,211,238,.18));filter:blur(2px)}
+    .stat-card p{color:var(--muted);font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.stat-card h3{font-size:38px;margin-top:10px;letter-spacing:-.06em}.stat-card small{display:block;color:var(--muted);margin-top:9px;font-weight:700}
+    .content-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+    .card{border:1px solid var(--line);border-radius:var(--radius);background:rgba(15,23,42,.70);backdrop-filter:blur(22px);box-shadow:0 16px 54px rgba(0,0,0,.24);padding:20px;overflow:hidden}
+    .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}.card-head h3{font-size:20px;letter-spacing:-.03em}.card-head p{color:var(--muted);margin-top:4px;font-size:13px;line-height:1.5}
+    .toolbar{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:10px;margin-bottom:18px}.toolbar.two{grid-template-columns:1fr auto}.toolbar.three{grid-template-columns:1fr 1fr auto}.toolbar.import{grid-template-columns:1fr auto auto}
+    input,select,textarea{width:100%;background:rgba(2,6,23,.68);border:1px solid var(--line);color:white;border-radius:16px;padding:13px 14px;outline:none;font:inherit;transition:.25s ease}
+    input:focus,select:focus,textarea:focus{border-color:rgba(34,211,238,.54);box-shadow:0 0 0 4px rgba(34,211,238,.08)}textarea{min-height:110px;resize:vertical}option{background:#0b1020;color:white}
+    .form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.form-grid .span2{grid-column:span 2}.form-grid .span4{grid-column:1/-1}
+    .list{display:grid;gap:12px}.list-item{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:15px;border-radius:22px;background:rgba(255,255,255,.055);border:1px solid var(--line);transition:.25s ease}.list-item:hover{transform:translateY(-3px);background:rgba(255,255,255,.075)}
+    .list-item h4{font-size:15px;margin-bottom:6px}.list-item p{color:var(--muted);font-size:13px;line-height:1.5}
+    .avatar{width:42px;height:42px;border-radius:16px;display:grid;place-items:center;font-weight:900;background:linear-gradient(135deg,rgba(34,211,238,.35),rgba(168,85,247,.35));border:1px solid var(--line);flex:none}.person-row{display:flex;gap:12px;align-items:center}
+    table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:20px}th,td{text-align:left;padding:14px 10px;border-bottom:1px solid var(--line);color:#e2e8f0;font-size:13px;vertical-align:middle}th{color:#cffafe;text-transform:uppercase;letter-spacing:.08em;font-size:11px}
+    .table-wrap{overflow:auto;max-height:620px;border-radius:20px}
+    .pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 9px;font-size:11px;font-weight:900;color:#ddefff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)}
+    .status-Active,.status-Regular,.status-Present{background:rgba(34,197,94,.16);color:#bbf7d0}.status-Newcomer,.status-Pending,.status-Late{background:rgba(245,158,11,.16);color:#fde68a}.status-Inactive,.status-NeedsFollowup,.status-Absent{background:rgba(239,68,68,.16);color:#fecaca}
+    .progress-wrap{height:10px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin-top:12px}.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));border-radius:999px;transition:.5s ease}
+    .login{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 22% 18%,rgba(34,211,238,.22),transparent 34%),radial-gradient(circle at 74% 26%,rgba(168,85,247,.24),transparent 34%),rgba(2,6,23,.94);z-index:100;padding:20px;backdrop-filter:blur(20px)}
+    .login-card{width:min(500px,100%);border-radius:36px;border:1px solid var(--line);background:rgba(15,23,42,.78);box-shadow:var(--shadow);backdrop-filter:blur(28px);padding:30px;text-align:center;animation:loginPop .5s ease both}@keyframes loginPop{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
+    .login-card .logo{margin:0 auto 16px;width:70px;height:70px;border-radius:24px}.login-card h2{font-size:34px;letter-spacing:-.055em}.login-card p{color:var(--muted);line-height:1.7;margin:12px 0 20px}.hidden{display:none!important}
+    .modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,.72);backdrop-filter:blur(18px);padding:20px}.modal.active{display:flex}.modal-card{width:min(980px,100%);max-height:92vh;overflow:auto;border-radius:32px;background:rgba(15,23,42,.94);border:1px solid var(--line);box-shadow:var(--shadow);padding:24px;animation:loginPop .35s ease both}
+    .toast{position:fixed;right:20px;bottom:20px;z-index:120;display:grid;gap:10px}.toast-msg{background:rgba(15,23,42,.9);border:1px solid var(--line);border-left:4px solid var(--cyan);border-radius:18px;padding:14px 16px;box-shadow:0 14px 38px rgba(0,0,0,.28);animation:toastIn .3s ease both;font-size:13px;color:#e2e8f0}@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+    .small-muted{font-size:12px;color:var(--muted);line-height:1.5}.right-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.section-spacer{height:18px}
+    .kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.lane{min-height:350px;border:1px solid var(--line);background:rgba(2,6,23,.28);border-radius:26px;padding:14px}.lane-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.lane-title h4{font-size:14px;color:#e2e8f0;text-transform:uppercase;letter-spacing:.08em}.task{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04));border-radius:22px;padding:15px;margin-bottom:12px}.task h4{font-size:15px;margin-bottom:10px}.task p{color:var(--muted);font-size:12px;line-height:1.55;margin-bottom:12px}.task-actions{display:flex;gap:8px;flex-wrap:wrap}.empty{color:var(--muted);text-align:center;border:1px dashed rgba(255,255,255,.12);border-radius:20px;padding:26px 14px;font-size:13px;line-height:1.6}
+    @media(max-width:1120px){.app{grid-template-columns:1fr}.sidebar{position:fixed;left:14px;top:14px;height:calc(100vh - 28px);width:min(310px,calc(100vw - 28px));z-index:70;transform:translateX(-115%);transition:.32s ease}.sidebar.open{transform:translateX(0)}.mobile-menu{display:grid;place-items:center}.topbar{position:sticky;top:0;z-index:50;background:linear-gradient(to bottom,rgba(7,10,19,.95),rgba(7,10,19,.72),transparent);backdrop-filter:blur(14px)}.hero-content{grid-template-columns:1fr}.quick-actions{justify-content:flex-start}}
+    @media(max-width:900px){.stats-grid{grid-template-columns:1fr 1fr}.content-grid,.kanban,.toolbar,.toolbar.two,.toolbar.three,.toolbar.import,.form-grid{grid-template-columns:1fr}.form-grid .span2,.form-grid .span4{grid-column:auto}.hero{padding:22px;border-radius:30px}.hero h2{font-size:42px}.list-item{flex-direction:column}.right-actions{justify-content:flex-start}}
+  </style>
+</head>
+
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+  <div id="loginScreen" class="login">
+    <div class="login-card">
+      <div class="logo" aria-hidden="true">
+        <svg width="44" height="44" viewBox="0 0 64 64" fill="none"><path d="M12 15C22 4 42 4 52 15C63 27 58 48 32 58C6 48 1 27 12 15Z" fill="rgba(255,255,255,.18)"/><path d="M19 22L32 41L45 22" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 43H46" stroke="white" stroke-width="6" stroke-linecap="round"/></svg>
+      </div>
+      <h2>Youth Central CRM</h2>
+      <p>Secure youth database, attendance, cells and follow-up system.</p>
+      <input id="loginEmail" type="email" placeholder="Email">
+      <div style="height:10px"></div>
+      <input id="loginPassword" type="password" placeholder="Password">
+      <div style="height:12px"></div>
+      <button onclick="login()">Login</button>
+      <button class="btn-ghost" onclick="signup()" style="margin-left:8px">Create Account</button>
+      <p class="small-muted">Enable Firebase Authentication → Email/Password before using login.</p>
+    </div>
+  </div>
+
+  <div class="app">
+    <aside id="sidebar" class="sidebar">
+      <div class="brand"><div class="logo" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 64 64" fill="none"><path d="M12 15C22 4 42 4 52 15C63 27 58 48 32 58C6 48 1 27 12 15Z" fill="rgba(255,255,255,.18)"/><path d="M19 22L32 41L45 22" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 43H46" stroke="white" stroke-width="6" stroke-linecap="round"/></svg></div><div><h1>Youth Central</h1><p>TGC Youth CRM</p></div></div>
+      <nav class="nav">
+        <button class="nav-btn active" onclick="openPage('dashboard', this)"><span class="nav-icon">⌂</span> Dashboard</button>
+        <button class="nav-btn" onclick="openPage('database', this)"><span class="nav-icon">🗂️</span> Youth Database</button>
+        <button class="nav-btn" onclick="openPage('newcomer', this)"><span class="nav-icon">✨</span> Newcomer Form</button>
+        <button class="nav-btn" onclick="openPage('attendance', this)"><span class="nav-icon">📍</span> Attendance</button>
+        <button class="nav-btn" onclick="openPage('cells', this)"><span class="nav-icon">🏠</span> Cell Groups</button>
+        <button class="nav-btn" onclick="openPage('followups', this)"><span class="nav-icon">☎️</span> Follow-ups</button>
+        <button class="nav-btn" onclick="openPage('reports', this)"><span class="nav-icon">📊</span> Reports</button>
+        <button class="nav-btn" onclick="openPage('tasks', this)"><span class="nav-icon">✓</span> Tasks</button>
+      </nav>
+      <div class="sidebar-footer"><div class="live-pill"><span class="pulse"></span> Live Firebase Sync</div><p>Leaders can update records from any device. Data saves to Firestore.</p></div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+        <p class="small-muted" id="todayLine"></p>
+        <div class="right-actions"><button class="btn-ghost" onclick="openMemberModal()">+ Add Person</button><button class="btn-ghost" onclick="logout()">Logout</button></div>
+      </div>
+
+      <section class="hero">
+        <div class="hero-content">
+          <div><div class="eyebrow"><span class="pulse"></span> Youth CRM System</div><h2>Know who came. <span>Know who needs care.</span></h2><p>Track your full youth database, attendance, newcomers, cells and follow-ups in one live dashboard.</p></div>
+          <div class="quick-actions"><button onclick="openMemberModal('Newcomer')">Add Newcomer</button><button class="btn-purple" onclick="openPageByName('attendance')">Mark Attendance</button><button class="btn-ghost" onclick="exportCSV('youth')">Export Youth</button></div>
+        </div>
+      </section>
+
+      <section id="dashboard" class="page active">
+        <div class="stats-grid">
+          <div class="stat-card" style="--glow:rgba(34,211,238,.2)"><p>Total Youth</p><h3 id="totalYouth">0</h3><small>Main database</small></div>
+          <div class="stat-card" style="--glow:rgba(245,158,11,.2)"><p>Newcomers</p><h3 id="newcomersCount">0</h3><small>New visitor records</small></div>
+          <div class="stat-card" style="--glow:rgba(34,197,94,.2)"><p>This Month</p><h3 id="attendedMonth">0</h3><small>Unique attended</small></div>
+          <div class="stat-card" style="--glow:rgba(239,68,68,.2)"><p>Missing 2+ Weeks</p><h3 id="missingCount">0</h3><small>Need care</small></div>
+          <div class="stat-card" style="--glow:rgba(168,85,247,.2)"><p>Follow-ups</p><h3 id="followupCount">0</h3><small>Pending</small></div>
+        </div>
+        <div class="content-grid">
+          <div class="card"><div class="card-head"><div><h3>Follow-up Alerts</h3><p>People who need a call/message.</p></div></div><div id="followupAlerts" class="list"></div></div>
+          <div class="card"><div class="card-head"><div><h3>Cell Leader Summary</h3><p>Youth count by cell leader.</p></div></div><div id="cellLeaderSummary" class="list"></div></div>
+        </div>
+      </section>
+
+      <section id="database" class="page">
+        <div class="card">
+          <div class="card-head"><div><h3>Youth Database</h3><p>Search, filter and manage all youth records.</p></div><button onclick="openMemberModal()">+ Add Person</button></div>
+          <div class="toolbar">
+            <input id="searchYouth" placeholder="Search name, phone, location..." oninput="renderYouthTable()">
+            <select id="filterType" onchange="renderYouthTable()"><option value="">All Types</option><option>Regular</option><option>Newcomer</option></select>
+            <select id="filterStatus" onchange="renderYouthTable()"><option value="">All Status</option><option>Active</option><option>Inactive</option><option>Needs Follow-up</option></select>
+            <select id="filterLeader" onchange="renderYouthTable()"><option value="">All Cell Leaders</option></select>
+            <button class="btn-ghost" onclick="exportCSV('youth')">Export</button>
+          </div>
+          <div class="toolbar import">
+            <input id="importFile" type="file" accept=".json">
+            <button onclick="importJsonData()">Import JSON</button>
+            <button class="btn-ghost" onclick="openPageByName('reports')">Reports</button>
+          </div>
+          <div class="table-wrap">
+            <table><thead><tr><th>Name</th><th>Phone</th><th>Gender</th><th>Location</th><th>Cell Leader</th><th>Type</th><th>Status</th><th>Last Attended</th><th>Action</th></tr></thead><tbody id="youthTable"></tbody></table>
+          </div>
+        </div>
+      </section>
+
+      <section id="newcomer" class="page">
+        <div class="card">
+          <div class="card-head"><div><h3>Newcomer Form</h3><p>Quickly add a first-time visitor into the database and follow-up board.</p></div></div>
+          <div class="form-grid">
+            <input id="newName" placeholder="Name">
+            <input id="newPhone" placeholder="Contact Number">
+            <select id="newGender"><option value="">Gender</option><option>Male</option><option>Female</option></select>
+            <input id="newLocation" placeholder="Location / Town">
+            <input id="newInvitedBy" placeholder="Invited By">
+            <input id="newFirstVisit" type="date">
+            <input id="newCellLeader" placeholder="Cell Leader">
+            <input id="newNotes" placeholder="Notes">
+            <button class="span4" onclick="addNewcomer()">Save Newcomer + Create Follow-up</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="attendance" class="page">
+        <div class="card">
+          <div class="card-head"><div><h3>Attendance Tracker</h3><p>Mark who came to church, youth meeting or cell.</p></div></div>
+          <div class="toolbar">
+            <input id="attendanceDate" type="date">
+            <input id="attendanceEvent" placeholder="Event Name e.g. Sunday Service">
+            <select id="attendanceMember"></select>
+            <select id="attendanceStatus"><option>Present</option><option>Late</option><option>Absent</option><option>Newcomer</option></select>
+            <button onclick="addAttendance()">Mark</button>
+          </div>
+          <div id="attendanceList" class="list"></div>
+        </div>
+      </section>
+
+      <section id="cells" class="page">
+        <div class="content-grid">
+          <div class="card">
+            <div class="card-head"><div><h3>Cell Groups</h3><p>Track each cell and its members.</p></div></div>
+            <div class="toolbar three"><input id="cellName" placeholder="Cell Group Name"><input id="cellLeaderName" placeholder="Leader"><button onclick="addCellGroup()">Add Cell</button></div>
+            <div id="cellGroupsList" class="list"></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div><h3>Cell Leaders</h3><p>Imported from Excel / manually added.</p></div></div>
+            <div class="toolbar three"><input id="leaderName" placeholder="Leader Name"><input id="leaderPhone" placeholder="Contact Number"><button onclick="addCellLeader()">Add Leader</button></div>
+            <div id="cellLeadersList" class="list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="followups" class="page">
+        <div class="card">
+          <div class="card-head"><div><h3>Follow-up Board</h3><p>Newcomers, missing members and care list.</p></div><button class="btn-ghost" onclick="exportCSV('followups')">Export</button></div>
+          <div id="followupList" class="list"></div>
+        </div>
+      </section>
+
+      <section id="reports" class="page">
+        <div class="card">
+          <div class="card-head"><div><h3>Reports & Export</h3><p>Download data for meetings and leadership updates.</p></div></div>
+          <div class="right-actions" style="justify-content:flex-start">
+            <button onclick="exportCSV('youth')">Export Youth CSV</button>
+            <button class="btn-purple" onclick="exportCSV('attendance')">Export Attendance CSV</button>
+            <button class="btn-ghost" onclick="exportCSV('followups')">Export Follow-ups CSV</button>
+          </div>
+          <div class="section-spacer"></div>
+          <div class="content-grid">
+            <div class="card"><h3>Missing 2+ Weeks</h3><br><div id="missingReport" class="list"></div></div>
+            <div class="card"><h3>Newcomers</h3><br><div id="newcomerReport" class="list"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tasks" class="page">
+        <div class="card">
+          <div class="card-head"><div><h3>Task Board</h3><p>Basic core team task tracking.</p></div></div>
+          <div class="toolbar"><input id="taskTitle" placeholder="Task"><select id="taskOwner"></select><input id="taskDue" type="date"><select id="taskPriority"><option>Normal</option><option>High</option><option>Urgent</option></select><button onclick="addTask()">Add</button></div>
+          <div class="kanban"><div class="lane"><div class="lane-title"><h4>To Do</h4></div><div id="todoTasks"></div></div><div class="lane"><div class="lane-title"><h4>In Progress</h4></div><div id="progressTasks"></div></div><div class="lane"><div class="lane-title"><h4>Completed</h4></div><div id="completedTasks"></div></div></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="memberModal" class="modal">
+    <div class="modal-card">
+      <div class="card-head"><div><h3 id="memberModalTitle">Add Person</h3><p>Form follows the uploaded Excel database structure.</p></div><button class="btn-ghost mini-btn" onclick="closeMemberModal()">Close</button></div>
+      <div class="form-grid">
+        <input id="mSerial" placeholder="Serial No">
+        <input id="mName" placeholder="Name (Name & Surname)">
+        <input id="mDob" type="date" placeholder="DOB">
+        <input id="mAge" placeholder="Age">
+        <select id="mGender"><option value="">Gender</option><option>Male</option><option>Female</option></select>
+        <input id="mPhone" placeholder="Contact Number">
+        <input id="mLocation" placeholder="Location (Town/City)">
+        <input id="mDS" placeholder="Divisional Secretariats">
+        <input id="mAddress" class="span2" placeholder="Address">
+        <input id="mCellLeader" placeholder="Cell Leader">
+        <input id="mCellGroup" placeholder="Cell Group">
+        <input id="mMinistry" placeholder="Ministry">
+        <input id="mTeam" placeholder="Team">
+        <select id="mType"><option>Regular</option><option>Newcomer</option></select>
+        <select id="mStatus"><option>Active</option><option>Inactive</option><option>Needs Follow-up</option></select>
+        <input id="mFirstVisit" type="date">
+        <input id="mLastAttended" type="date">
+        <select id="mFollowStatus"><option>Not Needed</option><option>Pending</option><option>Completed</option></select>
+        <textarea id="mNotes" class="span4" placeholder="Notes"></textarea>
+        <button class="span4" onclick="saveMember()">Save Person</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, onSnapshot, serverTimestamp, query, orderBy, writeBatch } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCdMfitam8d7UwVfP2I3jbuDIYvW-lAB-c",
+      authDomain: "youth-tasks.firebaseapp.com",
+      projectId: "youth-tasks",
+      storageBucket: "youth-tasks.firebasestorage.app",
+      messagingSenderId: "824413713361",
+      appId: "1:824413713361:web:6c84c4ce1efab73b3c66f0",
+      measurementId: "G-PKMFQ4Z1PZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    let youthMembers=[], cellLeaders=[], cellGroups=[], attendance=[], followUps=[], tasks=[], editingMemberId=null;
+    const $=id=>document.getElementById(id);
+    const clean=v=>String(v??"").replace(/[<>&'"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;',"'":'&#39;','"':'&quot;'}[c]));
+    const todayISO=()=>new Date().toISOString().slice(0,10);
+    $("todayLine").textContent=new Date().toLocaleDateString("en-US",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+    $("attendanceDate").value=todayISO(); $("newFirstVisit").value=todayISO();
+
+    function notify(message){const wrap=$("toast"),el=document.createElement("div");el.className="toast-msg";el.textContent=message;wrap.appendChild(el);setTimeout(()=>{el.style.opacity="0";el.style.transform="translateX(20px)"},2600);setTimeout(()=>el.remove(),3100)}
+    window.login=async()=>{try{await signInWithEmailAndPassword(auth,$("loginEmail").value.trim(),$("loginPassword").value.trim());notify("Logged in")}catch(e){notify(e.message)}};
+    window.signup=async()=>{try{await createUserWithEmailAndPassword(auth,$("loginEmail").value.trim(),$("loginPassword").value.trim());notify("Account created")}catch(e){notify(e.message)}};
+    window.logout=async()=>{await signOut(auth)};
+    onAuthStateChanged(auth,user=>{$("loginScreen").classList.toggle("hidden",!!user); if(user) startListeners();});
+
+    window.toggleSidebar=()=>$("sidebar").classList.toggle("open");
+    window.openPage=function(pageId,btn){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));$(pageId).classList.add("active");if(btn)btn.classList.add("active");$("sidebar").classList.remove("open");window.scrollTo({top:0,behavior:"smooth"})};
+    window.openPageByName=function(pageId){const btn=[...document.querySelectorAll(".nav-btn")].find(b=>b.getAttribute("onclick")?.includes("'"+pageId+"'"));window.openPage(pageId,btn)};
+    function initials(name){return clean(name).split(" ").map(n=>n[0]).join("").slice(0,2).toUpperCase()||"Y"}
+    function statusClass(s){return String(s||"").replace(/\s|\-/g,"")}
+
+    window.openMemberModal=function(type="Regular"){editingMemberId=null;$("memberModalTitle").textContent=type==="Newcomer"?"Add Newcomer":"Add Person";clearMemberForm();$("mType").value=type;$("mFirstVisit").value=todayISO();$("memberModal").classList.add("active")};
+    window.closeMemberModal=()=>$("memberModal").classList.remove("active");
+    function clearMemberForm(){["mSerial","mName","mDob","mAge","mPhone","mLocation","mDS","mAddress","mCellLeader","mCellGroup","mMinistry","mTeam","mFirstVisit","mLastAttended","mNotes"].forEach(id=>$(id).value="");$("mGender").value="";$("mType").value="Regular";$("mStatus").value="Active";$("mFollowStatus").value="Not Needed";}
+    window.editMember=function(id){const m=youthMembers.find(x=>x.id===id); if(!m)return; editingMemberId=id;$("memberModalTitle").textContent="Edit Person";$("mSerial").value=m.serialNo||"";$("mName").value=m.name||"";$("mDob").value=m.dob||"";$("mAge").value=m.age||"";$("mGender").value=m.gender||"";$("mPhone").value=m.contactNumber||"";$("mLocation").value=m.location||"";$("mDS").value=m.divisionalSecretariat||"";$("mAddress").value=m.address||"";$("mCellLeader").value=m.cellLeader||"";$("mCellGroup").value=m.cellGroup||"";$("mMinistry").value=m.ministry||"";$("mTeam").value=m.team||"";$("mType").value=m.memberType||"Regular";$("mStatus").value=m.status||"Active";$("mFirstVisit").value=m.firstVisitDate||"";$("mLastAttended").value=m.lastAttendedDate||"";$("mFollowStatus").value=m.followUpStatus||"Not Needed";$("mNotes").value=m.notes||"";$("memberModal").classList.add("active")};
+    window.saveMember=async function(){
+      const data={serialNo:$("mSerial").value.trim(),name:$("mName").value.trim(),dob:$("mDob").value,age:$("mAge").value.trim(),gender:$("mGender").value,contactNumber:$("mPhone").value.trim(),location:$("mLocation").value.trim(),divisionalSecretariat:$("mDS").value.trim(),address:$("mAddress").value.trim(),cellLeader:$("mCellLeader").value.trim(),cellGroup:$("mCellGroup").value.trim(),ministry:$("mMinistry").value.trim(),team:$("mTeam").value.trim(),memberType:$("mType").value,status:$("mStatus").value,firstVisitDate:$("mFirstVisit").value,lastAttendedDate:$("mLastAttended").value,followUpStatus:$("mFollowStatus").value,notes:$("mNotes").value.trim(),updatedAt:serverTimestamp()};
+      if(!data.name)return notify("Name is required");
+      if(editingMemberId){await updateDoc(doc(db,"youthMembers",editingMemberId),data);notify("Person updated")}
+      else{data.createdAt=serverTimestamp();await addDoc(collection(db,"youthMembers"),data);notify("Person added")}
+      closeMemberModal();
+    };
+    window.deleteMember=async id=>{if(confirm("Delete this person?")){await deleteDoc(doc(db,"youthMembers",id));notify("Deleted")}};
+
+    window.addNewcomer=async function(){
+      const name=$("newName").value.trim(), contactNumber=$("newPhone").value.trim();
+      if(!name)return notify("Name required");
+      const data={name,contactNumber,gender:$("newGender").value,location:$("newLocation").value.trim(),invitedBy:$("newInvitedBy").value.trim(),firstVisitDate:$("newFirstVisit").value||todayISO(),cellLeader:$("newCellLeader").value.trim(),notes:$("newNotes").value.trim(),memberType:"Newcomer",status:"Active",followUpStatus:"Pending",lastAttendedDate:$("newFirstVisit").value||todayISO(),createdAt:serverTimestamp(),updatedAt:serverTimestamp()};
+      const ref=await addDoc(collection(db,"youthMembers"),data);
+      await addDoc(collection(db,"followUps"),{memberId:ref.id,memberName:name,contactNumber,reason:"Newcomer follow-up",assignedTo:data.cellLeader||"Unassigned",status:"Pending",dueDate:"",notes:data.notes,createdAt:serverTimestamp()});
+      ["newName","newPhone","newLocation","newInvitedBy","newCellLeader","newNotes"].forEach(id=>$(id).value="");notify("Newcomer saved + follow-up created");
+    };
+
+    window.addAttendance=async function(){
+      const memberId=$("attendanceMember").value,date=$("attendanceDate").value,eventName=$("attendanceEvent").value.trim()||"Church",status=$("attendanceStatus").value;
+      const m=youthMembers.find(x=>x.id===memberId); if(!m||!date)return notify("Select member and date");
+      await addDoc(collection(db,"attendance"),{memberId,memberName:m.name,contactNumber:m.contactNumber||"",date,eventName,status,cellLeader:m.cellLeader||"",createdAt:serverTimestamp()});
+      if(status==="Present"||status==="Late"||status==="Newcomer") await updateDoc(doc(db,"youthMembers",memberId),{lastAttendedDate:date,followUpStatus:status==="Newcomer"?"Pending":(m.followUpStatus||"Not Needed"),updatedAt:serverTimestamp()});
+      notify("Attendance marked");
+    };
+    window.deleteAttendance=async id=>{if(confirm("Delete attendance record?")){await deleteDoc(doc(db,"attendance",id));notify("Attendance deleted")}};
+
+    window.addCellLeader=async()=>{const name=$("leaderName").value.trim(),contactNumber=$("leaderPhone").value.trim();if(!name)return notify("Leader name required");await addDoc(collection(db,"cellLeaders"),{name,contactNumber,role:"Cell Leader",status:"Active",createdAt:serverTimestamp()});$("leaderName").value="";$("leaderPhone").value="";notify("Leader added")};
+    window.addCellGroup=async()=>{const cellGroupName=$("cellName").value.trim(),leader=$("cellLeaderName").value.trim();if(!cellGroupName)return notify("Cell name required");await addDoc(collection(db,"cellGroups"),{cellGroupName,leader,assistantLeader:"",area:"",members:[],status:"Active",createdAt:serverTimestamp()});$("cellName").value="";$("cellLeaderName").value="";notify("Cell added")};
+
+    window.addTask=async()=>{const title=$("taskTitle").value.trim();if(!title)return notify("Task required");await addDoc(collection(db,"tasks"),{title,owner:$("taskOwner").value,due:$("taskDue").value,priority:$("taskPriority").value,status:"todo",createdAt:serverTimestamp()});$("taskTitle").value="";notify("Task added")};
+    window.moveTask=async(id,status)=>{await updateDoc(doc(db,"tasks",id),{status});notify("Task moved")};
+    window.deleteTask=async id=>{if(confirm("Delete task?")){await deleteDoc(doc(db,"tasks",id));notify("Task deleted")}};
+
+    window.importJsonData=async function(){
+      const file=$("importFile").files[0]; if(!file)return notify("Choose firebase-import-data.json");
+      const text=await file.text(); const data=JSON.parse(text); let count=0;
+      for(const [collectionName,items] of Object.entries(data)){
+        if(!Array.isArray(items))continue;
+        for(const item of items){await addDoc(collection(db,collectionName),{...item,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});count++;}
+      }
+      notify(`Imported ${count} records`);
+    };
+
+    window.exportCSV=function(type){
+      let rows=[],filename="export.csv";
+      if(type==="youth"){rows=youthMembers;filename="youth-members.csv"}
+      if(type==="attendance"){rows=attendance;filename="attendance.csv"}
+      if(type==="followups"){rows=followUps;filename="follow-ups.csv"}
+      if(!rows.length)return notify("No data to export");
+      const keys=[...new Set(rows.flatMap(o=>Object.keys(o).filter(k=>typeof o[k]!=="object")))];
+      const csv=[keys.join(","),...rows.map(r=>keys.map(k=>`"${String(r[k]??"").replace(/"/g,'""')}"`).join(","))].join("\n");
+      const blob=new Blob([csv],{type:"text/csv"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob);a.download=filename;a.click();URL.revokeObjectURL(a.href);
+    };
+
+    function isMissing(m){if(!m.lastAttendedDate)return true; const d=new Date(m.lastAttendedDate); return ((Date.now()-d.getTime())/(1000*60*60*24))>14}
+    function render(){
+      renderSelectors();renderDashboard();renderYouthTable();renderAttendance();renderCells();renderFollowUps();renderReports();renderTasks();
+    }
+    function renderSelectors(){
+      const leaders=[...new Set(youthMembers.map(m=>m.cellLeader).filter(Boolean))].sort();
+      $("filterLeader").innerHTML=`<option value="">All Cell Leaders</option>`+leaders.map(l=>`<option>${clean(l)}</option>`).join("");
+      $("attendanceMember").innerHTML=`<option value="">Select Member</option>`+youthMembers.sort((a,b)=>String(a.name).localeCompare(String(b.name))).map(m=>`<option value="${m.id}">${clean(m.name)} - ${clean(m.cellLeader||"No Leader")}</option>`).join("");
+      $("taskOwner").innerHTML=`<option value="">Unassigned</option>`+youthMembers.map(m=>`<option>${clean(m.name)}</option>`).join("");
+    }
+    function renderDashboard(){
+      const thisMonth=new Date().toISOString().slice(0,7);
+      const attendedUnique=new Set(attendance.filter(a=>String(a.date||"").startsWith(thisMonth)&&["Present","Late","Newcomer"].includes(a.status)).map(a=>a.memberId)).size;
+      const pending=followUps.filter(f=>f.status!=="Completed").length;
+      $("totalYouth").textContent=youthMembers.length;$("newcomersCount").textContent=youthMembers.filter(m=>m.memberType==="Newcomer").length;$("attendedMonth").textContent=attendedUnique;$("missingCount").textContent=youthMembers.filter(isMissing).length;$("followupCount").textContent=pending;
+      const needFollow=youthMembers.filter(m=>m.followUpStatus==="Pending"||m.status==="Needs Follow-up"||isMissing(m)).slice(0,8);
+      $("followupAlerts").innerHTML=needFollow.length?needFollow.map(m=>`<div class="list-item"><div><h4>${clean(m.name)}</h4><p>${clean(m.contactNumber||"No phone")} • ${clean(m.cellLeader||"No leader")} • Last: ${clean(m.lastAttendedDate||"Never")}</p></div><button class="mini-btn" onclick="createFollowUp('${m.id}')">Add Follow-up</button></div>`).join(""):`<div class="empty">No follow-up alerts right now.</div>`;
+      const counts={}; youthMembers.forEach(m=>{const k=m.cellLeader||"No Cell Leader"; counts[k]=(counts[k]||0)+1});
+      $("cellLeaderSummary").innerHTML=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([name,count])=>`<div class="list-item"><div><h4>${clean(name)}</h4><p>${count} youth members</p></div></div>`).join("")||`<div class="empty">No cell data yet.</div>`;
+    }
+    window.createFollowUp=async id=>{const m=youthMembers.find(x=>x.id===id); if(!m)return; await addDoc(collection(db,"followUps"),{memberId:m.id,memberName:m.name,contactNumber:m.contactNumber||"",reason:isMissing(m)?"Missing 2+ weeks":"Needs follow-up",assignedTo:m.cellLeader||"Unassigned",status:"Pending",dueDate:"",notes:"",createdAt:serverTimestamp()}); await updateDoc(doc(db,"youthMembers",id),{followUpStatus:"Pending"}); notify("Follow-up created")};
+    window.renderYouthTable=function(){
+      const q=($("searchYouth").value||"").toLowerCase(), type=$("filterType").value,status=$("filterStatus").value, leader=$("filterLeader").value;
+      const data=youthMembers.filter(m=>(!q||[m.name,m.contactNumber,m.location,m.cellLeader,m.ministry,m.team].join(" ").toLowerCase().includes(q))&&(!type||m.memberType===type)&&(!status||m.status===status)&&(!leader||m.cellLeader===leader));
+      $("youthTable").innerHTML=data.length?data.map(m=>`<tr><td><div class="person-row"><div class="avatar">${initials(m.name)}</div><b>${clean(m.name)}</b></div></td><td>${clean(m.contactNumber)}</td><td>${clean(m.gender)}</td><td>${clean(m.location)}</td><td>${clean(m.cellLeader)}</td><td><span class="pill status-${statusClass(m.memberType)}">${clean(m.memberType||"Regular")}</span></td><td><span class="pill status-${statusClass(m.status)}">${clean(m.status||"Active")}</span></td><td>${clean(m.lastAttendedDate||"Never")}</td><td><button class="mini-btn" onclick="editMember('${m.id}')">Edit</button><button class="mini-btn btn-green" onclick="quickPresent('${m.id}')">Present</button><button class="mini-btn btn-danger" onclick="deleteMember('${m.id}')">Delete</button></td></tr>`).join(""):`<tr><td colspan="9">No matching records.</td></tr>`;
+    };
+    window.quickPresent=async id=>{const m=youthMembers.find(x=>x.id===id);if(!m)return;const date=todayISO();await addDoc(collection(db,"attendance"),{memberId:id,memberName:m.name,contactNumber:m.contactNumber||"",date,eventName:"Quick Present",status:"Present",cellLeader:m.cellLeader||"",createdAt:serverTimestamp()});await updateDoc(doc(db,"youthMembers",id),{lastAttendedDate:date});notify("Marked present")};
+    function renderAttendance(){$("attendanceList").innerHTML=attendance.slice(0,30).map(a=>`<div class="list-item"><div><h4>${clean(a.memberName)}</h4><p>${clean(a.eventName)} • ${clean(a.date)} • <span class="pill status-${clean(a.status)}">${clean(a.status)}</span></p></div><button class="mini-btn btn-danger" onclick="deleteAttendance('${a.id}')">Delete</button></div>`).join("")||`<div class="empty">No attendance yet.</div>`}
+    function renderCells(){$("cellLeadersList").innerHTML=cellLeaders.map(l=>`<div class="list-item"><div><h4>${clean(l.name)}</h4><p>${clean(l.contactNumber)}</p></div></div>`).join("")||`<div class="empty">No leaders yet.</div>`;$("cellGroupsList").innerHTML=cellGroups.map(c=>`<div class="list-item"><div><h4>${clean(c.cellGroupName)}</h4><p>Lead: ${clean(c.leader)} • Assistant: ${clean(c.assistantLeader||"")}</p><p>${Array.isArray(c.members)?c.members.length:0} members in imported list</p></div></div>`).join("")||`<div class="empty">No cell groups yet.</div>`}
+    function renderFollowUps(){$("followupList").innerHTML=followUps.map(f=>`<div class="list-item"><div><h4>${clean(f.memberName)}</h4><p>${clean(f.reason)} • Assigned: ${clean(f.assignedTo)} • Status: ${clean(f.status)}</p><p>${clean(f.contactNumber)}</p></div><button class="mini-btn btn-green" onclick="completeFollowUp('${f.id}','${f.memberId||""}')">Complete</button></div>`).join("")||`<div class="empty">No follow-ups yet.</div>`}
+    window.completeFollowUp=async(id,memberId)=>{await updateDoc(doc(db,"followUps",id),{status:"Completed",completedAt:serverTimestamp()}); if(memberId) await updateDoc(doc(db,"youthMembers",memberId),{followUpStatus:"Completed"}); notify("Follow-up completed")};
+    function renderReports(){const missing=youthMembers.filter(isMissing);$("missingReport").innerHTML=missing.map(m=>`<div class="list-item"><div><h4>${clean(m.name)}</h4><p>${clean(m.contactNumber)} • Last: ${clean(m.lastAttendedDate||"Never")} • ${clean(m.cellLeader||"No leader")}</p></div></div>`).join("")||`<div class="empty">No one missing.</div>`;$("newcomerReport").innerHTML=youthMembers.filter(m=>m.memberType==="Newcomer").map(m=>`<div class="list-item"><div><h4>${clean(m.name)}</h4><p>${clean(m.contactNumber)} • First visit: ${clean(m.firstVisitDate||"")}</p></div></div>`).join("")||`<div class="empty">No newcomers.</div>`}
+    function taskCard(t){return `<div class="task"><h4>${clean(t.title)}</h4><p>${clean(t.owner||"Unassigned")} • Due ${clean(t.due||"")}</p><div class="task-actions"><button class="mini-btn" onclick="moveTask('${t.id}','todo')">To Do</button><button class="mini-btn btn-yellow" onclick="moveTask('${t.id}','progress')">Progress</button><button class="mini-btn btn-green" onclick="moveTask('${t.id}','completed')">Done</button><button class="mini-btn btn-danger" onclick="deleteTask('${t.id}')">Delete</button></div></div>`}
+    function renderTasks(){$("todoTasks").innerHTML=tasks.filter(t=>t.status==="todo").map(taskCard).join("")||`<div class="empty">No tasks</div>`;$("progressTasks").innerHTML=tasks.filter(t=>t.status==="progress").map(taskCard).join("")||`<div class="empty">No tasks</div>`;$("completedTasks").innerHTML=tasks.filter(t=>t.status==="completed").map(taskCard).join("")||`<div class="empty">No tasks</div>`}
+
+    let listenersStarted=false;
+    function listen(name,assign,sort=true){const col=collection(db,name);const q=sort?query(col,orderBy("createdAt","desc")):col;onSnapshot(q,snap=>{assign(snap.docs.map(d=>({id:d.id,...d.data()})));render()},err=>{console.error(err);notify("Firestore issue. Check rules/auth.")})}
+    function startListeners(){if(listenersStarted)return;listenersStarted=true;listen("youthMembers",d=>youthMembers=d);listen("cellLeaders",d=>cellLeaders=d);listen("cellGroups",d=>cellGroups=d);listen("attendance",d=>attendance=d);listen("followUps",d=>followUps=d);listen("tasks",d=>tasks=d)}
+  </script>
+</body>
+</html>
