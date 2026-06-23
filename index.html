@@ -1335,6 +1335,47 @@
       }
     }
 
+
+    /* V7.7 final auth + layout recovery */
+    #loginScreen.login{
+      min-height:100vh !important;
+      display:grid !important;
+      place-items:center !important;
+      padding:28px !important;
+      overflow:auto !important;
+    }
+    #loginScreen .auth-shell{
+      width:min(1040px,100%) !important;
+      display:grid !important;
+      grid-template-columns:1fr 1fr !important;
+      gap:22px !important;
+      align-items:stretch !important;
+      margin:0 auto !important;
+    }
+    #loginScreen .auth-brand,
+    #loginScreen .auth-card{
+      min-height:560px !important;
+      box-sizing:border-box !important;
+    }
+    #loginScreen .auth-card{
+      display:flex !important;
+      flex-direction:column !important;
+      justify-content:center !important;
+      padding:42px !important;
+    }
+    #loginScreen .auth-brand{
+      display:flex !important;
+      flex-direction:column !important;
+      justify-content:space-between !important;
+      padding:38px !important;
+    }
+    @media(max-width:900px){
+      #loginScreen.login{padding:18px !important;}
+      #loginScreen .auth-shell{display:block !important;width:min(520px,100%) !important;}
+      #loginScreen .auth-brand{display:none !important;}
+      #loginScreen .auth-card{min-height:auto !important;padding:24px !important;border-radius:30px !important;}
+    }
+
   </style>
 </head>
 
@@ -2030,6 +2071,9 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
 
+    console.info("Youth Central V7.7 loaded. Collection listeners use unsorted Firestore reads so older documents without createdAt will show again.");
+
+
 
     window.addEventListener("error", function(event){
       console.error("Youth Central error:", event.message, event.error);
@@ -2173,27 +2217,46 @@
     }
 
     onAuthStateChanged(auth, async user=>{
-      try{
-        currentUser = user;
-        if(!user){
-          currentProfile = null;
-          if($("loginScreen")) $("loginScreen").classList.remove("hidden");
-          if($("appScreen")) $("appScreen").classList.add("hidden");
-          if($("currentUserLabel")) $("currentUserLabel").textContent = "Not logged in";
-          return;
-        }
+      currentUser = user;
 
+      if(!user){
+        currentProfile = null;
+        if($("loginScreen")) $("loginScreen").classList.remove("hidden");
+        if($("appScreen")) $("appScreen").classList.add("hidden");
+        if($("currentUserLabel")) $("currentUserLabel").textContent = "Not logged in";
+        return;
+      }
+
+      // Show the app immediately after Firebase Auth confirms login.
+      // Firestore profile loading happens after this, so the app won't get stuck on "Logged in".
+      if($("loginScreen")) $("loginScreen").classList.add("hidden");
+      if($("appScreen")) $("appScreen").classList.remove("hidden");
+
+      currentProfile = {
+        id:user.uid,
+        uid:user.uid,
+        name:user.email?.split("@")[0] || "Youth Central User",
+        email:user.email || "",
+        role:"Member",
+        team:"",
+        status:"Active"
+      };
+
+      if($("currentUserLabel")) $("currentUserLabel").textContent = `${currentProfile.name || user.email} • Loading`;
+      updateProfileUI();
+      render();
+
+      try{
         currentProfile = await ensureProfile(user);
-        if($("loginScreen")) $("loginScreen").classList.add("hidden");
-        if($("appScreen")) $("appScreen").classList.remove("hidden");
         if($("currentUserLabel")) $("currentUserLabel").textContent = `${currentProfile.name || user.email} • ${currentProfile.role}`;
         updateProfileUI();
-        startListeners();
-        render();
       }catch(e){
-        console.error("Auth state error", e);
-        notify(e.message || "Authentication error");
+        console.error("Profile load/create issue", e);
+        notify("Logged in, but profile access has an issue. Check Firestore rules.");
       }
+
+      startListeners();
+      render();
     });
 
     window.toggleSide = function(){
@@ -3038,6 +3101,15 @@
     }
 
 
+
+    function byNewest(list){
+      return [...(list || [])].sort((a,b)=>{
+        const av = a.createdAt?.seconds || 0;
+        const bv = b.createdAt?.seconds || 0;
+        return bv - av;
+      });
+    }
+
     function safeRenderBlock(name, fn){
       try{ fn(); }
       catch(error){
@@ -3530,7 +3602,7 @@
 
     function renderNotifications(){$("notificationList").innerHTML=notifications.slice(0,8).map(n=>`<div class="list-item"><div><h4>${clean(n.title)}</h4><p>${clean(n.body)} • ${clean(n.team||"All")} • By ${clean(n.createdBy||"Team")}</p></div></div>`).join("")||`<div class="empty">No notifications yet.</div>`}
 
-    function listen(name,assign,sort=true){
+    function listen(name,assign,sort=false){
       const col=collection(db,name), q=sort?query(col,orderBy("createdAt","desc")):col;
       onSnapshot(q,snap=>{assign(snap.docs.map(d=>({id:d.id,...d.data()})));render()},err=>{console.error(err);notify("Firestore issue. Check Authentication and Rules.")});
     }
