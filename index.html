@@ -637,6 +637,193 @@
       flex:none;
     }
 
+
+
+    .event-detail-hero{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:34px;
+      padding:24px;
+      margin-bottom:16px;
+      background:
+        radial-gradient(circle at 12% 12%,rgba(34,211,238,.18),transparent 34%),
+        radial-gradient(circle at 88% 18%,rgba(139,92,246,.20),transparent 36%),
+        linear-gradient(135deg,rgba(255,255,255,.11),rgba(255,255,255,.04));
+      box-shadow:var(--shadow);
+    }
+    .event-detail-layout{
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .event-detail-flyer{
+      min-height:360px;
+      border-radius:28px;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 25% 20%,rgba(255,255,255,.25),transparent 18%),
+        linear-gradient(135deg,rgba(34,211,238,.22),rgba(37,99,235,.20),rgba(139,92,246,.22));
+      border:1px solid var(--line);
+      display:grid;
+      place-items:center;
+      color:#cffafe;
+      font-weight:900;
+      text-align:center;
+      padding:18px;
+    }
+    .event-detail-flyer img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .event-detail-content h2{
+      font-size:clamp(32px,4vw,58px);
+      line-height:.95;
+      letter-spacing:-.08em;
+      margin-bottom:12px;
+    }
+    .event-detail-content p{
+      color:var(--soft);
+      line-height:1.7;
+      margin-bottom:14px;
+    }
+    .event-detail-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+    .event-detail-stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:16px;
+    }
+    .event-detail-stat{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.055);
+      border-radius:22px;
+      padding:16px;
+    }
+    .event-detail-stat p{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin:0;
+    }
+    .event-detail-stat h3{
+      margin-top:8px;
+      font-size:30px;
+      letter-spacing:-.06em;
+    }
+    @media(max-width:900px){
+      .event-detail-layout,.event-detail-stats{grid-template-columns:1fr}
+      .event-detail-flyer{min-height:260px}
+    }
+
+    .game-hero{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:34px;
+      padding:28px;
+      margin-bottom:16px;
+      background:
+        radial-gradient(circle at 10% 10%,rgba(34,211,238,.18),transparent 34%),
+        radial-gradient(circle at 86% 16%,rgba(139,92,246,.20),transparent 36%),
+        linear-gradient(135deg,rgba(255,255,255,.11),rgba(255,255,255,.04));
+      box-shadow:var(--shadow);
+    }
+    .game-hero::after{
+      content:"";
+      position:absolute;
+      right:-70px;
+      top:-90px;
+      width:330px;
+      height:330px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.12);
+      background:radial-gradient(circle,rgba(34,211,238,.12),transparent 68%);
+      animation:drift 10s ease-in-out infinite alternate;
+    }
+    .game-hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:end}
+    .game-hero h2{font-size:clamp(34px,5vw,62px);line-height:.9;letter-spacing:-.08em}
+    .game-hero h2 span{background:linear-gradient(90deg,#fff,#bff7ff,#93c5fd);-webkit-background-clip:text;color:transparent}
+    .game-hero p{color:var(--soft);line-height:1.7;margin-top:12px;max-width:720px}
+    .game-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+    .game-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .game-tab-btn{background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--soft);padding:11px 14px;border-radius:999px;font-size:13px}
+    .game-tab-btn.active{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#04111f}
+    .game-section{display:none}
+    .game-section.active{display:block;animation:pageIn .35s ease both}
+    .team-builder-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .team-card{
+      border:1px solid var(--line);
+      background:rgba(10,18,36,.72);
+      border-radius:26px;
+      padding:16px;
+      overflow:hidden;
+      position:relative;
+    }
+    .team-color-strip{height:8px;border-radius:999px;margin-bottom:14px;background:var(--team-color,#35b8ff)}
+    .team-card h4{font-size:16px;margin-bottom:8px}
+    .team-card textarea{min-height:130px}
+    .team-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+    .player-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .player-chip{font-size:11px;font-weight:800;border:1px solid var(--line);background:rgba(255,255,255,.06);border-radius:999px;padding:6px 9px;color:var(--soft)}
+    .schedule-grid{display:grid;grid-template-columns:1fr .9fr;gap:16px}
+    .match-card{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.052);
+      border-radius:22px;
+      padding:14px;
+      display:grid;
+      gap:10px;
+    }
+    .match-line{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:900}
+    .score-inputs{display:grid;grid-template-columns:1fr .5fr .5fr 1fr;gap:8px;align-items:center}
+    .standings-table td,.standings-table th{text-align:center}
+    .standings-table td:first-child,.standings-table th:first-child{text-align:left}
+    .rules-preview{
+      white-space:pre-wrap;
+      line-height:1.7;
+      color:var(--soft);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:22px;
+      padding:16px;
+      min-height:220px;
+    }
+    .public-board{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    .live-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(34,197,94,.25);
+      background:rgba(34,197,94,.12);
+      color:#bbf7d0;
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:12px;
+      font-weight:900;
+    }
+    .color-picker-row{display:grid;grid-template-columns:1fr 58px;gap:8px}
+    input[type="color"]{padding:4px;height:48px}
+    @media(max-width:900px){
+      .game-hero-inner,.team-builder-grid,.schedule-grid,.public-board,.score-inputs{grid-template-columns:1fr}
+      .game-actions{justify-content:flex-start}
+      .team-meta{grid-template-columns:1fr}
+    }
+
     .bottom-nav{display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:70;background:rgba(5,8,20,.86);border:1px solid var(--line);backdrop-filter:blur(22px);border-radius:24px;padding:8px;box-shadow:0 18px 50px rgba(0,0,0,.38);grid-template-columns:repeat(6,1fr);gap:4px}
     .bottom-nav button{background:transparent;color:var(--soft);border-radius:16px;padding:9px 6px;font-size:11px;display:grid;gap:3px}
     .bottom-nav button.active{background:rgba(34,211,238,.14);color:white}
@@ -1109,6 +1296,215 @@
           </div>
         </section>
 
+
+
+        <section id="eventdetail" class="page">
+          <div class="event-detail-hero">
+            <div class="event-detail-layout">
+              <div id="detailEventFlyer" class="event-detail-flyer">Event Flyer</div>
+              <div class="event-detail-content">
+                <div class="hero-tag"><span class="pulse"></span> Event Details</div>
+                <h2 id="detailEventTitle">Event Title</h2>
+                <p id="detailEventDescription">Event details will appear here.</p>
+
+                <div id="detailEventMeta" class="list"></div>
+
+                <div class="event-detail-stats" id="detailEventStats"></div>
+
+                <div class="event-detail-actions">
+                  <button class="btn-ghost" onclick="openPageByName('events')">← Back to Events</button>
+                  <button onclick="openGamePlanFromEvent()">Open Game Plan</button>
+                  <button class="btn-purple" onclick="openPageByName('attendance')">Mark Attendance</button>
+                  <button class="btn-ghost" onclick="exportSelectedEventReport()">Export Event Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2>People who did not come</h2>
+                  <p>Absent and not marked people for this event.</p>
+                </div>
+              </div>
+              <div id="detailEventAbsentList" class="list"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2>Attendance Records</h2>
+                  <p>Latest records connected to this event.</p>
+                </div>
+              </div>
+              <div id="detailEventAttendanceList" class="list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="gameplan" class="page">
+          <div class="game-hero">
+            <div class="game-hero-inner">
+              <div>
+                <div class="hero-tag"><span class="pulse"></span> FOMO v2 Game Plan</div>
+                <h2>The Ultimate Room. <span>Live Tournament HQ.</span></h2>
+                <p>Build the 6 teams, add captains and players, create the schedule, update live scores and keep the rules in one clean place.</p>
+              </div>
+              <div class="game-actions">
+                <button onclick="createSixTeamSlots()">Create 6 Team Slots</button>
+                <button class="btn-purple" onclick="openGameSection('schedule')">Update Scores</button>
+                <button class="btn-ghost" onclick="openSelectedEventDetail()">← Event Details</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-tabs">
+            <button class="game-tab-btn active" onclick="openGameSection('setup', this)">Setup</button>
+            <button class="game-tab-btn" onclick="openGameSection('teams', this)">Teams</button>
+            <button class="game-tab-btn" onclick="openGameSection('schedule', this)">Schedule & Scores</button>
+            <button class="game-tab-btn" onclick="openGameSection('rules', this)">Rules</button>
+            <button class="game-tab-btn" onclick="openGameSection('public', this)">Public View</button>
+          </div>
+
+          <div id="game-setup" class="game-section active">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2>Tournament Setup</h2>
+                  <p>Edit this anytime. It updates live for everyone.</p>
+                </div>
+              </div>
+              <div class="form-grid">
+                <input id="tournamentTitle" class="span2" placeholder="Tournament title">
+                <input id="tournamentSubtitle" class="span2" placeholder="Tagline / subtitle">
+                <input id="tournamentDate" type="date">
+                <input id="tournamentStartTime" type="time">
+                <input id="tournamentVenue" class="span2" placeholder="Venue">
+                <textarea id="tournamentMessage" class="span4" placeholder="Public message / event note"></textarea>
+                <button class="span2" onclick="saveTournamentSettings()">Save Setup</button>
+                <button class="btn-ghost span2" onclick="createSixTeamSlots()">Create 6 Team Slots</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="game-teams" class="game-section">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2>Team Builder</h2>
+                  <p>Add names later. Captains, colors and players can be updated on the go.</p>
+                </div>
+                <button onclick="addTournamentTeam()">+ Add Team</button>
+              </div>
+              <div id="tournamentTeamsList" class="team-builder-grid"></div>
+            </div>
+          </div>
+
+          <div id="game-schedule" class="game-section">
+            <div class="schedule-grid">
+              <div class="card">
+                <div class="card-head">
+                  <div>
+                    <h2>Match Schedule</h2>
+                    <p>Create fixtures and update scores live.</p>
+                  </div>
+                </div>
+
+                <div class="form-grid">
+                  <input id="matchLabel" placeholder="Match e.g. Match 01">
+                  <input id="matchTime" type="time">
+                  <select id="matchTeamA"></select>
+                  <select id="matchTeamB"></select>
+                  <input id="matchCourt" placeholder="Court / Ground">
+                  <select id="matchStatus">
+                    <option>Upcoming</option>
+                    <option>Live</option>
+                    <option>Completed</option>
+                  </select>
+                  <input id="matchScoreA" type="number" placeholder="Team A score">
+                  <input id="matchScoreB" type="number" placeholder="Team B score">
+                  <button class="span4" onclick="addTournamentMatch()">Add Match</button>
+                </div>
+
+                <div style="height:16px"></div>
+                <div id="tournamentMatchesList" class="list"></div>
+              </div>
+
+              <div class="card">
+                <div class="card-head">
+                  <div>
+                    <h2>Leaderboard</h2>
+                    <p>Auto-calculated from completed match scores.</p>
+                  </div>
+                </div>
+                <div class="table-wrap">
+                  <table class="standings-table">
+                    <thead><tr><th>Team</th><th>P</th><th>W</th><th>L</th><th>D</th><th>Pts</th><th>Diff</th></tr></thead>
+                    <tbody id="tournamentStandings"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="game-rules" class="game-section">
+            <div class="grid-2">
+              <div class="card">
+                <div class="card-head">
+                  <div>
+                    <h2>Rules & Regulations</h2>
+                    <p>Keep it simple. Update anytime before the event.</p>
+                  </div>
+                </div>
+                <textarea id="tournamentRulesText" placeholder="Add rules, scoring system, tie-breaker, best deco and best cheer rules..."></textarea>
+                <div style="height:12px"></div>
+                <button onclick="saveTournamentRules()">Save Rules</button>
+              </div>
+              <div class="card">
+                <div class="card-head"><div><h2>Rules Preview</h2><p>This is what leaders/teams will see.</p></div></div>
+                <div id="rulesPreview" class="rules-preview"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="game-public" class="game-section">
+            <div class="public-board">
+              <div class="card">
+                <div class="card-head">
+                  <div>
+                    <h2 id="publicTournamentTitle">FOMO v2</h2>
+                    <p id="publicTournamentSubtitle">The Ultimate Room</p>
+                  </div>
+                  <span class="live-badge"><span class="pulse"></span> Live</span>
+                </div>
+                <div id="publicTournamentMeta" class="list"></div>
+              </div>
+
+              <div class="card">
+                <div class="card-head"><div><h2>Live Leaderboard</h2><p>Updated as scores are entered.</p></div></div>
+                <div class="table-wrap">
+                  <table class="standings-table">
+                    <thead><tr><th>Team</th><th>P</th><th>W</th><th>Pts</th><th>Diff</th></tr></thead>
+                    <tbody id="publicStandings"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-head"><div><h2>Teams</h2><p>Colors, captains and players.</p></div></div>
+                <div id="publicTeams" class="list"></div>
+              </div>
+
+              <div class="card">
+                <div class="card-head"><div><h2>Matches</h2><p>Schedule and scores.</p></div></div>
+                <div id="publicMatches" class="list"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="reports" class="page">
           <div class="card">
             <div class="card-head"><div><h2>Reports</h2><p>Export data for leader meetings.</p></div></div>
@@ -1201,8 +1597,8 @@
     const ADMIN_CODE = "YC-ADMIN-2026";
     const ROLES = ["Admin","Core Moderator","Team Head","Team Lead","Member","Viewer"];
     let authMode = "login";
-    let youthMembers=[], cellLeaders=[], cellGroups=[], attendance=[], followUps=[], tasks=[], userProfiles=[], notifications=[], events=[];
-    let editingMemberId=null, listenersStarted=false, currentProfile=null, currentUser=null, taskInitialLoaded=false;
+    let youthMembers=[], cellLeaders=[], cellGroups=[], attendance=[], followUps=[], tasks=[], userProfiles=[], notifications=[], events=[], tournamentTeams=[], tournamentMatches=[], tournamentSettings={};
+    let editingMemberId=null, listenersStarted=false, currentProfile=null, currentUser=null, taskInitialLoaded=false, selectedEventId='';
     const seenTaskIds = new Set();
 
     const $ = id => document.getElementById(id);
@@ -1714,8 +2110,284 @@
 
     function isMissing(m){if(!m.lastAttendedDate)return true;const d=new Date(m.lastAttendedDate);return ((Date.now()-d.getTime())/(1000*60*60*24))>14}
 
+
+    window.openGameSection = function(name, btn){
+      document.querySelectorAll(".game-section").forEach(s=>s.classList.remove("active"));
+      document.querySelectorAll(".game-tab-btn").forEach(b=>b.classList.remove("active"));
+      const section = $(`game-${name}`);
+      if(section) section.classList.add("active");
+      if(btn) btn.classList.add("active");
+      window.scrollTo({top:0,behavior:"smooth"});
+    };
+
+    window.saveTournamentSettings = async function(){
+      if(!canManage()) return notify("Only Admin or Core Moderator can edit the game plan.");
+      const data = {
+        title: $("tournamentTitle").value.trim() || "FOMO v2",
+        subtitle: $("tournamentSubtitle").value.trim() || "The Ultimate Room",
+        date: $("tournamentDate").value,
+        startTime: $("tournamentStartTime").value,
+        venue: $("tournamentVenue").value.trim(),
+        message: $("tournamentMessage").value.trim(),
+        updatedAt: serverTimestamp()
+      };
+      await setDoc(doc(db,"tournamentSettings","fomo-v2"), data, { merge:true });
+      notify("Tournament setup saved");
+    };
+
+    window.createSixTeamSlots = async function(){
+      if(!canManage()) return notify("Only Admin or Core Moderator can create team slots.");
+      const existing = tournamentTeams.length;
+      const colors = ["#22d3ee","#f59e0b","#22c55e","#ec4899","#8b5cf6","#ef4444"];
+      for(let i=existing; i<6; i++){
+        await addDoc(collection(db,"tournamentTeams"), {
+          tournamentId:"fomo-v2",
+          slot:i+1,
+          name:`Team ${i+1}`,
+          color:colors[i] || "#35b8ff",
+          captain:"",
+          players:[],
+          notes:"",
+          createdAt:serverTimestamp(),
+          updatedAt:serverTimestamp()
+        });
+      }
+      notify("6 team slots are ready");
+    };
+
+    window.addTournamentTeam = async function(){
+      if(!canManage()) return notify("Only Admin or Core Moderator can add teams.");
+      await addDoc(collection(db,"tournamentTeams"), {
+        tournamentId:"fomo-v2",
+        slot:tournamentTeams.length + 1,
+        name:`Team ${tournamentTeams.length + 1}`,
+        color:"#35b8ff",
+        captain:"",
+        players:[],
+        notes:"",
+        createdAt:serverTimestamp(),
+        updatedAt:serverTimestamp()
+      });
+      notify("Team added");
+    };
+
+    window.saveTournamentTeam = async function(id){
+      if(!canManage()) return notify("Only Admin or Core Moderator can edit teams.");
+      const playersText = $(`players-${id}`).value || "";
+      const players = playersText.split("\n").map(x=>x.trim()).filter(Boolean);
+      await updateDoc(doc(db,"tournamentTeams",id), {
+        name:$(`team-name-${id}`).value.trim() || "Unnamed Team",
+        color:$(`team-color-${id}`).value || "#35b8ff",
+        captain:$(`team-captain-${id}`).value.trim(),
+        players,
+        notes:$(`team-notes-${id}`).value.trim(),
+        updatedAt:serverTimestamp()
+      });
+      notify("Team saved");
+    };
+
+    window.deleteTournamentTeam = async function(id){
+      if(!canAdmin()) return notify("Only Admin can delete teams.");
+      if(confirm("Delete this tournament team?")){
+        await deleteDoc(doc(db,"tournamentTeams",id));
+        notify("Tournament team deleted");
+      }
+    };
+
+    window.addTournamentMatch = async function(){
+      if(!canManage()) return notify("Only Admin or Core Moderator can add matches.");
+      const teamA = $("matchTeamA").value;
+      const teamB = $("matchTeamB").value;
+      if(!teamA || !teamB || teamA === teamB) return notify("Select two different teams.");
+      const a = tournamentTeams.find(t=>t.id===teamA);
+      const b = tournamentTeams.find(t=>t.id===teamB);
+      await addDoc(collection(db,"tournamentMatches"), {
+        tournamentId:"fomo-v2",
+        label:$("matchLabel").value.trim() || `Match ${tournamentMatches.length + 1}`,
+        time:$("matchTime").value,
+        court:$("matchCourt").value.trim(),
+        teamAId:teamA,
+        teamBId:teamB,
+        teamAName:a?.name || "Team A",
+        teamBName:b?.name || "Team B",
+        scoreA:Number($("matchScoreA").value || 0),
+        scoreB:Number($("matchScoreB").value || 0),
+        status:$("matchStatus").value,
+        createdAt:serverTimestamp(),
+        updatedAt:serverTimestamp()
+      });
+      ["matchLabel","matchTime","matchCourt","matchScoreA","matchScoreB"].forEach(id=>$(id).value="");
+      notify("Match added");
+    };
+
+    window.saveTournamentMatch = async function(id){
+      if(!canManage()) return notify("Only Admin or Core Moderator can edit matches.");
+      await updateDoc(doc(db,"tournamentMatches",id), {
+        scoreA:Number($(`scoreA-${id}`).value || 0),
+        scoreB:Number($(`scoreB-${id}`).value || 0),
+        status:$(`status-${id}`).value,
+        court:$(`court-${id}`).value.trim(),
+        time:$(`time-${id}`).value,
+        updatedAt:serverTimestamp()
+      });
+      notify("Match updated");
+    };
+
+    window.deleteTournamentMatch = async function(id){
+      if(!canAdmin()) return notify("Only Admin can delete matches.");
+      if(confirm("Delete this match?")){
+        await deleteDoc(doc(db,"tournamentMatches",id));
+        notify("Match deleted");
+      }
+    };
+
+    window.saveTournamentRules = async function(){
+      if(!canManage()) return notify("Only Admin or Core Moderator can edit rules.");
+      await setDoc(doc(db,"tournamentSettings","fomo-v2"), {
+        rules:$("tournamentRulesText").value,
+        updatedAt:serverTimestamp()
+      }, { merge:true });
+      notify("Rules saved");
+    };
+
+    function teamById(id){
+      return tournamentTeams.find(t=>t.id===id) || {};
+    }
+
+    function standings(){
+      const table = {};
+      tournamentTeams.forEach(t=>{
+        table[t.id] = { id:t.id, name:t.name || `Team ${t.slot||""}`, color:t.color || "#35b8ff", played:0, won:0, lost:0, draw:0, pts:0, diff:0 };
+      });
+
+      tournamentMatches.filter(m=>m.status==="Completed").forEach(m=>{
+        if(!table[m.teamAId] || !table[m.teamBId]) return;
+        const a = table[m.teamAId], b = table[m.teamBId];
+        const scoreA = Number(m.scoreA || 0), scoreB = Number(m.scoreB || 0);
+        a.played++; b.played++;
+        a.diff += scoreA - scoreB;
+        b.diff += scoreB - scoreA;
+        if(scoreA > scoreB){ a.won++; b.lost++; a.pts += 3; }
+        else if(scoreB > scoreA){ b.won++; a.lost++; b.pts += 3; }
+        else { a.draw++; b.draw++; a.pts += 1; b.pts += 1; }
+      });
+
+      return Object.values(table).sort((a,b)=> b.pts - a.pts || b.diff - a.diff || a.name.localeCompare(b.name));
+    }
+
+    function renderTournament(){
+      if(!$("tournamentTeamsList")) return;
+
+      $("tournamentTitle").value = tournamentSettings.title || "FOMO v2";
+      $("tournamentSubtitle").value = tournamentSettings.subtitle || "The Ultimate Room";
+      $("tournamentDate").value = tournamentSettings.date || "";
+      $("tournamentStartTime").value = tournamentSettings.startTime || "";
+      $("tournamentVenue").value = tournamentSettings.venue || "";
+      $("tournamentMessage").value = tournamentSettings.message || "";
+      $("tournamentRulesText").value = tournamentSettings.rules || defaultRules();
+      $("rulesPreview").textContent = tournamentSettings.rules || defaultRules();
+
+      $("publicTournamentTitle").textContent = tournamentSettings.title || "FOMO v2";
+      $("publicTournamentSubtitle").textContent = tournamentSettings.subtitle || "The Ultimate Room";
+      $("publicTournamentMeta").innerHTML = `
+        <div class="list-item"><div><h4>Date & Time</h4><p>${clean(tournamentSettings.date||"TBC")} • ${clean(tournamentSettings.startTime||"TBC")}</p></div></div>
+        <div class="list-item"><div><h4>Venue</h4><p>${clean(tournamentSettings.venue||"TBC")}</p></div></div>
+        <div class="list-item"><div><h4>Note</h4><p>${clean(tournamentSettings.message||"Game plan will be updated live.")}</p></div></div>
+      `;
+
+      $("matchTeamA").innerHTML = `<option value="">Team A</option>` + tournamentTeams.map(t=>`<option value="${t.id}">${clean(t.name)}</option>`).join("");
+      $("matchTeamB").innerHTML = `<option value="">Team B</option>` + tournamentTeams.map(t=>`<option value="${t.id}">${clean(t.name)}</option>`).join("");
+
+      $("tournamentTeamsList").innerHTML = tournamentTeams.length ? tournamentTeams.sort((a,b)=>(a.slot||0)-(b.slot||0)).map(t=>{
+        const playersText = (t.players || []).join("\n");
+        const chips = (t.players || []).slice(0,12).map(p=>`<span class="player-chip">${clean(p)}</span>`).join("");
+        return `
+          <div class="team-card" style="--team-color:${clean(t.color||"#35b8ff")}">
+            <div class="team-color-strip"></div>
+            <h4>${clean(t.name||"Unnamed Team")}</h4>
+            <div class="team-meta">
+              <input id="team-name-${t.id}" value="${clean(t.name||"")}" placeholder="Team name">
+              <div class="color-picker-row">
+                <input id="team-captain-${t.id}" value="${clean(t.captain||"")}" placeholder="Captain">
+                <input id="team-color-${t.id}" type="color" value="${clean(t.color||"#35b8ff")}">
+              </div>
+            </div>
+            <textarea id="players-${t.id}" placeholder="Players - one name per line">${clean(playersText)}</textarea>
+            <input id="team-notes-${t.id}" value="${clean(t.notes||"")}" placeholder="Team notes">
+            <div class="player-chips">${chips}</div>
+            <div class="task-actions" style="margin-top:12px;">
+              <button class="mini-btn" onclick="saveTournamentTeam('${t.id}')">Save</button>
+              <button class="mini-btn btn-danger" onclick="deleteTournamentTeam('${t.id}')">Delete</button>
+            </div>
+          </div>
+        `;
+      }).join("") : `<div class="empty">No teams yet. Click Create 6 Team Slots.</div>`;
+
+      $("tournamentMatchesList").innerHTML = tournamentMatches.length ? tournamentMatches.map(m=>`
+        <div class="match-card">
+          <div class="match-line">
+            <span>${clean(m.label||"Match")}</span>
+            <span class="pill status-${roleKey(m.status)}">${clean(m.status||"Upcoming")}</span>
+          </div>
+          <div class="match-line">
+            <span>${clean(teamById(m.teamAId).name || m.teamAName || "Team A")}</span>
+            <span>${Number(m.scoreA||0)} - ${Number(m.scoreB||0)}</span>
+            <span>${clean(teamById(m.teamBId).name || m.teamBName || "Team B")}</span>
+          </div>
+          <div class="score-inputs">
+            <input id="time-${m.id}" type="time" value="${clean(m.time||"")}">
+            <input id="scoreA-${m.id}" type="number" value="${Number(m.scoreA||0)}">
+            <input id="scoreB-${m.id}" type="number" value="${Number(m.scoreB||0)}">
+            <select id="status-${m.id}">
+              <option ${m.status==="Upcoming"?"selected":""}>Upcoming</option>
+              <option ${m.status==="Live"?"selected":""}>Live</option>
+              <option ${m.status==="Completed"?"selected":""}>Completed</option>
+            </select>
+          </div>
+          <input id="court-${m.id}" value="${clean(m.court||"")}" placeholder="Court / Ground">
+          <div class="task-actions">
+            <button class="mini-btn" onclick="saveTournamentMatch('${m.id}')">Save Score</button>
+            <button class="mini-btn btn-danger" onclick="deleteTournamentMatch('${m.id}')">Delete</button>
+          </div>
+        </div>
+      `).join("") : `<div class="empty">No matches yet. Create matches when the teams are ready.</div>`;
+
+      const rows = standings();
+      $("tournamentStandings").innerHTML = rows.map(r=>`
+        <tr><td><span class="pill" style="border-color:${clean(r.color)}">${clean(r.name)}</span></td><td>${r.played}</td><td>${r.won}</td><td>${r.lost}</td><td>${r.draw}</td><td>${r.pts}</td><td>${r.diff}</td></tr>
+      `).join("") || `<tr><td colspan="7">No teams yet.</td></tr>`;
+
+      $("publicStandings").innerHTML = rows.map(r=>`
+        <tr><td><span class="pill" style="border-color:${clean(r.color)}">${clean(r.name)}</span></td><td>${r.played}</td><td>${r.won}</td><td>${r.pts}</td><td>${r.diff}</td></tr>
+      `).join("") || `<tr><td colspan="5">No teams yet.</td></tr>`;
+
+      $("publicTeams").innerHTML = tournamentTeams.length ? tournamentTeams.map(t=>`
+        <div class="list-item">
+          <div><h4><span class="pill" style="border-color:${clean(t.color||"#35b8ff")}">${clean(t.name)}</span></h4><p>Captain: ${clean(t.captain||"TBC")} • ${(t.players||[]).length} players</p></div>
+        </div>
+      `).join("") : `<div class="empty">Teams will appear here.</div>`;
+
+      $("publicMatches").innerHTML = tournamentMatches.length ? tournamentMatches.map(m=>`
+        <div class="list-item">
+          <div><h4>${clean(m.label||"Match")}: ${clean(teamById(m.teamAId).name||m.teamAName||"Team A")} vs ${clean(teamById(m.teamBId).name||m.teamBName||"Team B")}</h4><p>${clean(m.time||"TBC")} • ${clean(m.court||"Ground TBC")} • ${clean(m.status||"Upcoming")} • Score ${Number(m.scoreA||0)} - ${Number(m.scoreB||0)}</p></div>
+        </div>
+      `).join("") : `<div class="empty">Match schedule will appear here.</div>`;
+    }
+
+    function defaultRules(){
+      return `FOMO v2 - The Ultimate Room Rules
+
+1. Respect all players, referees and team leaders.
+2. Be on time for your match. Late teams may lose points.
+3. Captains are responsible for their team members.
+4. Referee decision is final.
+5. Best Deco and Best Cheer points will be judged separately.
+6. Final scoring system and tie-breakers will be updated before the tournament.`;
+    }
+
+
     function render(){
-      renderSelectors();renderDashboard();renderYouthTable();renderEvents();renderAttendance();renderTeams();renderFollowUps();renderReports();renderTasks();renderUsers();renderNotifications();updateProfileUI();
+      renderSelectors();renderDashboard();renderYouthTable();renderEvents();renderEventDetail();renderTournament();renderAttendance();renderTeams();renderFollowUps();renderReports();renderTasks();renderUsers();renderNotifications();updateProfileUI();
     }
 
     function renderSelectors(){
@@ -1760,6 +2432,98 @@
     };
 
     window.quickPresent=async id=>{const m=youthMembers.find(x=>x.id===id);if(!m)return;const date=todayISO();await addDoc(collection(db,"attendance"),{memberId:id,memberName:m.name,contactNumber:m.contactNumber||"",date,eventName:"Quick Present",status:"Present",cellLeader:m.cellLeader||"",team:m.team||"",createdAt:serverTimestamp()});await updateDoc(doc(db,"youthMembers",id),{lastAttendedDate:date,updatedAt:serverTimestamp()});notify("Marked present")};
+
+
+
+    window.openEventDetail = function(id){
+      selectedEventId = id;
+      const eventObj = events.find(e=>e.id===id);
+      if(!eventObj) return notify("Event not found.");
+      if($("eventReportSelect")) $("eventReportSelect").value = id;
+      renderEventDetail();
+      openPage("eventdetail", null);
+    };
+
+    window.openSelectedEventDetail = function(){
+      if(selectedEventId && events.some(e=>e.id===selectedEventId)){
+        renderEventDetail();
+        openPage("eventdetail", null);
+      }else{
+        openPageByName("events");
+      }
+    };
+
+    window.openGamePlanFromEvent = function(){
+      if(!selectedEventId && $("eventReportSelect")) selectedEventId = $("eventReportSelect").value;
+      renderTournament();
+      openPage("gameplan", null);
+    };
+
+    function renderEventDetail(){
+      if(!$("detailEventTitle")) return;
+      const eventObj = events.find(e=>e.id===selectedEventId) || events[0];
+
+      if(!eventObj){
+        $("detailEventTitle").textContent = "No event selected";
+        $("detailEventDescription").textContent = "Create an event first.";
+        $("detailEventFlyer").innerHTML = "Event Flyer";
+        $("detailEventMeta").innerHTML = "";
+        $("detailEventStats").innerHTML = "";
+        $("detailEventAbsentList").innerHTML = "";
+        $("detailEventAttendanceList").innerHTML = "";
+        return;
+      }
+
+      selectedEventId = eventObj.id;
+      if($("eventReportSelect")) $("eventReportSelect").value = eventObj.id;
+
+      $("detailEventTitle").textContent = eventObj.title || "Untitled Event";
+      $("detailEventDescription").textContent = eventObj.description || "No event details added yet.";
+      $("detailEventFlyer").innerHTML = eventFlyerHTML(eventObj);
+
+      $("detailEventMeta").innerHTML = `
+        <div class="list-item"><div><h4>Date & Time</h4><p>${clean(eventObj.date||"TBC")} • ${clean(eventObj.time||"TBC")}</p></div></div>
+        <div class="list-item"><div><h4>Venue</h4><p>${clean(eventObj.location||"TBC")}</p></div></div>
+        <div class="list-item"><div><h4>Owner / Expected</h4><p>${clean(eventObj.owner||"Not assigned")} • Expected: ${clean(eventObj.expectedCount||"Not set")}</p></div></div>
+      `;
+
+      const stats = eventStats(eventObj);
+      $("detailEventStats").innerHTML = `
+        <div class="event-detail-stat"><p>Total People</p><h3>${stats.total}</h3></div>
+        <div class="event-detail-stat"><p>Came</p><h3>${stats.came}</h3></div>
+        <div class="event-detail-stat"><p>Did Not Come</p><h3>${stats.didntCome}</h3></div>
+        <div class="event-detail-stat"><p>Not Marked</p><h3>${stats.notMarked}</h3></div>
+      `;
+
+      const didnt = youthMembers.filter(m=>{
+        const s = stats.map.get(m.id);
+        return s === "Absent" || !s;
+      });
+
+      $("detailEventAbsentList").innerHTML = didnt.length ? didnt.map(m=>{
+        const s = stats.map.get(m.id) || "Not Marked";
+        return `
+          <div class="list-item">
+            <div class="person">
+              <div class="avatar">${initials(m.name)}</div>
+              <div><h4>${clean(m.name)}</h4><p>${clean(m.contactNumber||"No phone")} • ${clean(m.team||m.ministry||"No team")} • ${clean(m.cellLeader||"No leader")}</p></div>
+            </div>
+            <span class="pill status-${roleKey(s)}">${clean(s)}</span>
+          </div>
+        `;
+      }).join("") : `<div class="empty">Everyone is marked as came for this event.</div>`;
+
+      const records = attendance.filter(a =>
+        (a.eventId && a.eventId === eventObj.id) ||
+        (!a.eventId && a.eventName === eventObj.title && a.date === eventObj.date)
+      );
+
+      $("detailEventAttendanceList").innerHTML = records.length ? records.slice(0,50).map(a=>`
+        <div class="list-item">
+          <div><h4>${clean(a.memberName)}</h4><p>${clean(a.date)} • ${clean(a.team||"No team")} • <span class="pill status-${roleKey(a.status)}">${clean(a.status)}</span></p></div>
+        </div>
+      `).join("") : `<div class="empty">No attendance marked for this event yet.</div>`;
+    }
 
 
     function eventFlyerHTML(e){
@@ -1807,7 +2571,9 @@
               <p>${clean(e.description||"No event details added")}</p>
               <p><span class="pill status-Present">${stats.came} came</span> <span class="pill status-Absent">${stats.didntCome} did not come</span> <span class="pill">${stats.notMarked} not marked</span></p>
               <div class="task-actions" style="margin-top:10px;">
-                <button class="mini-btn" onclick="selectEventReport('${e.id}')">View Report</button>
+                <button class="mini-btn btn-purple" onclick="openEventDetail('${e.id}')">View Details</button>
+                <button class="mini-btn btn-purple" onclick="openEventDetail('${e.id}')">View Details</button>
+                <button class="mini-btn" onclick="selectEventReport('${e.id}')">Quick Report</button>
                 <button class="mini-btn btn-danger" onclick="deleteEvent('${e.id}')">Delete</button>
               </div>
             </div>
@@ -1971,7 +2737,8 @@
 
     function startListeners(){
       if(listenersStarted)return; listenersStarted=true;
-      listen("youthMembers",d=>youthMembers=d);listen("cellLeaders",d=>cellLeaders=d);listen("cellGroups",d=>cellGroups=d);listen("attendance",d=>attendance=d);listen("followUps",d=>followUps=d);listen("userProfiles",d=>{userProfiles=d; if(currentUser){const me=d.find(u=>(u.uid||u.id)===currentUser.uid); if(me){currentProfile=me; $("currentUserLabel").textContent=`${currentProfile.name || currentUser.email} • ${currentProfile.role}`; updateProfileUI();}}});listen("notifications",d=>notifications=d);listen("events",d=>events=d);
+      listen("youthMembers",d=>youthMembers=d);listen("cellLeaders",d=>cellLeaders=d);listen("cellGroups",d=>cellGroups=d);listen("attendance",d=>attendance=d);listen("followUps",d=>followUps=d);listen("userProfiles",d=>{userProfiles=d; if(currentUser){const me=d.find(u=>(u.uid||u.id)===currentUser.uid); if(me){currentProfile=me; $("currentUserLabel").textContent=`${currentProfile.name || currentUser.email} • ${currentProfile.role}`; updateProfileUI();}}});listen("notifications",d=>notifications=d);listen("events",d=>events=d);listen("tournamentTeams",d=>tournamentTeams=d);listen("tournamentMatches",d=>tournamentMatches=d);
+      onSnapshot(doc(db,"tournamentSettings","fomo-v2"), snap=>{ tournamentSettings = snap.exists() ? snap.data() : {}; render(); });
       const qTasks=query(collection(db,"tasks"),orderBy("createdAt","desc"));
       onSnapshot(qTasks,snap=>{
         const newTasks=snap.docs.map(d=>({id:d.id,...d.data()}));
