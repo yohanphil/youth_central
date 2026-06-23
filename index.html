@@ -1048,6 +1048,96 @@
       .hero h1{font-size:38px}
       .auth-card h3{font-size:26px}
     }
+  
+
+    /* V7.3 login alignment + safety polish */
+    .login{
+      min-height:100svh;
+      padding:40px 22px;
+      place-items:center;
+    }
+    .auth-shell{
+      width:min(1180px,calc(100vw - 44px));
+      min-height:570px;
+      display:grid;
+      grid-template-columns:minmax(0,1.06fr) minmax(390px,.94fr);
+      gap:18px;
+      align-items:stretch;
+      margin:auto;
+    }
+    .auth-brand,
+    .auth-card{
+      min-height:570px;
+      height:100%;
+      border-radius:38px;
+    }
+    .auth-brand{
+      display:flex;
+      flex-direction:column;
+      padding:38px;
+    }
+    .auth-copy{
+      margin-top:74px;
+    }
+    .auth-copy h2{
+      font-size:clamp(42px,5.8vw,72px);
+    }
+    .auth-cards{
+      position:relative;
+      left:auto;
+      right:auto;
+      bottom:auto;
+      margin-top:auto;
+      z-index:2;
+    }
+    .auth-card{
+      justify-content:center;
+      padding:38px;
+    }
+    .auth-card input{
+      height:54px;
+      border-radius:18px;
+    }
+    .auth-card button{
+      height:54px;
+    }
+    .auth-tabs{
+      margin-bottom:26px;
+    }
+    .auth-card h3{
+      line-height:1.05;
+      margin-bottom:4px;
+    }
+    @media(max-width:980px){
+      .auth-shell{
+        grid-template-columns:1fr;
+        min-height:auto;
+        width:min(560px,calc(100vw - 28px));
+      }
+      .auth-brand{
+        display:none;
+      }
+      .auth-card{
+        min-height:auto;
+        padding:26px;
+        border-radius:30px;
+      }
+      .login{
+        padding:24px 14px;
+      }
+    }
+    @media(max-width:520px){
+      .auth-card{
+        padding:20px;
+      }
+      .auth-tabs{
+        margin-bottom:20px;
+      }
+      .auth-card input,.auth-card button{
+        height:50px;
+      }
+    }
+
   </style>
 </head>
 
@@ -1741,6 +1831,16 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
+
+
+    window.addEventListener("error", function(event){
+      console.error("Youth Central error:", event.message, event.error);
+      try{ notify("Something blocked loading. Open Console for details or refresh once."); }catch(e){}
+    });
+    window.addEventListener("unhandledrejection", function(event){
+      console.error("Youth Central promise error:", event.reason);
+      try{ notify("A sync/login issue happened. Check Firebase rules or refresh."); }catch(e){}
+    });
 
     const ADMIN_CODE = "YC-ADMIN-2026";
     const ROLES = ["Admin","Core Moderator","Team Head","Team Lead","Member","Viewer"];
@@ -2915,7 +3015,7 @@
 
     function startListeners(){
       if(listenersStarted)return; listenersStarted=true;
-      listen("youthMembers",d=>youthMembers=d);listen("cellLeaders",d=>cellLeaders=d);listen("cellGroups",d=>cellGroups=d);listen("attendance",d=>attendance=d);listen("followUps",d=>followUps=d);listen("userProfiles",d=>{userProfiles=d; if(currentUser){const me=d.find(u=>(u.uid||u.id)===currentUser.uid); if(me){currentProfile=me; $("currentUserLabel").textContent=`${currentProfile.name || currentUser.email} • ${currentProfile.role}`; updateProfileUI();}}});listen("notifications",d=>notifications=d);listen("events",d=>events=d);listen("tournamentTeams",d=>tournamentTeams=d);listen("tournamentMatches",d=>tournamentMatches=d);listen("tournamentSettings",d=>tournamentSettingsList=d);
+      listen("youthMembers",d=>youthMembers=d);listen("cellLeaders",d=>cellLeaders=d);listen("cellGroups",d=>cellGroups=d);listen("attendance",d=>attendance=d);listen("followUps",d=>followUps=d);listen("userProfiles",d=>{userProfiles=d; if(currentUser){const me=d.find(u=>(u.uid||u.id)===currentUser.uid); if(me){currentProfile=me; $("currentUserLabel").textContent=`${currentProfile.name || currentUser.email} • ${currentProfile.role}`; updateProfileUI();}}});listen("notifications",d=>notifications=d);listen("events",d=>events=d);listen("tournamentTeams",d=>tournamentTeams=d);listen("tournamentMatches",d=>tournamentMatches=d);listen("tournamentSettings",d=>tournamentSettingsList=d,false);
       const qTasks=query(collection(db,"tasks"),orderBy("createdAt","desc"));
       onSnapshot(qTasks,snap=>{
         const newTasks=snap.docs.map(d=>({id:d.id,...d.data()}));
