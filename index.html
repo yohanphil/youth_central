@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='34' fill='%232563eb'/%3E%3Ctext x='64' y='78' text-anchor='middle' font-size='44' font-family='Arial' fill='white'%3EYC%3C/text%3E%3C/svg%3E">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#050814" />
@@ -1265,6 +1266,75 @@
       background:#050814;
     }
 
+
+    /* V7.6 final login alignment patch */
+    #loginScreen.login{
+      min-height:100vh !important;
+      width:100% !important;
+      display:grid !important;
+      place-items:center !important;
+      padding:28px !important;
+      overflow:auto !important;
+    }
+    #loginScreen .auth-shell{
+      width:min(1040px,100%) !important;
+      min-height:560px !important;
+      display:grid !important;
+      grid-template-columns:1fr 1fr !important;
+      gap:22px !important;
+      align-items:stretch !important;
+      margin:0 auto !important;
+    }
+    #loginScreen .auth-brand,
+    #loginScreen .auth-card{
+      min-height:560px !important;
+      height:auto !important;
+      box-sizing:border-box !important;
+    }
+    #loginScreen .auth-card{
+      display:flex !important;
+      flex-direction:column !important;
+      justify-content:center !important;
+      padding:42px !important;
+    }
+    #loginScreen .auth-brand{
+      display:flex !important;
+      flex-direction:column !important;
+      justify-content:space-between !important;
+      padding:38px !important;
+    }
+    #loginScreen .auth-copy{
+      margin:0 !important;
+      padding:34px 0 20px !important;
+    }
+    #loginScreen .auth-cards{
+      position:relative !important;
+      left:auto !important;
+      right:auto !important;
+      bottom:auto !important;
+      margin-top:16px !important;
+    }
+    #loginScreen .auth-card input,
+    #loginScreen .auth-card button{
+      width:100% !important;
+      min-height:52px !important;
+      box-sizing:border-box !important;
+    }
+    @media(max-width:900px){
+      #loginScreen.login{padding:18px !important;}
+      #loginScreen .auth-shell{
+        display:block !important;
+        width:min(520px,100%) !important;
+        min-height:auto !important;
+      }
+      #loginScreen .auth-brand{display:none !important;}
+      #loginScreen .auth-card{
+        min-height:auto !important;
+        padding:24px !important;
+        border-radius:30px !important;
+      }
+    }
+
   </style>
 </head>
 
@@ -1981,6 +2051,15 @@
     const clean = v => String(v ?? "").replace(/[<>&'"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;',"'":'&#39;','"':'&quot;'}[c]));
     const todayISO = () => new Date().toISOString().slice(0,10);
     const roleKey = s => String(s||"").replace(/\s|\-/g,"");
+
+    function initials(value){
+      const text = String(value || "YC").trim();
+      const parts = text.split(/\s+/).filter(Boolean);
+      if(!parts.length) return "YC";
+      if(parts.length === 1) return parts[0].slice(0,2).toUpperCase();
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+
 
     $("todayLine").textContent = new Date().toLocaleDateString("en-US",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
     $("attendanceDate").value=todayISO();
@@ -2958,8 +3037,30 @@
       `).join("") : `<div class="empty">Match schedule will appear here.</div>`;
     }
 
+
+    function safeRenderBlock(name, fn){
+      try{ fn(); }
+      catch(error){
+        console.error(`Youth Central render failed: ${name}`, error);
+      }
+    }
+
         function render(){
-      renderSelectors();renderDashboard();renderYouthTable();renderEvents();renderSundayEvents();renderEventDetail();renderTournament();renderAttendance();renderTeams();renderFollowUps();renderReports();renderTasks();renderUsers();renderNotifications();updateProfileUI();
+      safeRenderBlock("selectors", renderSelectors);
+      safeRenderBlock("dashboard", renderDashboard);
+      safeRenderBlock("people", renderYouthTable);
+      safeRenderBlock("events", renderEvents);
+      safeRenderBlock("sundays", renderSundayEvents);
+      safeRenderBlock("event detail", renderEventDetail);
+      safeRenderBlock("tournament", renderTournament);
+      safeRenderBlock("attendance", renderAttendance);
+      safeRenderBlock("teams", renderTeams);
+      safeRenderBlock("follow-ups", renderFollowUps);
+      safeRenderBlock("reports", renderReports);
+      safeRenderBlock("tasks", renderTasks);
+      safeRenderBlock("users", renderUsers);
+      safeRenderBlock("notifications", renderNotifications);
+      safeRenderBlock("profile", updateProfileUI);
     }
 
     function renderSelectors(){
