@@ -1138,6 +1138,37 @@
       }
     }
 
+
+    /* V7.4 login alignment fix */
+    .auth-shell{
+      align-items:stretch;
+    }
+    .auth-brand,.auth-card{
+      min-height:560px;
+    }
+    .auth-card{
+      justify-content:center;
+    }
+    .auth-brand{
+      display:flex;
+      flex-direction:column;
+    }
+    .auth-copy{
+      margin-top:auto;
+      margin-bottom:auto;
+    }
+    .auth-cards{
+      position:relative;
+      left:auto;
+      right:auto;
+      bottom:auto;
+      margin-top:auto;
+    }
+    @media(max-width:900px){
+      .auth-shell{width:min(520px,100%)}
+      .auth-card{min-height:auto}
+    }
+
   </style>
 </head>
 
@@ -1878,6 +1909,290 @@
 
     function canManage(){return ["Admin","Core Moderator"].includes(currentProfile?.role)}
     function canAdmin(){return currentProfile?.role==="Admin"}
+
+
+    window.enableNotifications = async function(){
+      if(!("Notification" in window)) return notify("Browser notifications are not supported here.");
+      const result = await Notification.requestPermission();
+      notify(result === "granted" ? "Task alerts enabled" : "Notification permission not enabled");
+    };
+
+    function browserAlert(title, body){
+      if("Notification" in window && Notification.permission === "granted"){
+        new Notification(title, { body });
+      }
+    }
+
+    window.login = async function(){
+      try{
+        await signInWithEmailAndPassword(auth, $("loginEmail").value.trim(), $("loginPassword").value.trim());
+        notify("Logged in");
+      }catch(e){
+        console.error(e);
+        notify(e.message || "Login failed");
+      }
+    };
+
+    window.signup = async function(){
+      try{
+        const name = $("loginName").value.trim() || "Youth Central User";
+        const email = $("loginEmail").value.trim();
+        const password = $("loginPassword").value.trim();
+        const code = $("adminCode").value.trim();
+        if(!email || !password) return notify("Email and password are required.");
+
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        let role = "Member";
+
+        if(code === ADMIN_CODE){
+          const adminSnap = await getDocs(query(collection(db,"userProfiles"), where("role","==","Admin")));
+          role = adminSnap.size < 3 ? "Admin" : "Member";
+          if(role === "Member") notify("Admin limit reached. Account created as Member.");
+        }
+
+        await setDoc(doc(db,"userProfiles",cred.user.uid),{
+          uid:cred.user.uid,
+          name,
+          email,
+          role,
+          team:"",
+          status:"Active",
+          photoData:"",
+          photoURL:"",
+          createdAt:serverTimestamp(),
+          updatedAt:serverTimestamp()
+        });
+
+        notify("Account created");
+      }catch(e){
+        console.error(e);
+        notify(e.message || "Could not create account");
+      }
+    };
+
+    window.logout = async function(){
+      try{ await signOut(auth); }
+      catch(e){ console.error(e); notify(e.message || "Logout failed"); }
+    };
+
+    async function ensureProfile(user){
+      const ref = doc(db,"userProfiles",user.uid);
+      const snap = await getDoc(ref);
+      if(snap.exists()) return { id:user.uid, ...snap.data() };
+
+      const profile = {
+        uid:user.uid,
+        name:user.email?.split("@")[0] || "Youth Central User",
+        email:user.email || "",
+        role:"Member",
+        team:"",
+        status:"Active",
+        photoData:"",
+        photoURL:"",
+        createdAt:serverTimestamp(),
+        updatedAt:serverTimestamp()
+      };
+      await setDoc(ref, profile);
+      return { id:user.uid, ...profile };
+    }
+
+    onAuthStateChanged(auth, async user=>{
+      try{
+        currentUser = user;
+        if(!user){
+          currentProfile = null;
+          if($("loginScreen")) $("loginScreen").classList.remove("hidden");
+          if($("appScreen")) $("appScreen").classList.add("hidden");
+          if($("currentUserLabel")) $("currentUserLabel").textContent = "Not logged in";
+          return;
+        }
+
+        currentProfile = await ensureProfile(user);
+        if($("loginScreen")) $("loginScreen").classList.add("hidden");
+        if($("appScreen")) $("appScreen").classList.remove("hidden");
+        if($("currentUserLabel")) $("currentUserLabel").textContent = `${currentProfile.name || user.email} • ${currentProfile.role}`;
+        updateProfileUI();
+        startListeners();
+        render();
+      }catch(e){
+        console.error("Auth state error", e);
+        notify(e.message || "Authentication error");
+      }
+    });
+
+    window.toggleSide = function(){
+      const side = $("side");
+      if(side) side.classList.toggle("open");
+    };
+
+    window.openPage = function(pageId, btn){
+      document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+      document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+      document.querySelectorAll(".bottom-nav button").forEach(b=>b.classList.remove("active"));
+
+      const page = $(pageId);
+      if(page) page.classList.add("active");
+
+      const hero = $("homeHero");
+      if(hero) hero.classList.toggle("hidden", pageId !== "home");
+
+      if(btn) btn.classList.add("active");
+      const side = $("side");
+      if(side) side.classList.remove("open");
+      window.scrollTo({top:0, behavior:"smooth"});
+    };
+
+    window.openPageMobile = function(pageId, btn){
+      openPage(pageId, null);
+      document.querySelectorAll(".bottom-nav button").forEach(b=>b.classList.remove("active"));
+      if(btn) btn.classList.add("active");
+    };
+
+    window.openPageByName = function(pageId){
+      const btn = [...document.querySelectorAll(".nav-btn")].find(b=>b.getAttribute("onclick")?.includes("'"+pageId+"'"));
+      openPage(pageId, btn || null);
+    };
+
+    function clearMemberForm(){
+      ["mSerial","mName","mDob","mAge","mPhone","mLocation","mDS","mAddress","mCellLeader","mCellGroup","mMinistry","mTeam","mFirstVisit","mLastAttended","mNotes"].forEach(id=>{ if($(id)) $(id).value=""; });
+      if($("mGender")) $("mGender").value="";
+      if($("mType")) $("mType").value="Regular";
+      if($("mStatus")) $("mStatus").value="Active";
+      if($("mFollowStatus")) $("mFollowStatus").value="Not Needed";
+    }
+
+    window.openMemberModal = function(type="Regular"){
+      editingMemberId = null;
+      clearMemberForm();
+      if($("memberModalTitle")) $("memberModalTitle").textContent = type === "Newcomer" ? "Add Newcomer" : "Add Person";
+      if($("mType")) $("mType").value = type;
+      if($("mFirstVisit")) $("mFirstVisit").value = todayISO();
+      if($("memberModal")) $("memberModal").classList.add("active");
+    };
+
+    window.closeMemberModal = function(){
+      if($("memberModal")) $("memberModal").classList.remove("active");
+    };
+
+    window.editMember = function(id){
+      if(!canManage()) return notify("Only Admin or Core Moderator can edit people.");
+      const m = youthMembers.find(x=>x.id===id);
+      if(!m) return notify("Person not found.");
+      editingMemberId = id;
+      if($("memberModalTitle")) $("memberModalTitle").textContent = "Edit Person";
+      if($("mSerial")) $("mSerial").value=m.serialNo||"";
+      if($("mName")) $("mName").value=m.name||"";
+      if($("mDob")) $("mDob").value=m.dob||"";
+      if($("mAge")) $("mAge").value=m.age||"";
+      if($("mGender")) $("mGender").value=m.gender||"";
+      if($("mPhone")) $("mPhone").value=m.contactNumber||"";
+      if($("mLocation")) $("mLocation").value=m.location||"";
+      if($("mDS")) $("mDS").value=m.divisionalSecretariat||"";
+      if($("mAddress")) $("mAddress").value=m.address||"";
+      if($("mCellLeader")) $("mCellLeader").value=m.cellLeader||"";
+      if($("mCellGroup")) $("mCellGroup").value=m.cellGroup||"";
+      if($("mMinistry")) $("mMinistry").value=m.ministry||"";
+      if($("mTeam")) $("mTeam").value=m.team||"";
+      if($("mType")) $("mType").value=m.memberType||"Regular";
+      if($("mStatus")) $("mStatus").value=m.status||"Active";
+      if($("mFirstVisit")) $("mFirstVisit").value=m.firstVisitDate||"";
+      if($("mLastAttended")) $("mLastAttended").value=m.lastAttendedDate||"";
+      if($("mFollowStatus")) $("mFollowStatus").value=m.followUpStatus||"Not Needed";
+      if($("mNotes")) $("mNotes").value=m.notes||"";
+      if($("memberModal")) $("memberModal").classList.add("active");
+    };
+
+    window.saveMember = async function(){
+      if(!canManage()) return notify("Only Admin or Core Moderator can save people.");
+      const data={
+        serialNo:$("mSerial").value.trim(),
+        name:$("mName").value.trim(),
+        dob:$("mDob").value,
+        age:$("mAge").value.trim(),
+        gender:$("mGender").value,
+        contactNumber:$("mPhone").value.trim(),
+        location:$("mLocation").value.trim(),
+        divisionalSecretariat:$("mDS").value.trim(),
+        address:$("mAddress").value.trim(),
+        cellLeader:$("mCellLeader").value.trim(),
+        cellGroup:$("mCellGroup").value.trim(),
+        ministry:$("mMinistry").value.trim(),
+        team:$("mTeam").value.trim(),
+        memberType:$("mType").value,
+        status:$("mStatus").value,
+        firstVisitDate:$("mFirstVisit").value,
+        lastAttendedDate:$("mLastAttended").value,
+        followUpStatus:$("mFollowStatus").value,
+        notes:$("mNotes").value.trim(),
+        updatedAt:serverTimestamp()
+      };
+      if(!data.name) return notify("Name is required");
+      if(editingMemberId){
+        await updateDoc(doc(db,"youthMembers",editingMemberId), data);
+        notify("Person updated");
+      }else{
+        data.createdAt = serverTimestamp();
+        await addDoc(collection(db,"youthMembers"), data);
+        notify("Person added");
+      }
+      closeMemberModal();
+    };
+
+    window.deleteMember = async function(id){
+      if(!canAdmin()) return notify("Only Admin can delete people.");
+      if(confirm("Delete this person?")){
+        await deleteDoc(doc(db,"youthMembers",id));
+        notify("Deleted");
+      }
+    };
+
+    window.addNewcomer = async function(){
+      if(!canManage()) return notify("Only Admin or Core Moderator can add newcomers.");
+      const name = $("newName").value.trim();
+      const contactNumber = $("newPhone").value.trim();
+      if(!name) return notify("Name required");
+      const data={
+        name,
+        contactNumber,
+        gender:$("newGender").value,
+        location:$("newLocation").value.trim(),
+        invitedBy:$("newInvitedBy").value.trim(),
+        firstVisitDate:$("newFirstVisit").value||todayISO(),
+        cellLeader:$("newCellLeader").value.trim(),
+        team:$("newTeam").value.trim(),
+        ministry:$("newTeam").value.trim(),
+        notes:$("newNotes").value.trim(),
+        memberType:"Newcomer",
+        status:"Active",
+        followUpStatus:"Pending",
+        lastAttendedDate:$("newFirstVisit").value||todayISO(),
+        createdAt:serverTimestamp(),
+        updatedAt:serverTimestamp()
+      };
+      const ref = await addDoc(collection(db,"youthMembers"), data);
+      await addDoc(collection(db,"followUps"),{
+        memberId:ref.id,
+        memberName:name,
+        contactNumber,
+        reason:"Newcomer follow-up",
+        assignedTo:data.cellLeader||"Unassigned",
+        status:"Pending",
+        dueDate:"",
+        notes:data.notes,
+        createdAt:serverTimestamp()
+      });
+      ["newName","newPhone","newLocation","newInvitedBy","newCellLeader","newTeam","newNotes"].forEach(id=>{ if($(id)) $(id).value=""; });
+      notify("Newcomer saved + follow-up created");
+    };
+
+    window.saveTournamentRules = async function(){
+      // Legacy hidden section support. Rules are no longer shown in the Game Plan UI.
+      if(!canManage()) return notify("Only Admin or Core Moderator can edit rules.");
+      const id = typeof activeTournamentId === "function" ? activeTournamentId() : (selectedEventId || "fomo-v2");
+      const rulesText = $("tournamentRulesText") ? $("tournamentRulesText").value : "";
+      await setDoc(doc(db,"tournamentSettings",id), { rules:rulesText, updatedAt:serverTimestamp() }, { merge:true });
+      notify("Rules saved");
+    };
 
 
     let pendingProfilePhotoData = "";
