@@ -1169,6 +1169,102 @@
       .auth-card{min-height:auto}
     }
 
+  
+
+    /* V7.5 fixed login alignment */
+    #loginScreen.login{
+      min-height:100vh;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px 20px;
+    }
+    #loginScreen .auth-shell{
+      width:min(1040px,calc(100vw - 40px));
+      min-height:600px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:22px;
+      align-items:stretch;
+      margin:0 auto;
+    }
+    #loginScreen .auth-brand,
+    #loginScreen .auth-card{
+      height:100%;
+      min-height:600px;
+      border-radius:38px;
+    }
+    #loginScreen .auth-card{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:42px;
+    }
+    #loginScreen .auth-brand{
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:38px;
+    }
+    #loginScreen .auth-copy{
+      margin:0;
+      padding:44px 0;
+    }
+    #loginScreen .auth-cards{
+      position:relative;
+      left:auto;
+      right:auto;
+      bottom:auto;
+      margin-top:0;
+    }
+    #loginScreen .auth-card input,
+    #loginScreen .auth-card button{
+      min-height:52px;
+    }
+    @media(max-width:900px){
+      #loginScreen.login{padding:18px}
+      #loginScreen .auth-shell{
+        width:min(520px,100%);
+        min-height:auto;
+        display:block;
+      }
+      #loginScreen .auth-brand{display:none !important}
+      #loginScreen .auth-card{
+        min-height:auto;
+        padding:24px;
+        border-radius:30px;
+      }
+    }
+
+    /* V7.5 event/flyer visibility fixes */
+    #eventFlyerPreview.hidden{display:none !important;}
+    .saved-events-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin:16px 0 12px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+    }
+    .saved-events-title h3{font-size:18px;letter-spacing:-.04em}
+    .saved-events-title p{color:var(--muted);font-size:12px;line-height:1.5}
+    .event-card .event-flyer{
+      width:150px;
+      min-height:188px;
+      aspect-ratio:4/5;
+    }
+    .event-detail-flyer,
+    .event-flyer{
+      aspect-ratio:4/5;
+    }
+    .event-detail-flyer img,
+    .event-flyer img{
+      object-fit:contain !important;
+      background:#050814;
+    }
+
   </style>
 </head>
 
@@ -1441,7 +1537,8 @@
                 <button class="btn-ghost span2" onclick="clearEventForm()">Clear</button>
               </div>
 
-              <div id="eventFlyerPreview" class="event-flyer" style="width:100%;min-height:180px;margin-bottom:16px;">Flyer preview</div>
+              <div id="eventFlyerPreview" class="event-flyer hidden" style="width:100%;min-height:180px;margin-bottom:16px;">Flyer preview</div>
+              <div class="saved-events-title"><div><h3>Saved Special Events</h3><p>Your saved event flyers and details will appear here.</p></div></div>
               <div id="eventList" class="list"></div>
             </div>
 
@@ -2304,6 +2401,7 @@
           const ctx = canvas.getContext("2d");
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
           pendingEventFlyerData = canvas.toDataURL("image/jpeg", 0.78);
+          $("eventFlyerPreview").classList.remove("hidden");
           $("eventFlyerPreview").innerHTML = `<img src="${pendingEventFlyerData}" alt="Event flyer preview">`;
           notify("Event flyer preview ready.");
         };
@@ -2319,6 +2417,7 @@
       pendingEventFlyerData = "";
       editingEventId = null;
       if($("eventSaveBtn")) $("eventSaveBtn").textContent = "Create Event";
+      $("eventFlyerPreview").classList.add("hidden");
       $("eventFlyerPreview").innerHTML = "Flyer preview";
     };
 
@@ -2339,6 +2438,7 @@
       $("eventSheetLink").value = e.sheetLink || "";
       $("eventDescription").value = e.description || "";
       pendingEventFlyerData = e.flyerData || "";
+      $("eventFlyerPreview").classList.toggle("hidden", !(safeImageUrl(e.flyerData) || safeImageUrl(e.flyerURL)));
       $("eventFlyerPreview").innerHTML = eventFlyerHTML(e);
       $("eventSaveBtn").textContent = "Update Event";
       openPageByName("events");
@@ -2910,9 +3010,15 @@
 
     function getEventType(e){
       const raw = String(e?.eventType || "").trim();
+      const title = String(e?.title || "").toLowerCase().trim();
+
+      // Older saved events may have been misclassified. Keep obvious youth events in Special Events.
+      const looksSpecial = title.includes("fomo") || title.includes("frisbee") || title.includes("tournament") || title.includes("ultimate") || title.includes("youth event");
+      const looksSunday = title === "sunday service" || title.includes("sunday service");
+
+      if(looksSpecial) return "Special Youth Event";
+      if(looksSunday) return "Sunday Service";
       if(raw) return raw;
-      const title = String(e?.title || "").toLowerCase();
-      if(title.includes("sunday")) return "Sunday Service";
       return "Special Youth Event";
     }
 
@@ -2957,7 +3063,7 @@
 
     function renderEventDetail(){
       if(!$("detailEventTitle")) return;
-      const eventObj = events.find(e=>e.id===selectedEventId) || events[0];
+      const eventObj = events.find(e=>e.id===selectedEventId) || events.filter(isSpecialEvent)[0] || events[0];
 
       if(!eventObj){
         $("detailEventTitle").textContent = "No event selected";
