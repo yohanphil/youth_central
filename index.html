@@ -726,6 +726,102 @@
       .event-detail-flyer{min-height:260px}
     }
 
+
+    /* V7.2 polish: 4:5 event flyer, Sunday split, better event/game UI */
+    .event-flyer,
+    .event-detail-flyer{
+      aspect-ratio:4/5;
+    }
+    .event-flyer img,
+    .event-detail-flyer img{
+      object-fit:contain !important;
+      background:#050814;
+    }
+    .event-detail-flyer{
+      width:min(420px,100%);
+      min-height:auto !important;
+      max-height:none;
+      justify-self:center;
+    }
+    .event-detail-layout{
+      grid-template-columns:minmax(280px,420px) 1fr !important;
+      align-items:start;
+    }
+    .event-type-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      border:1px solid rgba(34,211,238,.24);
+      background:rgba(34,211,238,.12);
+      color:#cffafe;
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+    .event-link-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+    }
+    .sunday-card{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.052);
+      border-radius:22px;
+      padding:15px;
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:flex-start;
+    }
+    .sunday-card h4{font-size:16px;margin-bottom:5px}
+    .sunday-card p{color:var(--muted);font-size:13px;line-height:1.5}
+    .game-plan-wrap{
+      display:grid;
+      gap:16px;
+    }
+    .game-plan-card{
+      border:1px solid var(--line);
+      background:rgba(10,18,36,.74);
+      border-radius:28px;
+      padding:18px;
+    }
+    .game-mini-stat-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+    .game-mini-stat{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.055);
+      border-radius:20px;
+      padding:14px;
+    }
+    .game-mini-stat p{
+      color:var(--muted);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .game-mini-stat h3{
+      margin-top:6px;
+      font-size:26px;
+      letter-spacing:-.06em;
+    }
+    @media(max-width:900px){
+      .event-detail-layout{grid-template-columns:1fr !important}
+      .event-detail-flyer{width:100%}
+      .game-mini-stat-grid{grid-template-columns:1fr 1fr}
+      .sunday-card{flex-direction:column}
+    }
+
     .game-hero{
       position:relative;
       overflow:hidden;
@@ -1029,6 +1125,7 @@
           <button class="nav-btn" onclick="openPage('people', this)"><span class="nav-icon">🗂️</span> People</button>
           <button class="nav-btn" onclick="openPage('newcomer', this)"><span class="nav-icon">✨</span> Newcomer</button>
           <button class="nav-btn" onclick="openPage('events', this)"><span class="nav-icon">🎫</span> Events</button>
+          <button class="nav-btn" onclick="openPage('sundays', this)"><span class="nav-icon">⛪</span> Sundays</button>
           <button class="nav-btn" onclick="openPage('attendance', this)"><span class="nav-icon">📍</span> Attendance</button>
           <button class="nav-btn" onclick="openPage('teams', this)"><span class="nav-icon">⚡</span> Teams</button>
           <button class="nav-btn" onclick="openPage('followups', this)"><span class="nav-icon">☎️</span> Follow-ups</button>
@@ -1197,12 +1294,17 @@
             <div class="card">
               <div class="card-head">
                 <div>
-                  <h2>Events</h2>
-                  <p>Create events, upload the main flyer and track attendance performance.</p>
+                  <h2>Special Events</h2>
+                  <p>Create youth events, upload the 4:5 flyer, add registration links and track attendance.</p>
                 </div>
               </div>
 
               <div class="event-form">
+                <select id="eventType">
+                  <option>Special Youth Event</option>
+                  <option>Sunday Service</option>
+                  <option>Other Event</option>
+                </select>
                 <input id="eventTitle" class="span2" placeholder="Event title">
                 <input id="eventDate" type="date">
                 <input id="eventTime" type="time">
@@ -1210,9 +1312,11 @@
                 <input id="eventOwner" placeholder="Event owner">
                 <input id="eventExpected" type="number" min="0" placeholder="Expected count">
                 <input id="eventFlyerUrl" placeholder="Flyer image URL (optional)">
+                <input id="eventRegistrationLink" class="span2" placeholder="Registration link / Google Form URL">
+                <input id="eventSheetLink" class="span2" placeholder="Google Sheet link for responses (admin)">
                 <textarea id="eventDescription" class="span4" placeholder="Event details / notes"></textarea>
                 <input id="eventFlyerFile" class="span4" type="file" accept="image/*" onchange="previewEventFlyer(event)">
-                <button class="span2" onclick="addEvent()">Create Event</button>
+                <button id="eventSaveBtn" class="span2" onclick="addEvent()">Create Event</button>
                 <button class="btn-ghost span2" onclick="clearEventForm()">Clear</button>
               </div>
 
@@ -1243,6 +1347,30 @@
               </div>
               <div id="eventAbsentList" class="list"></div>
             </div>
+          </div>
+        </section>
+
+
+        <section id="sundays" class="page">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2>Sunday Services</h2>
+                <p>Auto-create Sunday events separately so they do not mix with special youth events.</p>
+              </div>
+              <div class="right-actions">
+                <button onclick="generateSundayServices(12)">Generate 12 Sundays</button>
+                <button class="btn-ghost" onclick="generateSundayServices(24)">Generate 24 Sundays</button>
+              </div>
+            </div>
+
+            <div class="toolbar three">
+              <input id="sundayVenue" placeholder="Default venue e.g. Church">
+              <input id="sundayTime" type="time">
+              <button class="btn-ghost" onclick="generateSundayServices(8)">Generate Next 8</button>
+            </div>
+
+            <div id="sundayEventsList" class="list"></div>
           </div>
         </section>
 
@@ -1313,8 +1441,10 @@
 
                 <div class="event-detail-actions">
                   <button class="btn-ghost" onclick="openPageByName('events')">← Back to Events</button>
-                  <button onclick="openGamePlanFromEvent()">Open Game Plan</button>
+                  <a id="detailRegistrationBtn" class="btn" target="_blank" rel="noopener">Register Now</a>
+                  <button id="detailGamePlanBtn" onclick="openGamePlanFromEvent()">Open Game Plan</button>
                   <button class="btn-purple" onclick="openPageByName('attendance')">Mark Attendance</button>
+                  <a id="detailSheetBtn" class="btn btn-ghost" target="_blank" rel="noopener">Registration Sheet</a>
                   <button class="btn-ghost" onclick="exportSelectedEventReport()">Export Event Report</button>
                 </div>
               </div>
@@ -1363,8 +1493,8 @@
           <div class="game-tabs">
             <button class="game-tab-btn active" onclick="openGameSection('setup', this)">Setup</button>
             <button class="game-tab-btn" onclick="openGameSection('teams', this)">Teams</button>
-            <button class="game-tab-btn" onclick="openGameSection('schedule', this)">Schedule & Scores</button>
-            <button class="game-tab-btn" onclick="openGameSection('rules', this)">Rules</button>
+            <button class="game-tab-btn" onclick="openGameSection('schedule', this)">Schedule</button>
+            <button class="game-tab-btn" onclick="openGameSection('standings', this)">Point Table</button>
             <button class="game-tab-btn" onclick="openGameSection('public', this)">Public View</button>
           </div>
 
@@ -1445,6 +1575,24 @@
                     <tbody id="tournamentStandings"></tbody>
                   </table>
                 </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div id="game-standings" class="game-section">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2>Point Table</h2>
+                  <p>Auto-calculated from completed match scores.</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="standings-table">
+                  <thead><tr><th>Team</th><th>Played</th><th>Won</th><th>Lost</th><th>Draw</th><th>Points</th><th>Diff</th></tr></thead>
+                  <tbody id="tournamentStandingsMain"></tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -1597,8 +1745,8 @@
     const ADMIN_CODE = "YC-ADMIN-2026";
     const ROLES = ["Admin","Core Moderator","Team Head","Team Lead","Member","Viewer"];
     let authMode = "login";
-    let youthMembers=[], cellLeaders=[], cellGroups=[], attendance=[], followUps=[], tasks=[], userProfiles=[], notifications=[], events=[], tournamentTeams=[], tournamentMatches=[], tournamentSettings={};
-    let editingMemberId=null, listenersStarted=false, currentProfile=null, currentUser=null, taskInitialLoaded=false, selectedEventId='';
+    let youthMembers=[], cellLeaders=[], cellGroups=[], attendance=[], followUps=[], tasks=[], userProfiles=[], notifications=[], events=[], tournamentTeams=[], tournamentMatches=[], tournamentSettingsList=[];
+    let editingMemberId=null, editingEventId=null, listenersStarted=false, currentProfile=null, currentUser=null, taskInitialLoaded=false, selectedEventId='';
     const seenTaskIds = new Set();
 
     const $ = id => document.getElementById(id);
@@ -1750,161 +1898,46 @@
     };
 
     window.clearEventForm = function(){
-      ["eventTitle","eventDate","eventTime","eventLocation","eventOwner","eventExpected","eventFlyerUrl","eventDescription"].forEach(id=>$(id).value="");
+      ["eventTitle","eventDate","eventTime","eventLocation","eventOwner","eventExpected","eventFlyerUrl","eventRegistrationLink","eventSheetLink","eventDescription"].forEach(id=>{ if($(id)) $(id).value=""; });
+      if($("eventType")) $("eventType").value = "Special Youth Event";
       $("eventFlyerFile").value = "";
       pendingEventFlyerData = "";
+      editingEventId = null;
+      if($("eventSaveBtn")) $("eventSaveBtn").textContent = "Create Event";
       $("eventFlyerPreview").innerHTML = "Flyer preview";
     };
 
-
-
-    window.enableNotifications = async function(){
-      if(!("Notification" in window)) return notify("Browser notifications are not supported here.");
-      const result = await Notification.requestPermission();
-      notify(result==="granted" ? "Task alerts enabled" : "Notification permission not enabled");
+    window.editEvent = function(id){
+      if(!canManage()) return notify("Only Admin or Core Moderator can edit events.");
+      const e = events.find(x=>x.id===id);
+      if(!e) return notify("Event not found.");
+      editingEventId = id;
+      $("eventType").value = getEventType(e);
+      $("eventTitle").value = e.title || "";
+      $("eventDate").value = e.date || "";
+      $("eventTime").value = e.time || "";
+      $("eventLocation").value = e.location || "";
+      $("eventOwner").value = e.owner || "";
+      $("eventExpected").value = e.expectedCount || "";
+      $("eventFlyerUrl").value = e.flyerURL || "";
+      $("eventRegistrationLink").value = e.registrationLink || "";
+      $("eventSheetLink").value = e.sheetLink || "";
+      $("eventDescription").value = e.description || "";
+      pendingEventFlyerData = e.flyerData || "";
+      $("eventFlyerPreview").innerHTML = eventFlyerHTML(e);
+      $("eventSaveBtn").textContent = "Update Event";
+      openPageByName("events");
+      notify("Event loaded for editing");
     };
 
-    function browserAlert(title, body){
-      if("Notification" in window && Notification.permission==="granted") new Notification(title,{body});
-    }
-
-    window.login = async function(){
-      try{await signInWithEmailAndPassword(auth,$("loginEmail").value.trim(),$("loginPassword").value.trim());notify("Logged in")}
-      catch(e){notify(e.message)}
-    };
-
-    window.signup = async function(){
-      try{
-        const name=$("loginName").value.trim() || "Youth Central User";
-        const email=$("loginEmail").value.trim();
-        const password=$("loginPassword").value.trim();
-        const code=$("adminCode").value.trim();
-        const cred=await createUserWithEmailAndPassword(auth,email,password);
-        let role="Member";
-        if(code===ADMIN_CODE){
-          const adminSnap=await getDocs(query(collection(db,"userProfiles"),where("role","==","Admin")));
-          role=adminSnap.size<3 ? "Admin" : "Member";
-          if(role==="Member") notify("Admin limit reached. Account created as Member.");
-        }
-        await setDoc(doc(db,"userProfiles",cred.user.uid),{uid:cred.user.uid,name,email,role,team:"",status:"Active",createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
-        notify("Account created");
-      }catch(e){notify(e.message)}
-    };
-
-    window.logout = async function(){await signOut(auth)};
-
-    async function ensureProfile(user){
-      const ref=doc(db,"userProfiles",user.uid);
-      const snap=await getDoc(ref);
-      if(snap.exists()) return {id:user.uid,...snap.data()};
-      const profile={uid:user.uid,name:user.email?.split("@")[0]||"Youth Central User",email:user.email||"",role:"Member",team:"",status:"Active",createdAt:serverTimestamp(),updatedAt:serverTimestamp()};
-      await setDoc(ref,profile);
-      return {id:user.uid,...profile};
-    }
-
-    onAuthStateChanged(auth,async user=>{
-      currentUser=user;
-      if(!user){
-        currentProfile=null;
-        $("loginScreen").classList.remove("hidden");
-        $("appScreen").classList.add("hidden");
-        $("currentUserLabel").textContent="Not logged in";
-        return;
-      }
-      currentProfile=await ensureProfile(user);
-      $("loginScreen").classList.add("hidden");
-      $("appScreen").classList.remove("hidden");
-      $("currentUserLabel").textContent=`${currentProfile.name || user.email} • ${currentProfile.role}`;
-      updateProfileUI();
-      startListeners();
-      render();
-    });
-
-    window.toggleSide=()=>$("side").classList.toggle("open");
-
-    window.openPage = function(pageId,btn){
-      document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-      document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
-      document.querySelectorAll(".bottom-nav button").forEach(b=>b.classList.remove("active"));
-      $(pageId).classList.add("active");
-
-      const hero = $("homeHero");
-      if(hero){
-        hero.classList.toggle("hidden", pageId !== "home");
-      }
-
-      if(btn) btn.classList.add("active");
-      $("side").classList.remove("open");
-      window.scrollTo({top:0,behavior:"smooth"});
-    };
-
-    window.openPageMobile = function(pageId,btn){
-      openPage(pageId,null);
-      document.querySelectorAll(".bottom-nav button").forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
-    };
-
-    window.openPageByName = function(pageId){
-      const btn=[...document.querySelectorAll(".nav-btn")].find(b=>b.getAttribute("onclick")?.includes("'"+pageId+"'"));
-      openPage(pageId,btn);
-    };
-
-    function initials(name){return clean(name).split(" ").filter(Boolean).map(n=>n[0]).join("").slice(0,2).toUpperCase()||"YC"}
-
-    window.openMemberModal = function(type="Regular"){
-      editingMemberId=null; clearMemberForm();
-      $("memberModalTitle").textContent=type==="Newcomer"?"Add Newcomer":"Add Person";
-      $("mType").value=type; $("mFirstVisit").value=todayISO();
-      $("memberModal").classList.add("active");
-    };
-    window.closeMemberModal=()=>$("memberModal").classList.remove("active");
-
-    function clearMemberForm(){
-      ["mSerial","mName","mDob","mAge","mPhone","mLocation","mDS","mAddress","mCellLeader","mCellGroup","mMinistry","mTeam","mFirstVisit","mLastAttended","mNotes"].forEach(id=>$(id).value="");
-      $("mGender").value="";$("mType").value="Regular";$("mStatus").value="Active";$("mFollowStatus").value="Not Needed";
-    }
-
-    window.editMember = function(id){
-      if(!canManage()) return notify("Only Admin or Core Moderator can edit people.");
-      const m=youthMembers.find(x=>x.id===id); if(!m) return;
-      editingMemberId=id; $("memberModalTitle").textContent="Edit Person";
-      $("mSerial").value=m.serialNo||"";$("mName").value=m.name||"";$("mDob").value=m.dob||"";$("mAge").value=m.age||"";$("mGender").value=m.gender||"";$("mPhone").value=m.contactNumber||"";$("mLocation").value=m.location||"";$("mDS").value=m.divisionalSecretariat||"";$("mAddress").value=m.address||"";$("mCellLeader").value=m.cellLeader||"";$("mCellGroup").value=m.cellGroup||"";$("mMinistry").value=m.ministry||"";$("mTeam").value=m.team||"";$("mType").value=m.memberType||"Regular";$("mStatus").value=m.status||"Active";$("mFirstVisit").value=m.firstVisitDate||"";$("mLastAttended").value=m.lastAttendedDate||"";$("mFollowStatus").value=m.followUpStatus||"Not Needed";$("mNotes").value=m.notes||"";
-      $("memberModal").classList.add("active");
-    };
-
-    window.saveMember = async function(){
-      if(!canManage()) return notify("Only Admin or Core Moderator can save people.");
-      const data={serialNo:$("mSerial").value.trim(),name:$("mName").value.trim(),dob:$("mDob").value,age:$("mAge").value.trim(),gender:$("mGender").value,contactNumber:$("mPhone").value.trim(),location:$("mLocation").value.trim(),divisionalSecretariat:$("mDS").value.trim(),address:$("mAddress").value.trim(),cellLeader:$("mCellLeader").value.trim(),cellGroup:$("mCellGroup").value.trim(),ministry:$("mMinistry").value.trim(),team:$("mTeam").value.trim(),memberType:$("mType").value,status:$("mStatus").value,firstVisitDate:$("mFirstVisit").value,lastAttendedDate:$("mLastAttended").value,followUpStatus:$("mFollowStatus").value,notes:$("mNotes").value.trim(),updatedAt:serverTimestamp()};
-      if(!data.name) return notify("Name is required");
-      if(editingMemberId){await updateDoc(doc(db,"youthMembers",editingMemberId),data);notify("Person updated")}
-      else{data.createdAt=serverTimestamp();await addDoc(collection(db,"youthMembers"),data);notify("Person added")}
-      closeMemberModal();
-    };
-
-    window.deleteMember=async id=>{
-      if(!canAdmin()) return notify("Only Admin can delete people.");
-      if(confirm("Delete this person?")){await deleteDoc(doc(db,"youthMembers",id));notify("Deleted")}
-    };
-
-    window.addNewcomer=async function(){
-      if(!canManage()) return notify("Only Admin or Core Moderator can add newcomers.");
-      const name=$("newName").value.trim(), contactNumber=$("newPhone").value.trim();
-      if(!name) return notify("Name required");
-      const data={name,contactNumber,gender:$("newGender").value,location:$("newLocation").value.trim(),invitedBy:$("newInvitedBy").value.trim(),firstVisitDate:$("newFirstVisit").value||todayISO(),cellLeader:$("newCellLeader").value.trim(),team:$("newTeam").value.trim(),ministry:$("newTeam").value.trim(),notes:$("newNotes").value.trim(),memberType:"Newcomer",status:"Active",followUpStatus:"Pending",lastAttendedDate:$("newFirstVisit").value||todayISO(),createdAt:serverTimestamp(),updatedAt:serverTimestamp()};
-      const ref=await addDoc(collection(db,"youthMembers"),data);
-      await addDoc(collection(db,"followUps"),{memberId:ref.id,memberName:name,contactNumber,reason:"Newcomer follow-up",assignedTo:data.cellLeader||"Unassigned",status:"Pending",dueDate:"",notes:data.notes,createdAt:serverTimestamp()});
-      ["newName","newPhone","newLocation","newInvitedBy","newCellLeader","newTeam","newNotes"].forEach(id=>$(id).value="");
-      notify("Newcomer saved + follow-up created");
-    };
-
-
-    window.addEvent = async function(){
+        window.addEvent = async function(){
       if(!canManage()) return notify("Only Admin or Core Moderator can create events.");
       const title = $("eventTitle").value.trim();
       const date = $("eventDate").value;
       if(!title || !date) return notify("Event title and date are required.");
 
       const data = {
+        eventType: $("eventType").value || "Special Youth Event",
         title,
         date,
         time: $("eventTime").value,
@@ -1913,19 +1946,28 @@
         expectedCount: Number($("eventExpected").value || 0),
         description: $("eventDescription").value.trim(),
         flyerURL: $("eventFlyerUrl").value.trim(),
-        flyerData: pendingEventFlyerData,
+        registrationLink: $("eventRegistrationLink").value.trim(),
+        sheetLink: $("eventSheetLink").value.trim(),
         status: "Upcoming",
-        createdBy: currentProfile?.name || currentUser?.email || "Team",
-        createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       };
 
-      await addDoc(collection(db,"events"), data);
+      if(pendingEventFlyerData) data.flyerData = pendingEventFlyerData;
+
+      if(editingEventId){
+        await updateDoc(doc(db,"events",editingEventId), data);
+        notify("Event updated");
+      }else{
+        data.createdBy = currentProfile?.name || currentUser?.email || "Team";
+        data.createdAt = serverTimestamp();
+        await addDoc(collection(db,"events"), data);
+        notify("Event created");
+      }
+
       clearEventForm();
-      notify("Event created");
     };
 
-    window.deleteEvent = async function(id){
+        window.deleteEvent = async function(id){
       if(!canAdmin()) return notify("Only Admin can delete events.");
       if(confirm("Delete this event? Attendance records will remain, but this event card will be removed.")){
         await deleteDoc(doc(db,"events",id));
@@ -2120,28 +2162,51 @@
       window.scrollTo({top:0,behavior:"smooth"});
     };
 
+    function activeTournamentId(){
+      return selectedEventId || "fomo-v2";
+    }
+
+    function activeTournamentSettings(){
+      return tournamentSettingsList.find(s=>s.id===activeTournamentId()) || {};
+    }
+
+    function activeTournamentTeams(){
+      const id = activeTournamentId();
+      return tournamentTeams.filter(t => (t.tournamentId || "fomo-v2") === id);
+    }
+
+    function activeTournamentMatches(){
+      const id = activeTournamentId();
+      return tournamentMatches.filter(m => (m.tournamentId || "fomo-v2") === id);
+    }
+
     window.saveTournamentSettings = async function(){
       if(!canManage()) return notify("Only Admin or Core Moderator can edit the game plan.");
+      const id = activeTournamentId();
+      const selectedEvent = events.find(e=>e.id===id);
       const data = {
-        title: $("tournamentTitle").value.trim() || "FOMO v2",
+        eventId:id,
+        title: $("tournamentTitle").value.trim() || selectedEvent?.title || "FOMO v2",
         subtitle: $("tournamentSubtitle").value.trim() || "The Ultimate Room",
-        date: $("tournamentDate").value,
-        startTime: $("tournamentStartTime").value,
-        venue: $("tournamentVenue").value.trim(),
+        date: $("tournamentDate").value || selectedEvent?.date || "",
+        startTime: $("tournamentStartTime").value || selectedEvent?.time || "",
+        venue: $("tournamentVenue").value.trim() || selectedEvent?.location || "",
         message: $("tournamentMessage").value.trim(),
         updatedAt: serverTimestamp()
       };
-      await setDoc(doc(db,"tournamentSettings","fomo-v2"), data, { merge:true });
-      notify("Tournament setup saved");
+      await setDoc(doc(db,"tournamentSettings",id), data, { merge:true });
+      notify("Game plan setup saved");
     };
 
     window.createSixTeamSlots = async function(){
       if(!canManage()) return notify("Only Admin or Core Moderator can create team slots.");
-      const existing = tournamentTeams.length;
+      const id = activeTournamentId();
+      const currentTeams = activeTournamentTeams();
+      const existing = currentTeams.length;
       const colors = ["#22d3ee","#f59e0b","#22c55e","#ec4899","#8b5cf6","#ef4444"];
       for(let i=existing; i<6; i++){
         await addDoc(collection(db,"tournamentTeams"), {
-          tournamentId:"fomo-v2",
+          tournamentId:id,
           slot:i+1,
           name:`Team ${i+1}`,
           color:colors[i] || "#35b8ff",
@@ -2157,10 +2222,12 @@
 
     window.addTournamentTeam = async function(){
       if(!canManage()) return notify("Only Admin or Core Moderator can add teams.");
+      const id = activeTournamentId();
+      const currentTeams = activeTournamentTeams();
       await addDoc(collection(db,"tournamentTeams"), {
-        tournamentId:"fomo-v2",
-        slot:tournamentTeams.length + 1,
-        name:`Team ${tournamentTeams.length + 1}`,
+        tournamentId:id,
+        slot:currentTeams.length + 1,
+        name:`Team ${currentTeams.length + 1}`,
         color:"#35b8ff",
         captain:"",
         players:[],
@@ -2199,11 +2266,13 @@
       const teamA = $("matchTeamA").value;
       const teamB = $("matchTeamB").value;
       if(!teamA || !teamB || teamA === teamB) return notify("Select two different teams.");
-      const a = tournamentTeams.find(t=>t.id===teamA);
-      const b = tournamentTeams.find(t=>t.id===teamB);
+      const teams = activeTournamentTeams();
+      const matches = activeTournamentMatches();
+      const a = teams.find(t=>t.id===teamA);
+      const b = teams.find(t=>t.id===teamB);
       await addDoc(collection(db,"tournamentMatches"), {
-        tournamentId:"fomo-v2",
-        label:$("matchLabel").value.trim() || `Match ${tournamentMatches.length + 1}`,
+        tournamentId:activeTournamentId(),
+        label:$("matchLabel").value.trim() || `Match ${matches.length + 1}`,
         time:$("matchTime").value,
         court:$("matchCourt").value.trim(),
         teamAId:teamA,
@@ -2241,26 +2310,20 @@
       }
     };
 
-    window.saveTournamentRules = async function(){
-      if(!canManage()) return notify("Only Admin or Core Moderator can edit rules.");
-      await setDoc(doc(db,"tournamentSettings","fomo-v2"), {
-        rules:$("tournamentRulesText").value,
-        updatedAt:serverTimestamp()
-      }, { merge:true });
-      notify("Rules saved");
-    };
-
     function teamById(id){
-      return tournamentTeams.find(t=>t.id===id) || {};
+      return activeTournamentTeams().find(t=>t.id===id) || tournamentTeams.find(t=>t.id===id) || {};
     }
 
     function standings(){
       const table = {};
-      tournamentTeams.forEach(t=>{
+      const teams = activeTournamentTeams();
+      const matches = activeTournamentMatches();
+
+      teams.forEach(t=>{
         table[t.id] = { id:t.id, name:t.name || `Team ${t.slot||""}`, color:t.color || "#35b8ff", played:0, won:0, lost:0, draw:0, pts:0, diff:0 };
       });
 
-      tournamentMatches.filter(m=>m.status==="Completed").forEach(m=>{
+      matches.filter(m=>m.status==="Completed").forEach(m=>{
         if(!table[m.teamAId] || !table[m.teamBId]) return;
         const a = table[m.teamAId], b = table[m.teamBId];
         const scoreA = Number(m.scoreA || 0), scoreB = Number(m.scoreB || 0);
@@ -2278,27 +2341,30 @@
     function renderTournament(){
       if(!$("tournamentTeamsList")) return;
 
-      $("tournamentTitle").value = tournamentSettings.title || "FOMO v2";
-      $("tournamentSubtitle").value = tournamentSettings.subtitle || "The Ultimate Room";
-      $("tournamentDate").value = tournamentSettings.date || "";
-      $("tournamentStartTime").value = tournamentSettings.startTime || "";
-      $("tournamentVenue").value = tournamentSettings.venue || "";
-      $("tournamentMessage").value = tournamentSettings.message || "";
-      $("tournamentRulesText").value = tournamentSettings.rules || defaultRules();
-      $("rulesPreview").textContent = tournamentSettings.rules || defaultRules();
+      const selectedEvent = events.find(e=>e.id===activeTournamentId());
+      const tournamentSettings = activeTournamentSettings();
+      const teams = activeTournamentTeams().sort((a,b)=>(a.slot||0)-(b.slot||0));
+      const matches = activeTournamentMatches();
 
-      $("publicTournamentTitle").textContent = tournamentSettings.title || "FOMO v2";
+      $("tournamentTitle").value = tournamentSettings.title || selectedEvent?.title || "FOMO v2";
+      $("tournamentSubtitle").value = tournamentSettings.subtitle || "The Ultimate Room";
+      $("tournamentDate").value = tournamentSettings.date || selectedEvent?.date || "";
+      $("tournamentStartTime").value = tournamentSettings.startTime || selectedEvent?.time || "";
+      $("tournamentVenue").value = tournamentSettings.venue || selectedEvent?.location || "";
+      $("tournamentMessage").value = tournamentSettings.message || selectedEvent?.description || "";
+
+      $("publicTournamentTitle").textContent = tournamentSettings.title || selectedEvent?.title || "FOMO v2";
       $("publicTournamentSubtitle").textContent = tournamentSettings.subtitle || "The Ultimate Room";
       $("publicTournamentMeta").innerHTML = `
-        <div class="list-item"><div><h4>Date & Time</h4><p>${clean(tournamentSettings.date||"TBC")} • ${clean(tournamentSettings.startTime||"TBC")}</p></div></div>
-        <div class="list-item"><div><h4>Venue</h4><p>${clean(tournamentSettings.venue||"TBC")}</p></div></div>
+        <div class="list-item"><div><h4>Date & Time</h4><p>${clean(tournamentSettings.date||selectedEvent?.date||"TBC")} • ${clean(tournamentSettings.startTime||selectedEvent?.time||"TBC")}</p></div></div>
+        <div class="list-item"><div><h4>Venue</h4><p>${clean(tournamentSettings.venue||selectedEvent?.location||"TBC")}</p></div></div>
         <div class="list-item"><div><h4>Note</h4><p>${clean(tournamentSettings.message||"Game plan will be updated live.")}</p></div></div>
       `;
 
-      $("matchTeamA").innerHTML = `<option value="">Team A</option>` + tournamentTeams.map(t=>`<option value="${t.id}">${clean(t.name)}</option>`).join("");
-      $("matchTeamB").innerHTML = `<option value="">Team B</option>` + tournamentTeams.map(t=>`<option value="${t.id}">${clean(t.name)}</option>`).join("");
+      $("matchTeamA").innerHTML = `<option value="">Team A</option>` + teams.map(t=>`<option value="${t.id}">${clean(t.name)}</option>`).join("");
+      $("matchTeamB").innerHTML = `<option value="">Team B</option>` + teams.map(t=>`<option value="${t.id}">${clean(t.name)}</option>`).join("");
 
-      $("tournamentTeamsList").innerHTML = tournamentTeams.length ? tournamentTeams.sort((a,b)=>(a.slot||0)-(b.slot||0)).map(t=>{
+      $("tournamentTeamsList").innerHTML = teams.length ? teams.map(t=>{
         const playersText = (t.players || []).join("\n");
         const chips = (t.players || []).slice(0,12).map(p=>`<span class="player-chip">${clean(p)}</span>`).join("");
         return `
@@ -2323,7 +2389,7 @@
         `;
       }).join("") : `<div class="empty">No teams yet. Click Create 6 Team Slots.</div>`;
 
-      $("tournamentMatchesList").innerHTML = tournamentMatches.length ? tournamentMatches.map(m=>`
+      $("tournamentMatchesList").innerHTML = matches.length ? matches.map(m=>`
         <div class="match-card">
           <div class="match-line">
             <span>${clean(m.label||"Match")}</span>
@@ -2353,41 +2419,32 @@
       `).join("") : `<div class="empty">No matches yet. Create matches when the teams are ready.</div>`;
 
       const rows = standings();
-      $("tournamentStandings").innerHTML = rows.map(r=>`
+      const fullRows = rows.map(r=>`
         <tr><td><span class="pill" style="border-color:${clean(r.color)}">${clean(r.name)}</span></td><td>${r.played}</td><td>${r.won}</td><td>${r.lost}</td><td>${r.draw}</td><td>${r.pts}</td><td>${r.diff}</td></tr>
       `).join("") || `<tr><td colspan="7">No teams yet.</td></tr>`;
+
+      if($("tournamentStandings")) $("tournamentStandings").innerHTML = fullRows;
+      if($("tournamentStandingsMain")) $("tournamentStandingsMain").innerHTML = fullRows;
 
       $("publicStandings").innerHTML = rows.map(r=>`
         <tr><td><span class="pill" style="border-color:${clean(r.color)}">${clean(r.name)}</span></td><td>${r.played}</td><td>${r.won}</td><td>${r.pts}</td><td>${r.diff}</td></tr>
       `).join("") || `<tr><td colspan="5">No teams yet.</td></tr>`;
 
-      $("publicTeams").innerHTML = tournamentTeams.length ? tournamentTeams.map(t=>`
+      $("publicTeams").innerHTML = teams.length ? teams.map(t=>`
         <div class="list-item">
           <div><h4><span class="pill" style="border-color:${clean(t.color||"#35b8ff")}">${clean(t.name)}</span></h4><p>Captain: ${clean(t.captain||"TBC")} • ${(t.players||[]).length} players</p></div>
         </div>
       `).join("") : `<div class="empty">Teams will appear here.</div>`;
 
-      $("publicMatches").innerHTML = tournamentMatches.length ? tournamentMatches.map(m=>`
+      $("publicMatches").innerHTML = matches.length ? matches.map(m=>`
         <div class="list-item">
           <div><h4>${clean(m.label||"Match")}: ${clean(teamById(m.teamAId).name||m.teamAName||"Team A")} vs ${clean(teamById(m.teamBId).name||m.teamBName||"Team B")}</h4><p>${clean(m.time||"TBC")} • ${clean(m.court||"Ground TBC")} • ${clean(m.status||"Upcoming")} • Score ${Number(m.scoreA||0)} - ${Number(m.scoreB||0)}</p></div>
         </div>
       `).join("") : `<div class="empty">Match schedule will appear here.</div>`;
     }
 
-    function defaultRules(){
-      return `FOMO v2 - The Ultimate Room Rules
-
-1. Respect all players, referees and team leaders.
-2. Be on time for your match. Late teams may lose points.
-3. Captains are responsible for their team members.
-4. Referee decision is final.
-5. Best Deco and Best Cheer points will be judged separately.
-6. Final scoring system and tie-breakers will be updated before the tournament.`;
-    }
-
-
-    function render(){
-      renderSelectors();renderDashboard();renderYouthTable();renderEvents();renderEventDetail();renderTournament();renderAttendance();renderTeams();renderFollowUps();renderReports();renderTasks();renderUsers();renderNotifications();updateProfileUI();
+        function render(){
+      renderSelectors();renderDashboard();renderYouthTable();renderEvents();renderSundayEvents();renderEventDetail();renderTournament();renderAttendance();renderTeams();renderFollowUps();renderReports();renderTasks();renderUsers();renderNotifications();updateProfileUI();
     }
 
     function renderSelectors(){
@@ -2435,6 +2492,28 @@
 
 
 
+
+    function getEventType(e){
+      const raw = String(e?.eventType || "").trim();
+      if(raw) return raw;
+      const title = String(e?.title || "").toLowerCase();
+      if(title.includes("sunday")) return "Sunday Service";
+      return "Special Youth Event";
+    }
+
+    function isSundayEvent(e){
+      return getEventType(e) === "Sunday Service";
+    }
+
+    function isSpecialEvent(e){
+      return getEventType(e) !== "Sunday Service";
+    }
+
+    function validUrl(url){
+      return String(url || "").trim().startsWith("http");
+    }
+
+
     window.openEventDetail = function(id){
       selectedEventId = id;
       const eventObj = events.find(e=>e.id===id);
@@ -2455,6 +2534,8 @@
 
     window.openGamePlanFromEvent = function(){
       if(!selectedEventId && $("eventReportSelect")) selectedEventId = $("eventReportSelect").value;
+      const eventObj = events.find(e=>e.id===selectedEventId);
+      if(eventObj && isSundayEvent(eventObj)) return notify("Game plan is only for special youth events.");
       renderTournament();
       openPage("gameplan", null);
     };
@@ -2482,10 +2563,28 @@
       $("detailEventFlyer").innerHTML = eventFlyerHTML(eventObj);
 
       $("detailEventMeta").innerHTML = `
+        <div class="event-type-pill">${clean(getEventType(eventObj))}</div>
         <div class="list-item"><div><h4>Date & Time</h4><p>${clean(eventObj.date||"TBC")} • ${clean(eventObj.time||"TBC")}</p></div></div>
         <div class="list-item"><div><h4>Venue</h4><p>${clean(eventObj.location||"TBC")}</p></div></div>
         <div class="list-item"><div><h4>Owner / Expected</h4><p>${clean(eventObj.owner||"Not assigned")} • Expected: ${clean(eventObj.expectedCount||"Not set")}</p></div></div>
       `;
+
+      const regBtn = $("detailRegistrationBtn");
+      if(regBtn){
+        regBtn.classList.toggle("hidden", !validUrl(eventObj.registrationLink));
+        regBtn.href = validUrl(eventObj.registrationLink) ? eventObj.registrationLink : "#";
+      }
+
+      const sheetBtn = $("detailSheetBtn");
+      if(sheetBtn){
+        sheetBtn.classList.toggle("hidden", !validUrl(eventObj.sheetLink));
+        sheetBtn.href = validUrl(eventObj.sheetLink) ? eventObj.sheetLink : "#";
+      }
+
+      const gameBtn = $("detailGamePlanBtn");
+      if(gameBtn){
+        gameBtn.classList.toggle("hidden", isSundayEvent(eventObj));
+      }
 
       const stats = eventStats(eventObj);
       $("detailEventStats").innerHTML = `
@@ -2525,8 +2624,7 @@
       `).join("") : `<div class="empty">No attendance marked for this event yet.</div>`;
     }
 
-
-    function eventFlyerHTML(e){
+        function eventFlyerHTML(e){
       const img = safeImageUrl(e.flyerData) || safeImageUrl(e.flyerURL);
       if(img) return `<img src="${img}" alt="${clean(e.title)} flyer">`;
       return `Event<br>Flyer`;
@@ -2560,26 +2658,33 @@
     function renderEvents(){
       if(!$("eventList")) return;
 
-      $("eventList").innerHTML = events.length ? events.map(e=>{
+      const specialEvents = events.filter(isSpecialEvent);
+
+      $("eventList").innerHTML = specialEvents.length ? specialEvents.map(e=>{
         const stats = eventStats(e);
         return `
           <div class="list-item event-card">
             <div class="event-flyer">${eventFlyerHTML(e)}</div>
             <div>
+              <span class="event-type-pill">${clean(getEventType(e))}</span>
               <h4>${clean(e.title)}</h4>
               <p>${clean(e.date||"No date")} ${clean(e.time||"")} • ${clean(e.location||"No location")}</p>
               <p>${clean(e.description||"No event details added")}</p>
               <p><span class="pill status-Present">${stats.came} came</span> <span class="pill status-Absent">${stats.didntCome} did not come</span> <span class="pill">${stats.notMarked} not marked</span></p>
+              <div class="event-link-row">
+                ${validUrl(e.registrationLink) ? `<a class="btn mini-btn" href="${clean(e.registrationLink)}" target="_blank" rel="noopener">Register</a>` : ""}
+                ${validUrl(e.sheetLink) ? `<a class="btn btn-ghost mini-btn" href="${clean(e.sheetLink)}" target="_blank" rel="noopener">Sheet</a>` : ""}
+              </div>
               <div class="task-actions" style="margin-top:10px;">
                 <button class="mini-btn btn-purple" onclick="openEventDetail('${e.id}')">View Details</button>
-                <button class="mini-btn btn-purple" onclick="openEventDetail('${e.id}')">View Details</button>
+                <button class="mini-btn" onclick="editEvent('${e.id}')">Edit</button>
                 <button class="mini-btn" onclick="selectEventReport('${e.id}')">Quick Report</button>
                 <button class="mini-btn btn-danger" onclick="deleteEvent('${e.id}')">Delete</button>
               </div>
             </div>
           </div>
         `;
-      }).join("") : `<div class="empty">No events yet. Add your first event and upload the main flyer.</div>`;
+      }).join("") : `<div class="empty">No special events yet. Add your next youth event here. Sunday services are kept separately.</div>`;
 
       renderEventReport();
     }
@@ -2655,6 +2760,79 @@
       a.click();
       URL.revokeObjectURL(a.href);
     };
+
+
+
+    function nextSunday(fromDate){
+      const d = new Date(fromDate);
+      d.setHours(0,0,0,0);
+      const day = d.getDay();
+      const diff = (7 - day) % 7 || 7;
+      d.setDate(d.getDate() + diff);
+      return d;
+    }
+
+    function isoDate(d){
+      return d.toISOString().slice(0,10);
+    }
+
+    window.generateSundayServices = async function(count=12){
+      if(!canManage()) return notify("Only Admin or Core Moderator can generate Sunday services.");
+      const venue = $("sundayVenue")?.value?.trim() || "Church";
+      const time = $("sundayTime")?.value || "10:00";
+      let d = nextSunday(new Date());
+      let created = 0;
+
+      for(let i=0;i<count;i++){
+        const date = isoDate(d);
+        const exists = events.some(e=>isSundayEvent(e) && e.date === date);
+        if(!exists){
+          await addDoc(collection(db,"events"), {
+            eventType:"Sunday Service",
+            title:"Sunday Service",
+            date,
+            time,
+            location:venue,
+            owner:"Youth Central",
+            expectedCount:0,
+            description:"Weekly Sunday service attendance tracking.",
+            flyerURL:"",
+            flyerData:"",
+            registrationLink:"",
+            sheetLink:"",
+            status:"Upcoming",
+            createdBy:currentProfile?.name || currentUser?.email || "Team",
+            createdAt:serverTimestamp(),
+            updatedAt:serverTimestamp()
+          });
+          created++;
+        }
+        d.setDate(d.getDate()+7);
+      }
+
+      notify(`Generated ${created} Sunday service events`);
+    };
+
+    function renderSundayEvents(){
+      if(!$("sundayEventsList")) return;
+      const sundayEvents = events.filter(isSundayEvent).sort((a,b)=>String(a.date||"").localeCompare(String(b.date||"")));
+      $("sundayEventsList").innerHTML = sundayEvents.length ? sundayEvents.map(e=>{
+        const stats = eventStats(e);
+        return `
+          <div class="sunday-card">
+            <div>
+              <h4>${clean(e.title)} • ${clean(e.date||"No date")}</h4>
+              <p>${clean(e.time||"")} • ${clean(e.location||"No venue")} • ${stats.came} came • ${stats.didntCome} did not come</p>
+            </div>
+            <div class="task-actions">
+              <button class="mini-btn btn-purple" onclick="openEventDetail('${e.id}')">View Details</button>
+              <button class="mini-btn" onclick="editEvent('${e.id}')">Edit</button>
+              <button class="mini-btn btn-danger" onclick="deleteEvent('${e.id}')">Delete</button>
+            </div>
+          </div>
+        `;
+      }).join("") : `<div class="empty">No Sunday events yet. Click Generate Sundays to create them automatically.</div>`;
+    }
 
 
     function renderAttendance(){
@@ -2737,8 +2915,7 @@
 
     function startListeners(){
       if(listenersStarted)return; listenersStarted=true;
-      listen("youthMembers",d=>youthMembers=d);listen("cellLeaders",d=>cellLeaders=d);listen("cellGroups",d=>cellGroups=d);listen("attendance",d=>attendance=d);listen("followUps",d=>followUps=d);listen("userProfiles",d=>{userProfiles=d; if(currentUser){const me=d.find(u=>(u.uid||u.id)===currentUser.uid); if(me){currentProfile=me; $("currentUserLabel").textContent=`${currentProfile.name || currentUser.email} • ${currentProfile.role}`; updateProfileUI();}}});listen("notifications",d=>notifications=d);listen("events",d=>events=d);listen("tournamentTeams",d=>tournamentTeams=d);listen("tournamentMatches",d=>tournamentMatches=d);
-      onSnapshot(doc(db,"tournamentSettings","fomo-v2"), snap=>{ tournamentSettings = snap.exists() ? snap.data() : {}; render(); });
+      listen("youthMembers",d=>youthMembers=d);listen("cellLeaders",d=>cellLeaders=d);listen("cellGroups",d=>cellGroups=d);listen("attendance",d=>attendance=d);listen("followUps",d=>followUps=d);listen("userProfiles",d=>{userProfiles=d; if(currentUser){const me=d.find(u=>(u.uid||u.id)===currentUser.uid); if(me){currentProfile=me; $("currentUserLabel").textContent=`${currentProfile.name || currentUser.email} • ${currentProfile.role}`; updateProfileUI();}}});listen("notifications",d=>notifications=d);listen("events",d=>events=d);listen("tournamentTeams",d=>tournamentTeams=d);listen("tournamentMatches",d=>tournamentMatches=d);listen("tournamentSettings",d=>tournamentSettingsList=d);
       const qTasks=query(collection(db,"tasks"),orderBy("createdAt","desc"));
       onSnapshot(qTasks,snap=>{
         const newTasks=snap.docs.map(d=>({id:d.id,...d.data()}));
