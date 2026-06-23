@@ -1376,6 +1376,28 @@
       #loginScreen .auth-card{min-height:auto !important;padding:24px !important;border-radius:30px !important;}
     }
 
+
+    /* V7.8 critical visibility fix */
+    #loginScreen.hidden,
+    #appScreen.hidden,
+    .hidden{
+      display:none !important;
+      visibility:hidden !important;
+      pointer-events:none !important;
+    }
+
+    #appScreen:not(.hidden){
+      display:block !important;
+      visibility:visible !important;
+      pointer-events:auto !important;
+    }
+
+    #loginScreen.login:not(.hidden){
+      display:grid !important;
+      visibility:visible !important;
+      pointer-events:auto !important;
+    }
+
   </style>
 </head>
 
@@ -2071,7 +2093,7 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
 
-    console.info("Youth Central V7.7 loaded. Collection listeners use unsorted Firestore reads so older documents without createdAt will show again.");
+    console.info("Youth Central V7.8 loaded. Login/app visibility fixed. Data recovery listeners enabled.");
 
 
 
@@ -2221,8 +2243,14 @@
 
       if(!user){
         currentProfile = null;
-        if($("loginScreen")) $("loginScreen").classList.remove("hidden");
-        if($("appScreen")) $("appScreen").classList.add("hidden");
+        if($("loginScreen")){
+          $("loginScreen").classList.remove("hidden");
+          $("loginScreen").style.display = "grid";
+        }
+        if($("appScreen")){
+          $("appScreen").classList.add("hidden");
+          $("appScreen").style.display = "none";
+        }
         if($("currentUserLabel")) $("currentUserLabel").textContent = "Not logged in";
         return;
       }
