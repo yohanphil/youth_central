@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -38,7 +38,7 @@
     html{scroll-behavior:smooth}
     body{
       min-height:100vh;
-      font-family:"Plus Jakarta Sans",system-ui,sans-serif;
+      font-family:"Poppins",system-ui,sans-serif;
       color:var(--text);
       background:
         radial-gradient(circle at 12% 4%,rgba(34,211,238,.20),transparent 26%),
@@ -473,7 +473,7 @@
 
     .stats{
       display:grid;
-      grid-template-columns:repeat(5,1fr);
+      grid-template-columns:repeat(6,1fr);
       gap:14px;
       margin-bottom:18px;
     }
@@ -567,6 +567,93 @@
     .bottom-nav button{background:transparent;color:var(--soft);border-radius:16px;padding:9px 6px;font-size:11px;display:grid;gap:3px}
     .bottom-nav button.active{background:rgba(34,211,238,.14);color:white}
 
+
+    .top-avatar{
+      width:34px;
+      height:34px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      background:linear-gradient(135deg,rgba(34,211,238,.35),rgba(37,99,235,.28));
+      border:1px solid var(--line);
+      color:white;
+      font-size:12px;
+      font-weight:900;
+      flex:none;
+    }
+    .top-avatar img,.profile-photo img,.profile-mini-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .profile-layout{
+      display:grid;
+      grid-template-columns:360px 1fr;
+      gap:16px;
+      align-items:start;
+    }
+    .profile-photo-card{
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .profile-photo{
+      width:168px;
+      height:168px;
+      margin:0 auto 18px;
+      border-radius:42px;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 28% 24%,rgba(255,255,255,.35),transparent 18%),
+        linear-gradient(135deg,rgba(34,211,238,.45),rgba(37,99,235,.32),rgba(139,92,246,.38));
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:0 20px 60px rgba(34,211,238,.16);
+      font-size:42px;
+      font-weight:900;
+      letter-spacing:-.08em;
+    }
+    .profile-mini-photo{
+      width:42px;
+      height:42px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      background:linear-gradient(135deg,rgba(34,211,238,.35),rgba(37,99,235,.28));
+      border:1px solid var(--line);
+      flex:none;
+      font-weight:900;
+      font-size:12px;
+    }
+    .profile-role-card{
+      display:grid;
+      gap:10px;
+      margin-top:16px;
+    }
+    .profile-role-card .role-box{
+      padding:14px;
+      border-radius:20px;
+      background:rgba(255,255,255,.055);
+      border:1px solid var(--line);
+      text-align:left;
+    }
+    .profile-role-card .role-box span{
+      display:block;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:5px;
+    }
+    .profile-role-card .role-box b{
+      font-size:14px;
+    }
+
     @media(max-width:1180px){
       .auth-shell{grid-template-columns:1fr}
       .auth-brand{min-height:520px}
@@ -582,7 +669,7 @@
       .auth-brand{display:none}
       .auth-card{border-radius:30px;padding:22px}
       .stats{grid-template-columns:1fr 1fr}
-      .grid-2,.grid-3,.kanban,.toolbar,.toolbar.two,.toolbar.three,.toolbar.import,.form-grid{grid-template-columns:1fr}
+      .grid-2,.grid-3,.kanban,.toolbar,.toolbar.two,.toolbar.three,.toolbar.import,.form-grid,.profile-layout{grid-template-columns:1fr}
       .span2,.span4{grid-column:auto}
       .hero{padding:22px;border-radius:30px;min-height:auto}
       .hero h1{font-size:43px}
@@ -671,6 +758,7 @@
 
         <nav class="nav">
           <button class="nav-btn active" onclick="openPage('home', this)"><span class="nav-icon">⌂</span> Home</button>
+          <button class="nav-btn" onclick="openPage('profile', this)"><span class="nav-icon">👤</span> Profile</button>
           <button class="nav-btn" onclick="openPage('people', this)"><span class="nav-icon">🗂️</span> People</button>
           <button class="nav-btn" onclick="openPage('newcomer', this)"><span class="nav-icon">✨</span> Newcomer</button>
           <button class="nav-btn" onclick="openPage('attendance', this)"><span class="nav-icon">📍</span> Attendance</button>
@@ -693,7 +781,7 @@
             <button class="mobile-menu" onclick="toggleSide()">☰</button>
             <div>
               <div class="date-pill" id="todayLine"></div>
-              <div class="user-pill"><span class="user-dot"></span><span id="currentUserLabel">Loading</span></div>
+              <div class="user-pill"><span id="topAvatar" class="top-avatar">YC</span><span id="currentUserLabel">Loading</span></div>
             </div>
           </div>
           <div class="right-actions">
@@ -703,7 +791,7 @@
           </div>
         </div>
 
-        <section class="hero">
+        <section id="homeHero" class="hero">
           <div class="hero-inner">
             <div>
               <div class="hero-tag"><span class="pulse"></span> Youth Central</div>
@@ -737,6 +825,49 @@
           <div class="grid-2">
             <div class="card"><div class="card-head"><div><h2>Latest Tasks</h2><p>Fresh responsibilities from the team.</p></div></div><div id="latestTasks" class="list"></div></div>
             <div class="card"><div class="card-head"><div><h2>Notifications</h2><p>Task alerts and system updates.</p></div></div><div id="notificationList" class="list"></div></div>
+          </div>
+        </section>
+
+
+        <section id="profile" class="page">
+          <div class="profile-layout">
+            <div class="card profile-photo-card">
+              <div class="card-head">
+                <div>
+                  <h2>My Profile</h2>
+                  <p>Your display picture, name and team identity.</p>
+                </div>
+              </div>
+
+              <div id="profilePhoto" class="profile-photo">YC</div>
+
+              <div class="profile-role-card">
+                <div class="role-box"><span>Access Level</span><b id="profileRoleText">Member</b></div>
+                <div class="role-box"><span>Email</span><b id="profileEmailText">-</b></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2>Profile Settings</h2>
+                  <p>Upload a DP or paste an image link. This saves to your Youth Central user profile.</p>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <input id="profileNameInput" class="span2" placeholder="Display name">
+                <input id="profileTeamInput" class="span2" placeholder="Team / Ministry">
+                <input id="profilePhotoUrlInput" class="span4" placeholder="Image URL (optional)">
+                <input id="profilePhotoFileInput" class="span4" type="file" accept="image/*" onchange="previewProfileUpload(event)">
+                <button onclick="saveMyProfile()" class="span2">Save Profile</button>
+                <button onclick="removeMyDP()" class="btn-ghost span2">Remove DP</button>
+              </div>
+
+              <p class="small-muted" style="margin-top:14px">
+                Best size: square image. Uploaded images are compressed and stored in your user profile.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -859,6 +990,7 @@
     <button onclick="openPageMobile('people', this)">🗂️<span>People</span></button>
     <button onclick="openPageMobile('attendance', this)">📍<span>Attend</span></button>
     <button onclick="openPageMobile('tasks', this)">✓<span>Tasks</span></button>
+    <button onclick="openPageMobile('profile', this)">👤<span>Profile</span></button>
     <button onclick="toggleSide()">☰<span>More</span></button>
   </div>
 
@@ -951,6 +1083,99 @@
     function canManage(){return ["Admin","Core Moderator"].includes(currentProfile?.role)}
     function canAdmin(){return currentProfile?.role==="Admin"}
 
+
+    let pendingProfilePhotoData = "";
+
+    function safeImageUrl(value){
+      const url = String(value || "").trim();
+      if(!url) return "";
+      if(url.startsWith("data:image/")) return url;
+      if(url.startsWith("https://")) return url;
+      return "";
+    }
+
+    function profileImage(profile){
+      return safeImageUrl(profile?.photoData) || safeImageUrl(profile?.photoURL);
+    }
+
+    function avatarHTML(profile, fallbackName){
+      const img = profileImage(profile);
+      if(img) return `<img src="${img}" alt="Profile photo">`;
+      return initials(fallbackName || profile?.name || "YC");
+    }
+
+    function updateProfileUI(){
+      if(!currentProfile) return;
+
+      const top = $("topAvatar");
+      if(top) top.innerHTML = avatarHTML(currentProfile, currentProfile.name);
+
+      const photo = $("profilePhoto");
+      if(photo) photo.innerHTML = avatarHTML(currentProfile, currentProfile.name);
+
+      if($("profileNameInput")) $("profileNameInput").value = currentProfile.name || "";
+      if($("profileTeamInput")) $("profileTeamInput").value = currentProfile.team || "";
+      if($("profilePhotoUrlInput")) $("profilePhotoUrlInput").value = currentProfile.photoURL || "";
+      if($("profileRoleText")) $("profileRoleText").textContent = currentProfile.role || "Member";
+      if($("profileEmailText")) $("profileEmailText").textContent = currentProfile.email || currentUser?.email || "-";
+    }
+
+    window.previewProfileUpload = function(event){
+      const file = event.target.files?.[0];
+      if(!file) return;
+      if(!file.type.startsWith("image/")) return notify("Please upload an image file.");
+
+      const reader = new FileReader();
+      reader.onload = function(e){
+        const img = new Image();
+        img.onload = function(){
+          const max = 420;
+          const scale = Math.min(max / img.width, max / img.height, 1);
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          pendingProfilePhotoData = canvas.toDataURL("image/jpeg", 0.78);
+          if($("profilePhoto")) $("profilePhoto").innerHTML = `<img src="${pendingProfilePhotoData}" alt="Profile photo preview">`;
+          notify("DP preview ready. Click Save Profile.");
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    window.saveMyProfile = async function(){
+      if(!currentUser) return notify("Login first.");
+
+      const data = {
+        name: $("profileNameInput").value.trim() || currentProfile?.name || currentUser.email,
+        team: $("profileTeamInput").value.trim(),
+        photoURL: $("profilePhotoUrlInput").value.trim(),
+        updatedAt: serverTimestamp()
+      };
+
+      if(pendingProfilePhotoData){
+        data.photoData = pendingProfilePhotoData;
+      }
+
+      await updateDoc(doc(db,"userProfiles",currentUser.uid), data);
+      pendingProfilePhotoData = "";
+      notify("Profile updated");
+    };
+
+    window.removeMyDP = async function(){
+      if(!currentUser) return notify("Login first.");
+      await updateDoc(doc(db,"userProfiles",currentUser.uid), {
+        photoData: "",
+        photoURL: "",
+        updatedAt: serverTimestamp()
+      });
+      pendingProfilePhotoData = "";
+      notify("DP removed");
+    };
+
+
     window.enableNotifications = async function(){
       if(!("Notification" in window)) return notify("Browser notifications are not supported here.");
       const result = await Notification.requestPermission();
@@ -1008,6 +1233,7 @@
       $("loginScreen").classList.add("hidden");
       $("appScreen").classList.remove("hidden");
       $("currentUserLabel").textContent=`${currentProfile.name || user.email} • ${currentProfile.role}`;
+      updateProfileUI();
       startListeners();
       render();
     });
@@ -1019,6 +1245,12 @@
       document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
       document.querySelectorAll(".bottom-nav button").forEach(b=>b.classList.remove("active"));
       $(pageId).classList.add("active");
+
+      const hero = $("homeHero");
+      if(hero){
+        hero.classList.toggle("hidden", pageId !== "home");
+      }
+
       if(btn) btn.classList.add("active");
       $("side").classList.remove("open");
       window.scrollTo({top:0,behavior:"smooth"});
@@ -1240,7 +1472,7 @@
     function isMissing(m){if(!m.lastAttendedDate)return true;const d=new Date(m.lastAttendedDate);return ((Date.now()-d.getTime())/(1000*60*60*24))>14}
 
     function render(){
-      renderSelectors();renderDashboard();renderYouthTable();renderAttendance();renderTeams();renderFollowUps();renderReports();renderTasks();renderUsers();renderNotifications();
+      renderSelectors();renderDashboard();renderYouthTable();renderAttendance();renderTeams();renderFollowUps();renderReports();renderTasks();renderUsers();renderNotifications();updateProfileUI();
     }
 
     function renderSelectors(){
@@ -1334,7 +1566,7 @@
 
     function renderUsers(){
       $("accessWarning").classList.toggle("hidden",canAdmin());
-      $("usersTable").innerHTML=userProfiles.map(u=>`<tr><td><div class="person"><div class="avatar">${initials(u.name||u.email)}</div><b>${clean(u.name||"User")}</b></div></td><td>${clean(u.email)}</td><td><select id="role-${u.uid||u.id}" ${canAdmin()?"":"disabled"}>${ROLES.map(r=>`<option ${u.role===r?"selected":""}>${r}</option>`).join("")}</select></td><td><input id="team-${u.uid||u.id}" value="${clean(u.team||"")}" placeholder="Team" ${canAdmin()?"":"disabled"}></td><td><select id="ustatus-${u.uid||u.id}" ${canAdmin()?"":"disabled"}><option ${u.status==="Active"?"selected":""}>Active</option><option ${u.status==="Disabled"?"selected":""}>Disabled</option></select></td><td><button class="mini-btn" onclick="updateUserRole('${u.uid||u.id}')">Save</button></td></tr>`).join("")||`<tr><td colspan="6">No users yet.</td></tr>`;
+      $("usersTable").innerHTML=userProfiles.map(u=>`<tr><td><div class="person"><div class="profile-mini-photo">${avatarHTML(u,u.name||u.email)}</div><b>${clean(u.name||"User")}</b></div></td><td>${clean(u.email)}</td><td><select id="role-${u.uid||u.id}" ${canAdmin()?"":"disabled"}>${ROLES.map(r=>`<option ${u.role===r?"selected":""}>${r}</option>`).join("")}</select></td><td><input id="team-${u.uid||u.id}" value="${clean(u.team||"")}" placeholder="Team" ${canAdmin()?"":"disabled"}></td><td><select id="ustatus-${u.uid||u.id}" ${canAdmin()?"":"disabled"}><option ${u.status==="Active"?"selected":""}>Active</option><option ${u.status==="Disabled"?"selected":""}>Disabled</option></select></td><td><button class="mini-btn" onclick="updateUserRole('${u.uid||u.id}')">Save</button></td></tr>`).join("")||`<tr><td colspan="6">No users yet.</td></tr>`;
     }
 
     function renderNotifications(){$("notificationList").innerHTML=notifications.slice(0,8).map(n=>`<div class="list-item"><div><h4>${clean(n.title)}</h4><p>${clean(n.body)} • ${clean(n.team||"All")} • By ${clean(n.createdBy||"Team")}</p></div></div>`).join("")||`<div class="empty">No notifications yet.</div>`}
@@ -1346,7 +1578,7 @@
 
     function startListeners(){
       if(listenersStarted)return; listenersStarted=true;
-      listen("youthMembers",d=>youthMembers=d);listen("cellLeaders",d=>cellLeaders=d);listen("cellGroups",d=>cellGroups=d);listen("attendance",d=>attendance=d);listen("followUps",d=>followUps=d);listen("userProfiles",d=>userProfiles=d);listen("notifications",d=>notifications=d);
+      listen("youthMembers",d=>youthMembers=d);listen("cellLeaders",d=>cellLeaders=d);listen("cellGroups",d=>cellGroups=d);listen("attendance",d=>attendance=d);listen("followUps",d=>followUps=d);listen("userProfiles",d=>{userProfiles=d; if(currentUser){const me=d.find(u=>(u.uid||u.id)===currentUser.uid); if(me){currentProfile=me; $("currentUserLabel").textContent=`${currentProfile.name || currentUser.email} • ${currentProfile.role}`; updateProfileUI();}}});listen("notifications",d=>notifications=d);
       const qTasks=query(collection(db,"tasks"),orderBy("createdAt","desc"));
       onSnapshot(qTasks,snap=>{
         const newTasks=snap.docs.map(d=>({id:d.id,...d.data()}));
