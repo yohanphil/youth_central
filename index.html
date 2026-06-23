@@ -2307,10 +2307,157 @@
       .stat h3{font-size:32px!important}
     }
 
+
+    /* =========================================================
+       Youth Central V11 - Studio Command Redesign
+       Inspired by bold agency/editorial layouts and award-site grids.
+       Data + Firebase collections untouched.
+       ========================================================= */
+
+    :root{
+      --bg:#050508;
+      --bg2:#080912;
+      --paper:#f4f1ea;
+      --ink:#f8f7f2;
+      --muted:#858997;
+      --soft:#d7d9e2;
+      --line:rgba(244,241,234,.14);
+      --line2:rgba(244,241,234,.28);
+      --cyan:#27e8ff;
+      --blue:#3478ff;
+      --purple:#8b5cf6;
+      --pink:#ff4fd8;
+      --green:#22c55e;
+      --yellow:#f59e0b;
+      --red:#ef4444;
+      --panel:rgba(255,255,255,.055);
+      --panel2:rgba(255,255,255,.085);
+      --shadow:0 32px 100px rgba(0,0,0,.54);
+      --mx:50%;
+      --my:20%;
+      --radius:0px;
+    }
+
+    *{scrollbar-width:thin;scrollbar-color:rgba(39,232,255,.35) rgba(255,255,255,.04)}
+    body{
+      color:var(--ink);
+      background:#050508 !important;
+      font-family:"Poppins",system-ui,sans-serif !important;
+      overflow-x:hidden;
+    }
+    body::before,body::after,.orb{display:none!important}
+
+    .studio-bg{position:fixed;inset:0;z-index:-10;overflow:hidden;pointer-events:none;background:radial-gradient(circle at var(--mx) var(--my),rgba(39,232,255,.15),transparent 24%),radial-gradient(circle at 82% 6%,rgba(139,92,246,.22),transparent 27%),radial-gradient(circle at 8% 85%,rgba(52,120,255,.16),transparent 28%),linear-gradient(135deg,#050508 0%,#080912 52%,#040510 100%)}
+    .studio-noise{position:absolute;inset:0;opacity:.34;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),rgba(0,0,0,.5),transparent 95%)}
+    .studio-line{position:absolute;height:1px;width:140vw;left:-20vw;background:linear-gradient(90deg,transparent,rgba(39,232,255,.32),rgba(139,92,246,.24),transparent);transform:rotate(-18deg);animation:studioLine 9s ease-in-out infinite alternate}
+    .line-a{top:24%}.line-b{top:70%;animation-duration:12s;transform:rotate(14deg)}
+    @keyframes studioLine{to{translate:5vw 4vh;opacity:.35}}
+    .studio-cursor-light{position:absolute;width:520px;height:520px;left:calc(var(--mx) - 260px);top:calc(var(--my) - 260px);background:radial-gradient(circle,rgba(39,232,255,.12),transparent 63%);filter:blur(3px);transition:.1s linear}
+
+    .studio-loader{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:rgba(5,5,8,.82);backdrop-filter:blur(24px)}
+    .studio-loader.hidden{display:none!important}
+    .studio-loader-card{width:min(460px,90vw);border:1px solid var(--line2);background:#080912;padding:34px;min-height:280px;display:grid;align-content:center;text-align:left;position:relative;overflow:hidden;box-shadow:var(--shadow);animation:studioReveal .55s cubic-bezier(.2,.8,.2,1) both}
+    .studio-loader-card::after{content:"";position:absolute;inset:auto 0 0;height:7px;background:linear-gradient(90deg,var(--cyan),var(--blue),var(--purple),var(--pink))}
+    .studio-loader-card p{color:var(--cyan);letter-spacing:.22em;font-size:12px;font-weight:900;margin-top:20px}
+    .studio-loader-card h2{font-size:clamp(32px,6vw,58px);letter-spacing:-.09em;line-height:.9;margin-top:8px;max-width:360px}
+    .studio-disc{width:82px;height:82px;border-radius:50%;border:2px solid rgba(255,255,255,.8);display:grid;place-items:center;background:radial-gradient(circle at 50% 50%,rgba(39,232,255,.8),rgba(139,92,246,.46));box-shadow:0 0 60px rgba(39,232,255,.35);animation:studioDisc 1.05s linear infinite}
+    .studio-disc span{width:42px;height:42px;border-radius:50%;border:2px solid rgba(255,255,255,.75)}
+    @keyframes studioDisc{to{rotate:360deg}}@keyframes studioReveal{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}
+
+    .app{width:min(1920px,100%)!important;padding:18px clamp(16px,2vw,36px) 90px!important;margin:0!important}
+    .shell{grid-template-columns:1fr!important;gap:0!important}.side{display:none!important}.main{width:100%;min-width:0}
+    .topbar{position:sticky!important;top:18px!important;z-index:100!important;width:100%!important;margin:0 0 14px!important;border-radius:0!important;padding:12px 14px!important;background:rgba(5,5,8,.74)!important;border:1px solid var(--line)!important;backdrop-filter:blur(24px)!important;box-shadow:none!important}
+    .topbar::before{content:"YOUTH CENTRAL / LIVE OPS";position:absolute;left:14px;top:-13px;color:rgba(248,247,242,.48);font-size:9px;letter-spacing:.2em;font-weight:900}
+    .date-pill,.user-pill{font-size:12px;font-weight:800;color:#cdd5e7}.right-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+    .desktop-nav{position:sticky!important;top:86px!important;z-index:90!important;display:grid!important;grid-template-columns:repeat(12,1fr)!important;gap:0!important;width:100%!important;margin:0 0 18px!important;padding:0!important;border-radius:0!important;border:1px solid var(--line)!important;background:rgba(5,5,8,.68)!important;backdrop-filter:blur(22px)!important;overflow:hidden}
+    .top-nav-btn{min-height:64px!important;border-radius:0!important;border:0!important;border-right:1px solid var(--line)!important;background:transparent!important;color:#8f98ae!important;font-size:11px!important;font-weight:900!important;letter-spacing:.08em!important;text-transform:uppercase!important;padding:10px!important;justify-content:flex-start!important;box-shadow:none!important;white-space:normal!important;line-height:1.25!important;transition:.22s ease!important}
+    .top-nav-btn:last-child{border-right:0!important}.top-nav-btn:hover{background:rgba(39,232,255,.08)!important;color:#fff!important;transform:none!important}
+    .top-nav-btn.active{background:var(--paper)!important;color:#050508!important;box-shadow:inset 0 -5px 0 var(--cyan)!important}.top-nav-btn::after{display:none!important}
+
+    .studio-marquee{width:100%;border:1px solid var(--line);border-left:0;border-right:0;padding:10px 0;overflow:hidden;margin-bottom:18px;background:rgba(255,255,255,.025)}
+    .marquee-track{display:flex;width:max-content;gap:28px;animation:marqueeMove 22s linear infinite}
+    .marquee-track span{font-size:12px;letter-spacing:.18em;font-weight:900;color:#aab8d2;text-transform:uppercase}.marquee-track span::after{content:"—";margin-left:28px;color:var(--cyan)}
+    @keyframes marqueeMove{to{transform:translateX(-50%)}}
+
+    .hero{min-height:calc(100vh - 220px)!important;border-radius:0!important;border:1px solid var(--line)!important;background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.018)),radial-gradient(circle at var(--mx) var(--my),rgba(39,232,255,.13),transparent 30%)!important;box-shadow:none!important;padding:clamp(28px,5vw,78px)!important;display:grid!important;align-items:end!important;margin-bottom:22px!important;position:relative}
+    .hero::before{content:""!important;position:absolute!important;right:clamp(18px,5vw,90px)!important;top:clamp(18px,4vw,70px)!important;width:min(45vw,620px)!important;height:min(45vw,620px)!important;border-radius:999px!important;border:1px solid rgba(39,232,255,.25)!important;background:radial-gradient(circle,transparent 0 34%,rgba(39,232,255,.13) 35% 36%,transparent 37% 52%,rgba(139,92,246,.18) 53% 54%,transparent 55%),conic-gradient(from 90deg,transparent,rgba(39,232,255,.18),transparent,rgba(139,92,246,.16),transparent)!important;clip-path:none!important;animation:orbitTurn 18s linear infinite!important}
+    .hero::after{content:"SYSTEM  /  COMMAND  /  YOUTH  CENTRAL"!important;position:absolute!important;right:24px!important;bottom:20px!important;writing-mode:vertical-rl;letter-spacing:.18em;color:rgba(248,247,242,.38);font-size:10px;font-weight:900;background:none!important;width:auto!important;height:auto!important;clip-path:none!important}
+    .hero-inner{display:grid!important;grid-template-columns:minmax(0,1.25fr) minmax(360px,.75fr)!important;gap:clamp(24px,5vw,74px)!important;align-items:end!important;position:relative;z-index:2}
+    .hero-tag,.auth-copy .tag{width:max-content;background:var(--paper)!important;color:#050508!important;border-radius:0!important;border:0!important;padding:8px 11px!important;font-size:10px!important;letter-spacing:.14em!important}
+    .hero h1{font-size:clamp(58px,10vw,158px)!important;line-height:.78!important;letter-spacing:-.105em!important;max-width:1150px!important;margin-top:20px!important;text-transform:none!important}
+    .hero h1 span{display:block;background:linear-gradient(90deg,#fff,#dffbff,#86edff,#c6b5ff)!important;-webkit-background-clip:text!important;color:transparent!important}
+    .hero p{margin-top:24px!important;max-width:720px!important;font-size:clamp(15px,1.15vw,20px)!important;line-height:1.7!important;color:#c8d4e8!important}
+
+    .hero-index-panel{border:1px solid var(--line);background:rgba(5,5,8,.72);display:grid;min-height:420px;align-content:stretch}
+    .index-line{display:grid;grid-template-columns:54px 1fr auto;gap:14px;align-items:center;border-bottom:1px solid var(--line);padding:18px;transition:.2s ease}.index-line:hover{background:rgba(39,232,255,.07)}
+    .index-line span{font-size:12px;color:var(--cyan);font-weight:900}.index-line b{font-size:16px;letter-spacing:-.03em}.index-line em{font-style:normal;color:var(--muted);font-size:12px;font-weight:800}
+    .hero-actions{display:grid!important;grid-template-columns:1fr!important;padding:18px;gap:10px!important;align-self:end!important}
+
+    .stats{display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:0!important;border:1px solid var(--line);border-bottom:0}
+    .stat{border-radius:0!important;border:0!important;border-right:1px solid var(--line)!important;background:rgba(255,255,255,.032)!important;box-shadow:none!important;min-height:150px!important;padding:22px!important}.stat:last-child{border-right:0!important}.stat::after{display:none!important}
+    .stat p{font-size:10px!important;letter-spacing:.16em!important;color:#92a0b8!important}.stat h3{font-size:clamp(38px,4vw,70px)!important;letter-spacing:-.08em!important}
+
+    .card,.list-item,.team-card,.match-card,.event-report-box,.event-detail-stat,.profile-photo-card,.modal-card{border-radius:0!important;background:rgba(255,255,255,.036)!important;border:1px solid var(--line)!important;box-shadow:none!important;backdrop-filter:blur(18px)!important}
+    .card{padding:clamp(18px,2vw,28px)!important;position:relative;overflow:hidden}.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--cyan),var(--purple));opacity:.7}
+    .card:hover,.list-item:hover,.team-card:hover,.match-card:hover{transform:translateY(-2px)!important;border-color:rgba(39,232,255,.30)!important;background:rgba(255,255,255,.055)!important}
+    .card-head{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:18px}.card-head h2{font-size:clamp(28px,4vw,54px)!important;line-height:.9!important;letter-spacing:-.095em!important}.card-head p{font-size:13px!important;color:#8c9ab5!important;margin-top:8px!important}
+    .grid-2{gap:18px!important}.grid-3{gap:18px!important}
+
+    input,select,textarea{border-radius:0!important;background:rgba(2,6,23,.76)!important;border-color:var(--line)!important;color:#fff!important}
+    input:focus,select:focus,textarea:focus{border-color:rgba(39,232,255,.55)!important;box-shadow:0 0 0 4px rgba(39,232,255,.08)!important}
+
+    button,.btn{border-radius:0!important;background:var(--paper)!important;color:#050508!important;border:1px solid var(--paper)!important;box-shadow:none!important;letter-spacing:-.02em;transition:.18s ease!important}
+    button:hover,.btn:hover{transform:translateY(-2px)!important;box-shadow:8px 8px 0 rgba(39,232,255,.18)!important;filter:none!important}
+    .btn-ghost{background:transparent!important;color:var(--paper)!important;border-color:var(--line2)!important}
+    .btn-purple{color:#fff!important;border-color:transparent!important;background:linear-gradient(135deg,var(--blue),var(--purple),var(--pink))!important}
+    .btn-danger{background:rgba(239,68,68,.16)!important;color:#fecaca!important;border-color:rgba(239,68,68,.28)!important}.mini-btn{font-size:11px!important;padding:8px 10px!important}
+
+    .table-wrap table{border-collapse:collapse}th{color:#a9b7d0!important;letter-spacing:.12em!important;font-size:10px!important;text-transform:uppercase!important}td,th{border-bottom:1px solid var(--line)!important}
+    .event-flyer,.event-detail-flyer{border-radius:0!important;border-color:var(--line)!important;background:rgba(255,255,255,.04)!important}
+
+    .page.active{animation:studioPage .5s cubic-bezier(.2,.8,.2,1) both}@keyframes studioPage{from{opacity:0;transform:translateY(18px);filter:blur(10px)}to{opacity:1;transform:none;filter:blur(0)}}
+
+    .login{min-height:100vh!important;display:grid!important;place-items:center!important;padding:clamp(14px,3vw,34px)!important}
+    .auth-shell{width:min(1320px,100%)!important;display:grid!important;grid-template-columns:1.15fr .85fr!important;gap:0!important;border:1px solid var(--line);background:rgba(5,5,8,.74)}
+    .auth-brand,.auth-card{min-height:720px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important}
+    .auth-brand{position:relative!important;display:flex!important;flex-direction:column!important;justify-content:space-between!important;padding:clamp(28px,5vw,70px)!important;border-right:1px solid var(--line)!important;overflow:hidden!important}
+    .auth-brand::before{content:"";position:absolute;width:620px;height:620px;right:-240px;bottom:-240px;border-radius:999px;border:1px solid rgba(39,232,255,.25);background:radial-gradient(circle,rgba(39,232,255,.12),transparent 64%);animation:orbitTurn 18s linear infinite}
+    .auth-card{padding:clamp(24px,4vw,54px)!important;display:flex!important;flex-direction:column!important;justify-content:center!important}.auth-card::before{content:"LOGIN NODE";color:var(--cyan);letter-spacing:.18em;font-size:10px;font-weight:900;margin-bottom:18px}
+    .auth-copy h2{font-size:clamp(58px,9vw,132px)!important;line-height:.78!important;letter-spacing:-.11em!important}.auth-copy p{max-width:640px!important;font-size:18px!important;line-height:1.6!important}
+    .auth-tabs{border-radius:0!important;border-color:var(--line)!important;background:rgba(255,255,255,.04)!important}.auth-tab{border-radius:0!important;background:transparent!important;color:#91a3c3!important}.auth-tab.active{background:var(--paper)!important;color:#050508!important}
+
+    .referee-shell{border-radius:0!important;border:1px solid var(--line)!important;background:radial-gradient(circle at var(--mx) var(--my),rgba(39,232,255,.14),transparent 28%),linear-gradient(135deg,#050508,#080912)!important}
+    .flying-disc{background:radial-gradient(circle at 45% 45%,#fff,#bff7ff 18%,var(--cyan) 28%,var(--purple) 82%)!important;border-color:white!important;box-shadow:0 0 55px rgba(39,232,255,.44),0 0 110px rgba(139,92,246,.28)!important;animation:discFly 4.8s linear infinite, discPulse 1.3s ease-in-out infinite alternate!important}
+
+    .bottom-nav{border-radius:0!important;background:rgba(5,5,8,.86)!important;border-color:var(--line)!important;backdrop-filter:blur(22px)!important}.bottom-nav button{border-radius:0!important;background:transparent!important;color:#a8b6cf!important;border:0!important;box-shadow:none!important}.bottom-nav button.active{background:rgba(39,232,255,.12)!important;color:#fff!important}
+
+    @media(max-width:1200px){.desktop-nav{grid-template-columns:repeat(6,1fr)!important}.hero-inner{grid-template-columns:1fr!important}.hero-index-panel{min-height:auto}.stats{grid-template-columns:repeat(2,1fr)!important}.stat{border-bottom:1px solid var(--line)!important}}
+    @media(max-width:900px){.desktop-nav{display:none!important}.side{display:flex!important;background:rgba(5,5,8,.95)!important;border:1px solid var(--line)!important;border-radius:0!important}.nav-icon{display:none!important}.mobile-menu{display:grid!important;place-items:center!important}.auth-shell{display:block!important}.auth-brand{display:none!important}.auth-card{min-height:auto!important}.hero{min-height:auto!important;padding:28px!important}.hero h1{font-size:clamp(42px,13vw,78px)!important}}
+    @media(max-width:620px){.app{padding:10px 0 88px!important}.topbar{top:8px!important;margin:0 10px 12px!important}.hero,.card{margin-left:10px!important;margin-right:10px!important}.stats{grid-template-columns:1fr!important;margin:0 10px 14px!important}.stat{border-right:0!important}}
+
   </style>
 </head>
 
 <body>
+
+  <div class="studio-bg" aria-hidden="true">
+    <div class="studio-noise"></div>
+    <div class="studio-line line-a"></div>
+    <div class="studio-line line-b"></div>
+    <div class="studio-cursor-light"></div>
+  </div>
+
+  <div id="appLoader" class="studio-loader hidden">
+    <div class="studio-loader-card">
+      <div class="studio-disc">
+        <span></span>
+      </div>
+      <p>YOUTH CENTRAL</p>
+      <h2>Building the command room</h2>
+    </div>
+  </div>
+
 
   <div class="yc-ambient" aria-hidden="true">
     <div class="yc-grid"></div>
@@ -2433,18 +2580,39 @@
         </div>
 
         <div class="desktop-nav" id="desktopNav">
-          <button class="top-nav-btn active" data-page="home" onclick="openPage('home', this)">Command</button>
-          <button class="top-nav-btn" data-page="profile" onclick="openPage('profile', this)">Profile</button>
-          <button class="top-nav-btn" data-page="people" onclick="openPage('people', this)">People</button>
-          <button class="top-nav-btn" data-page="newcomer" onclick="openPage('newcomer', this)">Newcomer</button>
-          <button class="top-nav-btn" data-page="events" onclick="openPage('events', this)">Events</button>
-          <button class="top-nav-btn" data-page="sundays" onclick="openPage('sundays', this)">Sundays</button>
-          <button class="top-nav-btn" data-page="attendance" onclick="openPage('attendance', this)">Attendance</button>
-          <button class="top-nav-btn" data-page="teams" onclick="openPage('teams', this)">Teams</button>
-          <button class="top-nav-btn" data-page="followups" onclick="openPage('followups', this)">Follow-ups</button>
-          <button class="top-nav-btn" data-page="tasks" onclick="openPage('tasks', this)">Tasks</button>
-          <button class="top-nav-btn" data-page="reports" onclick="openPage('reports', this)">Reports</button>
-          <button class="top-nav-btn" data-page="access" onclick="openPage('access', this)">Access</button>
+          <button class="top-nav-btn active" data-page="home" onclick="openPage('home', this)">01 / Command</button>
+          <button class="top-nav-btn" data-page="profile" onclick="openPage('profile', this)">02 / Profile</button>
+          <button class="top-nav-btn" data-page="people" onclick="openPage('people', this)">03 / People</button>
+          <button class="top-nav-btn" data-page="newcomer" onclick="openPage('newcomer', this)">04 / Newcomer</button>
+          <button class="top-nav-btn" data-page="events" onclick="openPage('events', this)">05 / Events</button>
+          <button class="top-nav-btn" data-page="sundays" onclick="openPage('sundays', this)">06 / Sundays</button>
+          <button class="top-nav-btn" data-page="attendance" onclick="openPage('attendance', this)">07 / Attendance</button>
+          <button class="top-nav-btn" data-page="teams" onclick="openPage('teams', this)">08 / Teams</button>
+          <button class="top-nav-btn" data-page="followups" onclick="openPage('followups', this)">09 / Follow-ups</button>
+          <button class="top-nav-btn" data-page="tasks" onclick="openPage('tasks', this)">10 / Tasks</button>
+          <button class="top-nav-btn" data-page="reports" onclick="openPage('reports', this)">11 / Reports</button>
+          <button class="top-nav-btn" data-page="access" onclick="openPage('access', this)">12 / Access</button>
+        </div>
+
+        <div class="studio-marquee">
+          <div class="marquee-track">
+            <span>LIVE FOLLOW-UP SYSTEM</span>
+            <span>PEOPLE</span>
+            <span>ATTENDANCE</span>
+            <span>EVENTS</span>
+            <span>GAME PLAN</span>
+            <span>TEAMS</span>
+            <span>REPORTS</span>
+            <span>YOUTH CENTRAL</span>
+            <span>LIVE FOLLOW-UP SYSTEM</span>
+            <span>PEOPLE</span>
+            <span>ATTENDANCE</span>
+            <span>EVENTS</span>
+            <span>GAME PLAN</span>
+            <span>TEAMS</span>
+            <span>REPORTS</span>
+            <span>YOUTH CENTRAL</span>
+          </div>
         </div>
 
         <section id="homeHero" class="hero">
@@ -2454,10 +2622,16 @@
               <h1>I am done following up. <span>Now you do it.</span></h1>
               <p>A live command system for people, attendance, events, teams, follow-ups and tournament control.</p>
             </div>
-            <div class="hero-actions">
-              <button onclick="openMemberModal('Newcomer')">Add Newcomer</button>
-              <button class="btn-purple" onclick="openPageByName('attendance')">Mark Attendance</button>
-              <button class="btn-ghost" onclick="openPageByName('events')">Add Event</button>
+            <div class="hero-index-panel">
+              <div class="index-line"><span>01</span><b>People database</b><em id="heroPeopleCount">Live</em></div>
+              <div class="index-line"><span>02</span><b>Attendance pulse</b><em id="heroAttendanceCount">Live</em></div>
+              <div class="index-line"><span>03</span><b>Event control</b><em>Ready</em></div>
+              <div class="index-line"><span>04</span><b>Game plan</b><em>Referee mode</em></div>
+              <div class="hero-actions">
+                <button onclick="openMemberModal('Newcomer')">Add Newcomer</button>
+                <button class="btn-purple" onclick="openPageByName('attendance')">Mark Attendance</button>
+                <button class="btn-ghost" onclick="openPageByName('events')">Add Event</button>
+              </div>
             </div>
           </div>
         </section>
@@ -3264,7 +3438,7 @@
 
       startListeners();
       render();
-      showAppLoader("Launching Youth Central");
+      studioLoader("Opening command room");
       handleInitialRoute();
     });
 
@@ -4159,6 +4333,25 @@
     }
 
     window.addEventListener("pointermove", (event)=>{
+      const x = Math.round((event.clientX / window.innerWidth) * 100);
+      const y = Math.round((event.clientY / window.innerHeight) * 100);
+      document.documentElement.style.setProperty("--mx", `${x}%`);
+      document.documentElement.style.setProperty("--my", `${y}%`);
+    }, {passive:true});
+
+
+    function studioLoader(label="Opening Youth Central"){
+      const loader = $("appLoader");
+      if(!loader) return;
+      const p = loader.querySelector("p");
+      const h = loader.querySelector("h2");
+      if(p) p.textContent = "YOUTH CENTRAL";
+      if(h) h.textContent = label;
+      loader.classList.remove("hidden");
+      setTimeout(()=>loader.classList.add("hidden"), 950);
+    }
+
+    window.addEventListener("pointermove", event=>{
       const x = Math.round((event.clientX / window.innerWidth) * 100);
       const y = Math.round((event.clientY / window.innerHeight) * 100);
       document.documentElement.style.setProperty("--mx", `${x}%`);
