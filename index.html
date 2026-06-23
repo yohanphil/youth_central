@@ -563,7 +563,81 @@
     .toast-msg{background:rgba(10,18,36,.94);border:1px solid var(--line);border-left:4px solid var(--cyan);border-radius:18px;padding:14px 16px;box-shadow:0 18px 45px rgba(0,0,0,.36);font-size:13px;color:#e2e8f0;animation:toastIn .24s ease both}
     @keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
 
-    .bottom-nav{display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:70;background:rgba(5,8,20,.86);border:1px solid var(--line);backdrop-filter:blur(22px);border-radius:24px;padding:8px;box-shadow:0 18px 50px rgba(0,0,0,.38);grid-template-columns:repeat(5,1fr);gap:4px}
+
+    .event-form{
+      display:grid;
+      grid-template-columns:1.1fr .75fr .8fr .75fr;
+      gap:10px;
+      margin-bottom:16px;
+    }
+    .event-form .span2{grid-column:span 2}
+    .event-form .span4{grid-column:1/-1}
+    .event-card{
+      display:grid;
+      grid-template-columns:150px 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    .event-flyer{
+      width:150px;
+      min-height:150px;
+      border-radius:22px;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 25% 20%,rgba(255,255,255,.28),transparent 18%),
+        linear-gradient(135deg,rgba(34,211,238,.22),rgba(37,99,235,.20),rgba(139,92,246,.22));
+      border:1px solid var(--line);
+      display:grid;
+      place-items:center;
+      color:#cffafe;
+      font-weight:900;
+      text-align:center;
+      padding:12px;
+    }
+    .event-flyer img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .event-report-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin:14px 0;
+    }
+    .event-report-box{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.055);
+      border-radius:22px;
+      padding:16px;
+    }
+    .event-report-box p{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .event-report-box h3{
+      margin-top:8px;
+      font-size:30px;
+      letter-spacing:-.06em;
+    }
+    .logo-export-card{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.055);
+      border-radius:24px;
+      padding:18px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+    .logo-export-card svg{
+      flex:none;
+    }
+
+    .bottom-nav{display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:70;background:rgba(5,8,20,.86);border:1px solid var(--line);backdrop-filter:blur(22px);border-radius:24px;padding:8px;box-shadow:0 18px 50px rgba(0,0,0,.38);grid-template-columns:repeat(6,1fr);gap:4px}
     .bottom-nav button{background:transparent;color:var(--soft);border-radius:16px;padding:9px 6px;font-size:11px;display:grid;gap:3px}
     .bottom-nav button.active{background:rgba(34,211,238,.14);color:white}
 
@@ -669,8 +743,13 @@
       .auth-brand{display:none}
       .auth-card{border-radius:30px;padding:22px}
       .stats{grid-template-columns:1fr 1fr}
-      .grid-2,.grid-3,.kanban,.toolbar,.toolbar.two,.toolbar.three,.toolbar.import,.form-grid,.profile-layout{grid-template-columns:1fr}
-      .span2,.span4{grid-column:auto}
+      .grid-2,.grid-3,.kanban,.toolbar,.toolbar.two,.toolbar.three,.toolbar.import,.form-grid,.profile-layout,.event-form,.event-report-grid{grid-template-columns:1fr}
+      .span2,.span4,.event-form .span2,.event-form .span4{grid-column:auto}
+      .event-card{grid-template-columns:1fr}
+      .event-flyer{width:100%;min-height:220px}
+      .side{width:min(292px,calc(100vw - 24px));left:12px;top:12px;height:calc(100vh - 24px);border-radius:28px}
+      .nav-btn{padding:10px 12px;font-size:13px}
+      .side-foot{display:none}
       .hero{padding:22px;border-radius:30px;min-height:auto}
       .hero h1{font-size:43px}
       .list-item{flex-direction:column}
@@ -761,6 +840,7 @@
           <button class="nav-btn" onclick="openPage('profile', this)"><span class="nav-icon">👤</span> Profile</button>
           <button class="nav-btn" onclick="openPage('people', this)"><span class="nav-icon">🗂️</span> People</button>
           <button class="nav-btn" onclick="openPage('newcomer', this)"><span class="nav-icon">✨</span> Newcomer</button>
+          <button class="nav-btn" onclick="openPage('events', this)"><span class="nav-icon">🎫</span> Events</button>
           <button class="nav-btn" onclick="openPage('attendance', this)"><span class="nav-icon">📍</span> Attendance</button>
           <button class="nav-btn" onclick="openPage('teams', this)"><span class="nav-icon">⚡</span> Teams</button>
           <button class="nav-btn" onclick="openPage('followups', this)"><span class="nav-icon">☎️</span> Follow-ups</button>
@@ -801,7 +881,7 @@
             <div class="hero-actions">
               <button onclick="openMemberModal('Newcomer')">Add Newcomer</button>
               <button class="btn-purple" onclick="openPageByName('attendance')">Mark Attendance</button>
-              <button class="btn-ghost" onclick="openPageByName('tasks')">Add Task</button>
+              <button class="btn-ghost" onclick="openPageByName('events')">Add Event</button>
             </div>
           </div>
         </section>
@@ -867,6 +947,21 @@
               <p class="small-muted" style="margin-top:14px">
                 Best size: square image. Uploaded images are compressed and stored in your user profile.
               </p>
+
+              <div class="logo-export-card" style="margin-top:16px;">
+                <svg width="54" height="54" viewBox="0 0 128 128" fill="none">
+                  <rect width="128" height="128" rx="34" fill="url(#ycg)"/>
+                  <path d="M28 33C48 17 80 17 100 33C121 51 116 91 64 116C12 91 7 51 28 33Z" fill="rgba(255,255,255,.16)"/>
+                  <path d="M35 50L64 87L93 50" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M39 92H89" stroke="white" stroke-width="12" stroke-linecap="round"/>
+                  <circle cx="64" cy="38" r="8" fill="white"/>
+                  <defs><linearGradient id="ycg" x1="12" y1="10" x2="118" y2="120"><stop stop-color="#22D3EE"/><stop offset=".5" stop-color="#2563EB"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs>
+                </svg>
+                <div>
+                  <h4>Youth Central Logo</h4>
+                  <p class="small-muted">Included in the ZIP as youth-central-logo.svg.</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -908,12 +1003,68 @@
           </div>
         </section>
 
+
+        <section id="events" class="page">
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2>Events</h2>
+                  <p>Create events, upload the main flyer and track attendance performance.</p>
+                </div>
+              </div>
+
+              <div class="event-form">
+                <input id="eventTitle" class="span2" placeholder="Event title">
+                <input id="eventDate" type="date">
+                <input id="eventTime" type="time">
+                <input id="eventLocation" placeholder="Location / venue">
+                <input id="eventOwner" placeholder="Event owner">
+                <input id="eventExpected" type="number" min="0" placeholder="Expected count">
+                <input id="eventFlyerUrl" placeholder="Flyer image URL (optional)">
+                <textarea id="eventDescription" class="span4" placeholder="Event details / notes"></textarea>
+                <input id="eventFlyerFile" class="span4" type="file" accept="image/*" onchange="previewEventFlyer(event)">
+                <button class="span2" onclick="addEvent()">Create Event</button>
+                <button class="btn-ghost span2" onclick="clearEventForm()">Clear</button>
+              </div>
+
+              <div id="eventFlyerPreview" class="event-flyer" style="width:100%;min-height:180px;margin-bottom:16px;">Flyer preview</div>
+              <div id="eventList" class="list"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2>Event Report</h2>
+                  <p>See who came, who did not come and who is still not marked.</p>
+                </div>
+              </div>
+
+              <div class="toolbar two">
+                <select id="eventReportSelect" onchange="renderEventReport()"></select>
+                <button onclick="exportSelectedEventReport()">Export Report</button>
+              </div>
+
+              <div id="eventReportStats" class="event-report-grid"></div>
+
+              <div class="card-head" style="margin-top:18px;">
+                <div>
+                  <h3>People who did not come</h3>
+                  <p>Includes Absent and Not Marked records for the selected event.</p>
+                </div>
+              </div>
+              <div id="eventAbsentList" class="list"></div>
+            </div>
+          </div>
+        </section>
+
         <section id="attendance" class="page">
           <div class="card">
             <div class="card-head"><div><h2>Attendance</h2><p>Mark who came to church, youth meeting, training or cell.</p></div></div>
             <div class="toolbar">
               <input id="attendanceDate" type="date">
-              <input id="attendanceEvent" placeholder="Event Name">
+              <select id="attendanceEventSelect"></select>
+              <input id="attendanceEvent" placeholder="Custom event name">
               <select id="attendanceMember"></select>
               <select id="attendanceStatus"><option>Present</option><option>Late</option><option>Absent</option><option>Newcomer</option></select>
               <button onclick="addAttendance()">Mark</button>
@@ -988,9 +1139,9 @@
   <div class="bottom-nav">
     <button class="active" onclick="openPageMobile('home', this)">⌂<span>Home</span></button>
     <button onclick="openPageMobile('people', this)">🗂️<span>People</span></button>
+    <button onclick="openPageMobile('events', this)">🎫<span>Events</span></button>
     <button onclick="openPageMobile('attendance', this)">📍<span>Attend</span></button>
     <button onclick="openPageMobile('tasks', this)">✓<span>Tasks</span></button>
-    <button onclick="openPageMobile('profile', this)">👤<span>Profile</span></button>
     <button onclick="toggleSide()">☰<span>More</span></button>
   </div>
 
@@ -1049,7 +1200,7 @@
     const ADMIN_CODE = "YC-ADMIN-2026";
     const ROLES = ["Admin","Core Moderator","Team Head","Team Lead","Member","Viewer"];
     let authMode = "login";
-    let youthMembers=[], cellLeaders=[], cellGroups=[], attendance=[], followUps=[], tasks=[], userProfiles=[], notifications=[];
+    let youthMembers=[], cellLeaders=[], cellGroups=[], attendance=[], followUps=[], tasks=[], userProfiles=[], notifications=[], events=[];
     let editingMemberId=null, listenersStarted=false, currentProfile=null, currentUser=null, taskInitialLoaded=false;
     const seenTaskIds = new Set();
 
@@ -1085,6 +1236,7 @@
 
 
     let pendingProfilePhotoData = "";
+    let pendingEventFlyerData = "";
 
     function safeImageUrl(value){
       const url = String(value || "").trim();
@@ -1174,6 +1326,39 @@
       pendingProfilePhotoData = "";
       notify("DP removed");
     };
+
+    window.previewEventFlyer = function(event){
+      const file = event.target.files?.[0];
+      if(!file) return;
+      if(!file.type.startsWith("image/")) return notify("Please upload an image file.");
+
+      const reader = new FileReader();
+      reader.onload = function(e){
+        const img = new Image();
+        img.onload = function(){
+          const max = 1000;
+          const scale = Math.min(max / img.width, max / img.height, 1);
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          pendingEventFlyerData = canvas.toDataURL("image/jpeg", 0.78);
+          $("eventFlyerPreview").innerHTML = `<img src="${pendingEventFlyerData}" alt="Event flyer preview">`;
+          notify("Event flyer preview ready.");
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    window.clearEventForm = function(){
+      ["eventTitle","eventDate","eventTime","eventLocation","eventOwner","eventExpected","eventFlyerUrl","eventDescription"].forEach(id=>$(id).value="");
+      $("eventFlyerFile").value = "";
+      pendingEventFlyerData = "";
+      $("eventFlyerPreview").innerHTML = "Flyer preview";
+    };
+
 
 
     window.enableNotifications = async function(){
@@ -1315,12 +1500,69 @@
       notify("Newcomer saved + follow-up created");
     };
 
+
+    window.addEvent = async function(){
+      if(!canManage()) return notify("Only Admin or Core Moderator can create events.");
+      const title = $("eventTitle").value.trim();
+      const date = $("eventDate").value;
+      if(!title || !date) return notify("Event title and date are required.");
+
+      const data = {
+        title,
+        date,
+        time: $("eventTime").value,
+        location: $("eventLocation").value.trim(),
+        owner: $("eventOwner").value.trim(),
+        expectedCount: Number($("eventExpected").value || 0),
+        description: $("eventDescription").value.trim(),
+        flyerURL: $("eventFlyerUrl").value.trim(),
+        flyerData: pendingEventFlyerData,
+        status: "Upcoming",
+        createdBy: currentProfile?.name || currentUser?.email || "Team",
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      };
+
+      await addDoc(collection(db,"events"), data);
+      clearEventForm();
+      notify("Event created");
+    };
+
+    window.deleteEvent = async function(id){
+      if(!canAdmin()) return notify("Only Admin can delete events.");
+      if(confirm("Delete this event? Attendance records will remain, but this event card will be removed.")){
+        await deleteDoc(doc(db,"events",id));
+        notify("Event deleted");
+      }
+    };
+
     window.addAttendance=async function(){
-      const memberId=$("attendanceMember").value,date=$("attendanceDate").value,eventName=$("attendanceEvent").value.trim()||"Church",status=$("attendanceStatus").value;
+      const memberId=$("attendanceMember").value;
+      const selectedEventId=$("attendanceEventSelect").value;
+      const selectedEvent=events.find(e=>e.id===selectedEventId);
+      const date=$("attendanceDate").value || selectedEvent?.date || todayISO();
+      const eventName=selectedEvent ? selectedEvent.title : ($("attendanceEvent").value.trim()||"Church");
+      const status=$("attendanceStatus").value;
       const m=youthMembers.find(x=>x.id===memberId);
-      if(!m||!date) return notify("Select member and date");
-      await addDoc(collection(db,"attendance"),{memberId,memberName:m.name,contactNumber:m.contactNumber||"",date,eventName,status,cellLeader:m.cellLeader||"",team:m.team||"",createdAt:serverTimestamp()});
-      if(["Present","Late","Newcomer"].includes(status)) await updateDoc(doc(db,"youthMembers",memberId),{lastAttendedDate:date,updatedAt:serverTimestamp()});
+      if(!m||!date) return notify("Select person and date");
+
+      await addDoc(collection(db,"attendance"),{
+        memberId,
+        memberName:m.name,
+        contactNumber:m.contactNumber||"",
+        date,
+        eventId:selectedEventId||"",
+        eventName,
+        status,
+        cellLeader:m.cellLeader||"",
+        team:m.team||"",
+        createdAt:serverTimestamp()
+      });
+
+      if(["Present","Late","Newcomer"].includes(status)){
+        await updateDoc(doc(db,"youthMembers",memberId),{lastAttendedDate:date,updatedAt:serverTimestamp()});
+      }
+
       notify("Attendance marked");
     };
     window.deleteAttendance=async id=>{if(!canManage()) return notify("Only leaders can delete attendance."); if(confirm("Delete attendance record?")){await deleteDoc(doc(db,"attendance",id));notify("Attendance deleted")}};
@@ -1472,7 +1714,7 @@
     function isMissing(m){if(!m.lastAttendedDate)return true;const d=new Date(m.lastAttendedDate);return ((Date.now()-d.getTime())/(1000*60*60*24))>14}
 
     function render(){
-      renderSelectors();renderDashboard();renderYouthTable();renderAttendance();renderTeams();renderFollowUps();renderReports();renderTasks();renderUsers();renderNotifications();updateProfileUI();
+      renderSelectors();renderDashboard();renderYouthTable();renderEvents();renderAttendance();renderTeams();renderFollowUps();renderReports();renderTasks();renderUsers();renderNotifications();updateProfileUI();
     }
 
     function renderSelectors(){
@@ -1482,6 +1724,19 @@
       $("filterTeam").innerHTML=`<option value="">All Teams</option>`+teams.map(t=>`<option>${clean(t)}</option>`).join("");
       $("attendanceMember").innerHTML=`<option value="">Select Person</option>`+youthMembers.sort((a,b)=>String(a.name).localeCompare(String(b.name))).map(m=>`<option value="${m.id}">${clean(m.name)} - ${clean(m.team||m.ministry||"No Team")}</option>`).join("");
       $("taskOwner").innerHTML=`<option value="">Unassigned</option>`+youthMembers.map(m=>`<option>${clean(m.name)}</option>`).join("");
+
+      if($("attendanceEventSelect")){
+        const current = $("attendanceEventSelect").value;
+        $("attendanceEventSelect").innerHTML=`<option value="">Custom / No event</option>`+events.map(e=>`<option value="${e.id}">${clean(e.title)} • ${clean(e.date||"")}</option>`).join("");
+        $("attendanceEventSelect").value = current;
+      }
+      if($("eventReportSelect")){
+        const currentReport = $("eventReportSelect").value;
+        $("eventReportSelect").innerHTML = events.length
+          ? events.map(e=>`<option value="${e.id}">${clean(e.title)} • ${clean(e.date||"")}</option>`).join("")
+          : `<option value="">No events yet</option>`;
+        if(currentReport && events.some(e=>e.id===currentReport)) $("eventReportSelect").value = currentReport;
+      }
     }
 
     function renderDashboard(){
@@ -1505,7 +1760,144 @@
 
     window.quickPresent=async id=>{const m=youthMembers.find(x=>x.id===id);if(!m)return;const date=todayISO();await addDoc(collection(db,"attendance"),{memberId:id,memberName:m.name,contactNumber:m.contactNumber||"",date,eventName:"Quick Present",status:"Present",cellLeader:m.cellLeader||"",team:m.team||"",createdAt:serverTimestamp()});await updateDoc(doc(db,"youthMembers",id),{lastAttendedDate:date,updatedAt:serverTimestamp()});notify("Marked present")};
 
-    function renderAttendance(){$("attendanceList").innerHTML=attendance.slice(0,40).map(a=>`<div class="list-item"><div><h4>${clean(a.memberName)}</h4><p>${clean(a.eventName)} • ${clean(a.date)} • <span class="pill status-${roleKey(a.status)}">${clean(a.status)}</span></p></div><button class="mini-btn btn-danger" onclick="deleteAttendance('${a.id}')">Delete</button></div>`).join("")||`<div class="empty">No attendance yet.</div>`}
+
+    function eventFlyerHTML(e){
+      const img = safeImageUrl(e.flyerData) || safeImageUrl(e.flyerURL);
+      if(img) return `<img src="${img}" alt="${clean(e.title)} flyer">`;
+      return `Event<br>Flyer`;
+    }
+
+    function eventStatusMap(eventObj){
+      const records = attendance.filter(a =>
+        (a.eventId && a.eventId === eventObj.id) ||
+        (!a.eventId && a.eventName === eventObj.title && a.date === eventObj.date)
+      );
+
+      const map = new Map();
+      records.forEach(a=>{
+        if(!map.has(a.memberId)) map.set(a.memberId, a.status || "Not Marked");
+      });
+      return map;
+    }
+
+    function eventStats(eventObj){
+      const map = eventStatusMap(eventObj);
+      let came = 0, absent = 0, notMarked = 0;
+      youthMembers.forEach(m=>{
+        const s = map.get(m.id);
+        if(["Present","Late","Newcomer"].includes(s)) came++;
+        else if(s === "Absent") absent++;
+        else notMarked++;
+      });
+      return { came, absent, notMarked, didntCome: absent + notMarked, total:youthMembers.length, map };
+    }
+
+    function renderEvents(){
+      if(!$("eventList")) return;
+
+      $("eventList").innerHTML = events.length ? events.map(e=>{
+        const stats = eventStats(e);
+        return `
+          <div class="list-item event-card">
+            <div class="event-flyer">${eventFlyerHTML(e)}</div>
+            <div>
+              <h4>${clean(e.title)}</h4>
+              <p>${clean(e.date||"No date")} ${clean(e.time||"")} • ${clean(e.location||"No location")}</p>
+              <p>${clean(e.description||"No event details added")}</p>
+              <p><span class="pill status-Present">${stats.came} came</span> <span class="pill status-Absent">${stats.didntCome} did not come</span> <span class="pill">${stats.notMarked} not marked</span></p>
+              <div class="task-actions" style="margin-top:10px;">
+                <button class="mini-btn" onclick="selectEventReport('${e.id}')">View Report</button>
+                <button class="mini-btn btn-danger" onclick="deleteEvent('${e.id}')">Delete</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("") : `<div class="empty">No events yet. Add your first event and upload the main flyer.</div>`;
+
+      renderEventReport();
+    }
+
+    window.selectEventReport = function(id){
+      $("eventReportSelect").value = id;
+      renderEventReport();
+      openPageByName("events");
+    };
+
+    window.renderEventReport = function(){
+      if(!$("eventReportStats")) return;
+
+      const id = $("eventReportSelect").value || events[0]?.id || "";
+      const eventObj = events.find(e=>e.id===id);
+
+      if(!eventObj){
+        $("eventReportStats").innerHTML = `<div class="empty">Create an event to see reports.</div>`;
+        $("eventAbsentList").innerHTML = "";
+        return;
+      }
+
+      const stats = eventStats(eventObj);
+
+      $("eventReportStats").innerHTML = `
+        <div class="event-report-box"><p>Total People</p><h3>${stats.total}</h3></div>
+        <div class="event-report-box"><p>Came</p><h3>${stats.came}</h3></div>
+        <div class="event-report-box"><p>Did Not Come</p><h3>${stats.didntCome}</h3></div>
+        <div class="event-report-box"><p>Not Marked</p><h3>${stats.notMarked}</h3></div>
+      `;
+
+      const didnt = youthMembers.filter(m=>{
+        const s = stats.map.get(m.id);
+        return s === "Absent" || !s;
+      });
+
+      $("eventAbsentList").innerHTML = didnt.length ? didnt.map(m=>{
+        const s = stats.map.get(m.id) || "Not Marked";
+        return `
+          <div class="list-item">
+            <div class="person">
+              <div class="avatar">${initials(m.name)}</div>
+              <div><h4>${clean(m.name)}</h4><p>${clean(m.contactNumber||"No phone")} • ${clean(m.team||m.ministry||"No team")} • ${clean(m.cellLeader||"No leader")}</p></div>
+            </div>
+            <span class="pill status-${roleKey(s)}">${clean(s)}</span>
+          </div>
+        `;
+      }).join("") : `<div class="empty">Everyone is marked as came for this event.</div>`;
+    };
+
+    window.exportSelectedEventReport = function(){
+      const id = $("eventReportSelect").value || events[0]?.id || "";
+      const eventObj = events.find(e=>e.id===id);
+      if(!eventObj) return notify("Select an event first.");
+
+      const stats = eventStats(eventObj);
+      const rows = youthMembers.map(m=>({
+        eventTitle:eventObj.title,
+        eventDate:eventObj.date || "",
+        name:m.name || "",
+        contactNumber:m.contactNumber || "",
+        team:m.team || m.ministry || "",
+        cellLeader:m.cellLeader || "",
+        status:stats.map.get(m.id) || "Not Marked"
+      }));
+
+      const keys = Object.keys(rows[0] || {});
+      const csv = [keys.join(","), ...rows.map(r=>keys.map(k=>`"${String(r[k]??"").replace(/"/g,'""')}"`).join(","))].join("\n");
+      const blob = new Blob([csv], {type:"text/csv"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `${(eventObj.title||"event").replace(/[^a-z0-9]/gi,"-").toLowerCase()}-attendance-report.csv`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    };
+
+
+    function renderAttendance(){
+      $("attendanceList").innerHTML=attendance.slice(0,60).map(a=>`
+        <div class="list-item">
+          <div><h4>${clean(a.memberName)}</h4><p>${clean(a.eventName)} • ${clean(a.date)} • ${clean(a.team||"No team")} • <span class="pill status-${roleKey(a.status)}">${clean(a.status)}</span></p></div>
+          <button class="mini-btn btn-danger" onclick="deleteAttendance('${a.id}')">Delete</button>
+        </div>
+      `).join("")||`<div class="empty">No attendance yet.</div>`;
+    }
 
     function renderTeams(){
       const teams={};
@@ -1578,7 +1970,7 @@
 
     function startListeners(){
       if(listenersStarted)return; listenersStarted=true;
-      listen("youthMembers",d=>youthMembers=d);listen("cellLeaders",d=>cellLeaders=d);listen("cellGroups",d=>cellGroups=d);listen("attendance",d=>attendance=d);listen("followUps",d=>followUps=d);listen("userProfiles",d=>{userProfiles=d; if(currentUser){const me=d.find(u=>(u.uid||u.id)===currentUser.uid); if(me){currentProfile=me; $("currentUserLabel").textContent=`${currentProfile.name || currentUser.email} • ${currentProfile.role}`; updateProfileUI();}}});listen("notifications",d=>notifications=d);
+      listen("youthMembers",d=>youthMembers=d);listen("cellLeaders",d=>cellLeaders=d);listen("cellGroups",d=>cellGroups=d);listen("attendance",d=>attendance=d);listen("followUps",d=>followUps=d);listen("userProfiles",d=>{userProfiles=d; if(currentUser){const me=d.find(u=>(u.uid||u.id)===currentUser.uid); if(me){currentProfile=me; $("currentUserLabel").textContent=`${currentProfile.name || currentUser.email} • ${currentProfile.role}`; updateProfileUI();}}});listen("notifications",d=>notifications=d);listen("events",d=>events=d);
       const qTasks=query(collection(db,"tasks"),orderBy("createdAt","desc"));
       onSnapshot(qTasks,snap=>{
         const newTasks=snap.docs.map(d=>({id:d.id,...d.data()}));
