@@ -845,7 +845,7 @@
 
         <section id="access" class="page">
           <div class="card">
-            <div class="card-head"><div><h2>Access</h2><p>Admins can classify leaders and users into access levels.</p></div></div>
+            <div class="card-head"><div><h2>Access</h2><p>Admins can control roles, teams, people, tasks, attendance and cleanup.</p></div></div>
             <div id="accessWarning" class="empty hidden">Only Admins can change roles.</div>
             <div class="table-wrap"><table><thead><tr><th>User</th><th>Email</th><th>Role</th><th>Team</th><th>Status</th><th>Action</th></tr></thead><tbody id="usersTable"></tbody></table></div>
           </div>
@@ -898,7 +898,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, setDoc, getDoc, getDocs, onSnapshot, serverTimestamp, query, orderBy, where } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, setDoc, getDoc, getDocs, onSnapshot, serverTimestamp, query, orderBy, where, writeBatch } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCdMfitam8d7UwVfP2I3jbuDIYvW-lAB-c",
@@ -1096,6 +1096,87 @@
     window.addCellLeader=async()=>{if(!canManage()) return notify("Only leaders can add cell leaders."); const name=$("leaderName").value.trim();if(!name)return notify("Leader name required");await addDoc(collection(db,"cellLeaders"),{name,contactNumber:"",role:"Cell Leader",status:"Active",createdAt:serverTimestamp()});$("leaderName").value="";notify("Leader added")};
     window.addCellGroup=async()=>{if(!canManage()) return notify("Only leaders can add cell groups."); const cellGroupName=$("cellName").value.trim();if(!cellGroupName)return notify("Cell name required");await addDoc(collection(db,"cellGroups"),{cellGroupName,leader:"",assistantLeader:"",area:"",members:[],status:"Active",createdAt:serverTimestamp()});$("cellName").value="";notify("Cell added")};
 
+    window.deleteCellLeader = async function(id){
+      if(!canAdmin()) return notify("Only Admin can delete cell leaders.");
+      if(confirm("Delete this cell leader?")){
+        await deleteDoc(doc(db,"cellLeaders",id));
+        notify("Cell leader deleted");
+      }
+    };
+
+    window.deleteCellGroup = async function(id){
+      if(!canAdmin()) return notify("Only Admin can delete cell groups.");
+      if(confirm("Delete this cell group?")){
+        await deleteDoc(doc(db,"cellGroups",id));
+        notify("Cell group deleted");
+      }
+    };
+
+    window.renameTeam = async function(encodedTeam){
+      if(!canAdmin()) return notify("Only Admin can rename teams.");
+      const oldTeam = decodeURIComponent(encodedTeam);
+      if(oldTeam === "No Team") return notify("No Team cannot be renamed.");
+      const newTeam = prompt(`Rename team "${oldTeam}" to:`);
+      if(!newTeam || !newTeam.trim()) return;
+      const cleanTeam = newTeam.trim();
+
+      const batch = writeBatch(db);
+      let count = 0;
+
+      youthMembers.forEach(m=>{
+        const updates = {};
+        if((m.team || "") === oldTeam) updates.team = cleanTeam;
+        if((m.ministry || "") === oldTeam) updates.ministry = cleanTeam;
+        if(Object.keys(updates).length){
+          updates.updatedAt = serverTimestamp();
+          batch.update(doc(db,"youthMembers",m.id), updates);
+          count++;
+        }
+      });
+
+      userProfiles.forEach(u=>{
+        if((u.team || "") === oldTeam){
+          batch.update(doc(db,"userProfiles",u.uid || u.id), { team: cleanTeam, updatedAt:serverTimestamp() });
+          count++;
+        }
+      });
+
+      await batch.commit();
+      notify(`Renamed team for ${count} records`);
+    };
+
+    window.deleteTeam = async function(encodedTeam){
+      if(!canAdmin()) return notify("Only Admin can delete teams.");
+      const team = decodeURIComponent(encodedTeam);
+      if(team === "No Team") return notify("No Team cannot be deleted.");
+      if(!confirm(`Delete team "${team}"? This will not delete people. It will only clear this team/ministry label from people and user access profiles.`)) return;
+
+      const batch = writeBatch(db);
+      let count = 0;
+
+      youthMembers.forEach(m=>{
+        const updates = {};
+        if((m.team || "") === team) updates.team = "";
+        if((m.ministry || "") === team) updates.ministry = "";
+        if(Object.keys(updates).length){
+          updates.updatedAt = serverTimestamp();
+          batch.update(doc(db,"youthMembers",m.id), updates);
+          count++;
+        }
+      });
+
+      userProfiles.forEach(u=>{
+        if((u.team || "") === team){
+          batch.update(doc(db,"userProfiles",u.uid || u.id), { team:"", updatedAt:serverTimestamp() });
+          count++;
+        }
+      });
+
+      await batch.commit();
+      notify(`Deleted team label from ${count} records`);
+    };
+
+
     window.addTask=async function(){
       const title=$("taskTitle").value.trim();
       if(!title) return notify("Task required");
@@ -1109,6 +1190,15 @@
     window.deleteTask=async id=>{if(!canManage()) return notify("Only leaders can delete tasks."); if(confirm("Delete task?")){await deleteDoc(doc(db,"tasks",id));notify("Task deleted")}};
 
     window.completeFollowUp=async(id,memberId)=>{await updateDoc(doc(db,"followUps",id),{status:"Completed",completedAt:serverTimestamp()});if(memberId)await updateDoc(doc(db,"youthMembers",memberId),{followUpStatus:"Completed"});notify("Follow-up completed")};
+
+    window.deleteFollowUp = async function(id){
+      if(!canAdmin()) return notify("Only Admin can delete follow-ups.");
+      if(confirm("Delete this follow-up?")){
+        await deleteDoc(doc(db,"followUps",id));
+        notify("Follow-up deleted");
+      }
+    };
+
 
     window.createFollowUp=async id=>{
       const m=youthMembers.find(x=>x.id===id); if(!m)return;
@@ -1186,13 +1276,52 @@
     function renderAttendance(){$("attendanceList").innerHTML=attendance.slice(0,40).map(a=>`<div class="list-item"><div><h4>${clean(a.memberName)}</h4><p>${clean(a.eventName)} • ${clean(a.date)} • <span class="pill status-${roleKey(a.status)}">${clean(a.status)}</span></p></div><button class="mini-btn btn-danger" onclick="deleteAttendance('${a.id}')">Delete</button></div>`).join("")||`<div class="empty">No attendance yet.</div>`}
 
     function renderTeams(){
-      const teams={};youthMembers.forEach(m=>{const k=m.team||m.ministry||"No Team";if(!teams[k])teams[k]=[];teams[k].push(m)});
-      $("teamsList").innerHTML=Object.entries(teams).sort((a,b)=>b[1].length-a[1].length).map(([team,items])=>`<div class="list-item"><div><h4>${clean(team)}</h4><p>${items.length} people • Heads: ${clean(userProfiles.filter(u=>u.team===team&&["Team Head","Team Lead"].includes(u.role)).map(u=>u.name).join(", ")||"Not assigned")}</p></div></div>`).join("")||`<div class="empty">No teams yet. Add team names inside a person profile.</div>`;
-      $("cellLeadersList").innerHTML=cellLeaders.map(l=>`<div class="list-item"><div><h4>${clean(l.name)}</h4><p>${clean(l.contactNumber||"No phone")}</p></div></div>`).join("")||`<div class="empty">No leaders yet.</div>`;
-      $("cellGroupsList").innerHTML=cellGroups.map(c=>`<div class="list-item"><div><h4>${clean(c.cellGroupName)}</h4><p>Lead: ${clean(c.leader||"")} • ${Array.isArray(c.members)?c.members.length:0} imported members</p></div></div>`).join("")||`<div class="empty">No cell groups yet.</div>`;
+      const teams={};
+      youthMembers.forEach(m=>{
+        const k=m.team||m.ministry||"No Team";
+        if(!teams[k]) teams[k]=[];
+        teams[k].push(m);
+      });
+
+      $("teamsList").innerHTML=Object.entries(teams).sort((a,b)=>b[1].length-a[1].length).map(([team,items])=>`
+        <div class="list-item">
+          <div>
+            <h4>${clean(team)}</h4>
+            <p>${items.length} people • Heads: ${clean(userProfiles.filter(u=>u.team===team&&["Team Head","Team Lead"].includes(u.role)).map(u=>u.name).join(", ")||"Not assigned")}</p>
+          </div>
+          <div class="task-actions">
+            <button class="mini-btn" onclick="renameTeam('${encodeURIComponent(team)}')">Rename</button>
+            <button class="mini-btn btn-danger" onclick="deleteTeam('${encodeURIComponent(team)}')">Delete</button>
+          </div>
+        </div>
+      `).join("")||`<div class="empty">No teams yet. Add team names inside a person profile.</div>`;
+
+      $("cellLeadersList").innerHTML=cellLeaders.map(l=>`
+        <div class="list-item">
+          <div><h4>${clean(l.name)}</h4><p>${clean(l.contactNumber||"No phone")}</p></div>
+          <button class="mini-btn btn-danger" onclick="deleteCellLeader('${l.id}')">Delete</button>
+        </div>
+      `).join("")||`<div class="empty">No leaders yet.</div>`;
+
+      $("cellGroupsList").innerHTML=cellGroups.map(c=>`
+        <div class="list-item">
+          <div><h4>${clean(c.cellGroupName)}</h4><p>Lead: ${clean(c.leader||"")} • ${Array.isArray(c.members)?c.members.length:0} imported members</p></div>
+          <button class="mini-btn btn-danger" onclick="deleteCellGroup('${c.id}')">Delete</button>
+        </div>
+      `).join("")||`<div class="empty">No cell groups yet.</div>`;
     }
 
-    function renderFollowUps(){$("followupList").innerHTML=followUps.map(f=>`<div class="list-item"><div><h4>${clean(f.memberName)}</h4><p>${clean(f.reason)} • Assigned: ${clean(f.assignedTo)} • <span class="pill status-${roleKey(f.status)}">${clean(f.status)}</span></p><p>${clean(f.contactNumber)}</p></div><button class="mini-btn btn-green" onclick="completeFollowUp('${f.id}','${f.memberId||""}')">Complete</button></div>`).join("")||`<div class="empty">No follow-ups yet.</div>`}
+    function renderFollowUps(){
+      $("followupList").innerHTML=followUps.map(f=>`
+        <div class="list-item">
+          <div><h4>${clean(f.memberName)}</h4><p>${clean(f.reason)} • Assigned: ${clean(f.assignedTo)} • <span class="pill status-${roleKey(f.status)}">${clean(f.status)}</span></p><p>${clean(f.contactNumber)}</p></div>
+          <div class="task-actions">
+            <button class="mini-btn btn-green" onclick="completeFollowUp('${f.id}','${f.memberId||""}')">Complete</button>
+            <button class="mini-btn btn-danger" onclick="deleteFollowUp('${f.id}')">Delete</button>
+          </div>
+        </div>
+      `).join("")||`<div class="empty">No follow-ups yet.</div>`;
+    }
 
     function renderReports(){
       const missing=youthMembers.filter(isMissing);
