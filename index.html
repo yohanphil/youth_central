@@ -2526,7 +2526,7 @@
     .studio-loader-card h2{letter-spacing:-.08em!important;}
     .studio-disc{border:1px solid rgba(245,240,230,.72)!important;background:radial-gradient(circle at 45% 42%,#fff 0 8%,rgba(45,243,255,.85) 9% 38%,rgba(155,108,255,.68) 75%)!important;}
 
-    /* Login: Youth Core Team */
+    /* Login: premium leadership suite */
     .login{min-height:100svh!important;padding:clamp(16px,3vw,38px)!important;display:grid!important;place-items:center!important;}
     .auth-shell{
       width:min(1280px,100%)!important;
@@ -2560,7 +2560,19 @@
       border:1px solid rgba(45,243,255,.18)!important;
       background:radial-gradient(circle,rgba(45,243,255,.11),transparent 62%)!important;
       animation:orbitTurn 18s linear infinite!important;
-    }    }
+    }
+    .auth-brand::after{
+      content:"LEADERSHIP / PEOPLE / CARE / EVENTS"!important;
+      position:absolute!important;
+      right:28px!important;
+      bottom:28px!important;
+      color:rgba(245,240,230,.34)!important;
+      font-size:10px!important;
+      letter-spacing:.22em!important;
+      font-weight:900!important;
+      background:none!important;
+      width:auto!important;height:auto!important;animation:none!important;
+    }
     .auth-orbit{opacity:.36!important;filter:blur(.2px)}
     .auth-copy h2{font-size:clamp(58px,8vw,112px)!important;line-height:.82!important;letter-spacing:-.105em!important;max-width:820px!important;}
     .auth-copy h2 span,
@@ -2568,6 +2580,23 @@
     .ref-live-card h2 span{
       background:linear-gradient(90deg,#fff,#e9ffff,#9ff6ff,#c8baff)!important;
       -webkit-background-clip:text!important;color:transparent!important;
+    }
+    .auth-copy p{font-size:17px!important;line-height:1.72!important;color:#cdd6e8!important;max-width:650px!important;}
+    .logo-row h1,.brand h2{letter-spacing:-.07em!important;}
+    .auth-card{padding:clamp(28px,4vw,54px)!important;position:relative!important;}
+    .auth-card::before{
+      content:"SECURE ACCESS"!important;
+      position:static!important;
+      display:inline-flex!important;
+      width:max-content!important;
+      margin-bottom:18px!important;
+      padding:7px 10px!important;
+      color:#081018!important;
+      background:var(--champagne)!important;
+      font-size:10px!important;
+      letter-spacing:.16em!important;
+      font-weight:900!important;
+      border-radius:999px!important;
     }
     .auth-card h3{font-size:clamp(34px,4vw,52px)!important;line-height:.94!important;letter-spacing:-.085em!important;}
     .auth-card p{color:#aeb9ce!important;}
@@ -3031,6 +3060,84 @@
       margin-top:0!important;
     }
 
+  
+
+    /* =========================================================
+       Youth Central V12.2 - Requested UX Adjustments
+       Clean home, modal events, admin settings, analytics, FOMO intro.
+       ========================================================= */
+    #homeHero{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important;}
+    #home.page.active{margin-top:0!important;}
+    .admin-only.hidden{display:none!important;}
+    .settings-btn{width:52px!important;min-width:52px!important;padding:0!important;font-size:20px!important;border-radius:18px!important;}
+    .desktop-nav{grid-template-columns:repeat(10,1fr)!important;}
+    .nav .nav-btn[data-page="profile"],
+    .nav .nav-btn[data-page="access"],
+    .desktop-nav .top-nav-btn[data-page="profile"],
+    .desktop-nav .top-nav-btn[data-page="access"]{display:none!important;}
+    .event-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px;}
+    .event-card{align-items:start!important;}
+    .event-page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+    .event-page-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end;}
+    .event-modal .modal-card{width:min(1120px,96vw)!important;}
+    .event-form{margin-bottom:0!important;}
+    .quick-action-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+    .call-link{background:linear-gradient(135deg,#27e8ff,#54ff9f)!important;color:#041009!important;border-color:transparent!important;text-decoration:none!important;}
+    .follow-link{background:linear-gradient(135deg,#d9ff00,#54ff9f)!important;color:#061006!important;border-color:transparent!important;}
+    .admin-settings-copy{font-size:12px;color:var(--muted);margin-top:6px;}
+
+    .analytics-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-bottom:16px;}
+    .analytics-title-card{min-height:260px;display:grid;align-content:end;background:radial-gradient(circle at 18% 12%,rgba(39,232,255,.18),transparent 32%),linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.03))!important;}
+    .analytics-title-card h2{font-size:clamp(44px,7vw,94px)!important;line-height:.82!important;letter-spacing:-.1em!important;}
+    .analytics-title-card h2 span{display:block;background:linear-gradient(90deg,#fff,#bdf9ff,#c7b8ff);-webkit-background-clip:text;color:transparent;}
+    .analytics-kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+    .analytics-kpi{border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:24px;padding:18px;min-height:124px;display:grid;align-content:end;}
+    .analytics-kpi p{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#a7b5cc;font-weight:900;}
+    .analytics-kpi h3{font-size:44px;letter-spacing:-.08em;margin-top:8px;}
+    .analytics-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;}
+    .chart-card{min-height:310px;}
+    .chart-bars{display:flex;align-items:end;gap:10px;height:210px;padding:16px 6px 0;border-bottom:1px solid var(--line);}
+    .chart-bar-wrap{flex:1;min-width:28px;display:grid;align-content:end;gap:8px;text-align:center;height:100%;}
+    .chart-bar{height:var(--h,10%);border-radius:16px 16px 4px 4px;background:linear-gradient(180deg,#27e8ff,#8b5cf6);box-shadow:0 0 26px rgba(39,232,255,.16);min-height:6px;}
+    .chart-bar-wrap span{font-size:10px;color:#9fb0ca;font-weight:800;}
+    .chart-list{display:grid;gap:10px;}
+    .chart-list-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:18px;padding:12px;}
+    .mini-progress{height:9px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin-top:8px;}
+    .mini-progress i{display:block;height:100%;width:var(--w,10%);background:linear-gradient(90deg,#27e8ff,#d9ff00);border-radius:999px;}
+
+    .game-intro-overlay{position:fixed;inset:0;z-index:99990;background:#020302;display:grid;place-items:center;overflow:hidden;}
+    .game-intro-overlay.hidden{display:none!important;}
+    .game-intro-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.12) contrast(1.05);}
+    .game-intro-shade{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,transparent 0 45%,rgba(0,0,0,.55) 72%),linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.72));pointer-events:none;}
+    .game-intro-controls{position:absolute;left:clamp(18px,4vw,64px);right:clamp(18px,4vw,64px);bottom:clamp(18px,4vw,50px);z-index:2;display:flex;align-items:end;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+    .game-intro-title{max-width:720px;}
+    .game-intro-title p{display:inline-flex;align-items:center;gap:8px;background:#d9ff00;color:#050505;padding:8px 12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;border-radius:999px;}
+    .game-intro-title h1{font-size:clamp(48px,9vw,132px);line-height:.78;letter-spacing:-.09em;margin-top:14px;color:white;text-shadow:0 0 40px rgba(39,232,255,.28);}
+    .intro-start-btn.hidden{display:none!important;}
+
+    body.game-mode{background:#060800!important;}
+    body.game-mode .referee-shell{background:radial-gradient(circle at 18% 10%,rgba(217,255,0,.20),transparent 26%),radial-gradient(circle at 88% 12%,rgba(39,232,255,.18),transparent 32%),linear-gradient(135deg,#040500,#090d05 50%,#0a0b0f)!important;border:1px solid rgba(217,255,0,.34)!important;}
+    body.game-mode .referee-shell::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(135deg,rgba(217,255,0,.12) 0 10px,transparent 10px 26px);mask-image:linear-gradient(90deg,rgba(0,0,0,.38),transparent 28%,transparent 72%,rgba(0,0,0,.28));opacity:.62;}
+    body.game-mode .ref-top{background:rgba(5,7,2,.78)!important;border-bottom:1px solid rgba(217,255,0,.28)!important;}
+    body.game-mode .ref-live-card,
+    body.game-mode .ref-scoreboard,
+    body.game-mode .game-section .card,
+    body.game-mode .team-card,
+    body.game-mode .match-card{background:rgba(6,8,4,.72)!important;border:1px solid rgba(217,255,0,.20)!important;box-shadow:0 24px 100px rgba(0,0,0,.55),0 0 55px rgba(39,232,255,.07)!important;}
+    body.game-mode .hero-tag,
+    body.game-mode .live-badge{background:#d9ff00!important;color:#050505!important;border:0!important;}
+    body.game-mode .ref-live-card h2 span,
+    body.game-mode .ref-brand h1,
+    body.game-mode .live-team .score{background:linear-gradient(90deg,#d9ff00,#27e8ff,#ffffff);-webkit-background-clip:text;color:transparent!important;text-shadow:none!important;}
+    body.game-mode .ref-tab.active,
+    body.game-mode .vs-pill{background:#d9ff00!important;color:#050505!important;}
+    body.game-mode button:not(.btn-ghost):not(.btn-danger),
+    body.game-mode .btn:not(.btn-ghost):not(.btn-danger){background:linear-gradient(135deg,#d9ff00,#27e8ff)!important;color:#050505!important;border-color:transparent!important;}
+    body.game-mode .btn-ghost{background:rgba(255,255,255,.06)!important;color:#f7ffe0!important;border-color:rgba(217,255,0,.22)!important;}
+
+    @media(max-width:1100px){.analytics-hero,.analytics-grid{grid-template-columns:1fr!important;}.desktop-nav{grid-template-columns:repeat(5,1fr)!important;}}
+    @media(max-width:720px){.analytics-kpi-grid{grid-template-columns:1fr!important;}.event-page-head{display:grid;}.event-page-actions{justify-content:flex-start;}.quick-action-row .mini-btn{padding:8px 9px!important;font-size:10px!important;}}
+
   </style>
 </head>
 
@@ -3049,7 +3156,7 @@
         <span></span>
       </div>
       <p>YOUTH CENTRAL</p>
-      <h2>Youth Core</h2>
+      <h2>Building the leadership room</h2>
     </div>
   </div>
 
@@ -3084,13 +3191,13 @@
               <circle cx="32" cy="18" r="4" fill="white"/>
             </svg>
           </div>
-          <div><h1>Youth Central</h1><p>Youth Core</p></div>
+          <div><h1>Youth Central</h1><p>Leadership command system</p></div>
         </div>
 
         <div class="auth-copy">
           <div class="tag"><span class="pulse"></span> Youth Central</div>
-          <h2>Use this properly.</span></h2>
-          <p> So Yohan will chill and wait</p>
+          <h2>Youth Central. <span>Lead with clarity.</span></h2>
+          <p>A refined command space for youth leaders to manage people, attendance, teams, events, follow-ups and responsibilities with confidence.</p>
         </div>
 
         <div class="auth-cards">
@@ -3134,12 +3241,12 @@
               <circle cx="32" cy="18" r="4" fill="white"/>
             </svg>
           </div>
-          <div><h2>Youth Central</h2><p>Youth Core Team</p></div>
+          <div><h2>Youth Central</h2><p>Leadership OS</p></div>
         </div>
 
         <nav class="nav">
           <button class="nav-btn active" data-page="home" onclick="openPage('home', this)"><span class="nav-icon"></span>Home</button>
-          <button class="nav-btn" data-page="profile" onclick="openPage('profile', this)"><span class="nav-icon"></span>Profile</button>
+          <button class="nav-btn" data-page="tasks" onclick="openPage('tasks', this)"><span class="nav-icon"></span>Tasks</button>
           <button class="nav-btn" data-page="people" onclick="openPage('people', this)"><span class="nav-icon"></span>People</button>
           <button class="nav-btn" data-page="newcomer" onclick="openPage('newcomer', this)"><span class="nav-icon"></span>Newcomer</button>
           <button class="nav-btn" data-page="events" onclick="openPage('events', this)"><span class="nav-icon"></span>Events</button>
@@ -3147,13 +3254,12 @@
           <button class="nav-btn" data-page="attendance" onclick="openPage('attendance', this)"><span class="nav-icon"></span>Attendance</button>
           <button class="nav-btn" data-page="teams" onclick="openPage('teams', this)"><span class="nav-icon"></span>Teams</button>
           <button class="nav-btn" data-page="followups" onclick="openPage('followups', this)"><span class="nav-icon"></span>Follow-ups</button>
-          <button class="nav-btn" data-page="tasks" onclick="openPage('tasks', this)"><span class="nav-icon"></span>Tasks</button>
           <button class="nav-btn" data-page="reports" onclick="openPage('reports', this)"><span class="nav-icon"></span>Reports</button>
-          <button class="nav-btn" data-page="access" onclick="openPage('access', this)"><span class="nav-icon"></span>Access</button>
         </nav>
 
         <div class="side-foot">
           <div class="live-pill"><span class="pulse"></span> Live Sync</div>
+          <p>Clean data for leaders, team heads, moderators and admins.</p>
         </div>
       </aside>
 
@@ -3169,13 +3275,14 @@
           <div class="right-actions">
             <button class="btn-ghost desktop-only" onclick="enableNotifications()">Enable Alerts</button>
             <button class="btn-ghost desktop-only" onclick="openMemberModal()">+ Add Person</button>
+            <button id="adminSettingsBtn" class="btn-ghost settings-btn admin-only hidden" title="Admin Settings" onclick="openAdminSettings()">⚙</button>
             <button class="btn-ghost" onclick="logout()">Logout</button>
           </div>
         </div>
 
         <div class="desktop-nav" id="desktopNav">
-          <button class="top-nav-btn active" data-page="home" onclick="openPage('home', this)">01 / Command</button>
-          <button class="top-nav-btn" data-page="profile" onclick="openPage('profile', this)">02 / Profile</button>
+          <button class="top-nav-btn active" data-page="home" onclick="openPage('home', this)">01 / Home</button>
+          <button class="top-nav-btn" data-page="tasks" onclick="openPage('tasks', this)">02 / Tasks</button>
           <button class="top-nav-btn" data-page="people" onclick="openPage('people', this)">03 / People</button>
           <button class="top-nav-btn" data-page="newcomer" onclick="openPage('newcomer', this)">04 / Newcomer</button>
           <button class="top-nav-btn" data-page="events" onclick="openPage('events', this)">05 / Events</button>
@@ -3183,16 +3290,14 @@
           <button class="top-nav-btn" data-page="attendance" onclick="openPage('attendance', this)">07 / Attendance</button>
           <button class="top-nav-btn" data-page="teams" onclick="openPage('teams', this)">08 / Teams</button>
           <button class="top-nav-btn" data-page="followups" onclick="openPage('followups', this)">09 / Follow-ups</button>
-          <button class="top-nav-btn" data-page="tasks" onclick="openPage('tasks', this)">10 / Tasks</button>
-          <button class="top-nav-btn" data-page="reports" onclick="openPage('reports', this)">11 / Reports</button>
-          <button class="top-nav-btn" data-page="access" onclick="openPage('access', this)">12 / Access</button>
+          <button class="top-nav-btn" data-page="reports" onclick="openPage('reports', this)">10 / Youth Analytics</button>
         </div>
 <section id="homeHero" class="hero">
           <div class="hero-inner">
             <div>
               <div class="hero-tag"><span class="pulse"></span> Youth Central</div>
-              <h1>I am done Following Up. <span>Now you do it.</span></h1>
-              <p>It is a nice design :p</p>
+              <h1>Lead the room. <span>Move as one.</span></h1>
+              <p>A beautiful live workspace for people, attendance, events, teams, care follow-ups, tasks and game-day control.</p>
             </div>
             <div class="hero-index-panel">
               <div class="index-line"><span>01</span><b>People database</b><em id="heroPeopleCount">Live</em></div>
@@ -3327,69 +3432,24 @@
 
 
         <section id="events" class="page">
-          <div class="grid-2">
-            <div class="card">
-              <div class="card-head">
-                <div>
-                  <h2>Special Events</h2>
-                  <p>Create youth events, upload the 4:5 flyer, add registration links and track attendance.</p>
-                </div>
+          <div class="card">
+            <div class="card-head event-page-head">
+              <div>
+                <h2>Special Events</h2>
+                <p>Scheduled youth events with flyers, registration links, reports and game plans.</p>
               </div>
-
-              <div class="event-form">
-                <select id="eventType">
-                  <option>Special Youth Event</option>
-                  <option>Sunday Service</option>
-                  <option>Other Event</option>
-                </select>
-                <input id="eventTitle" class="span2" placeholder="Event title">
-                <input id="eventDate" type="date">
-                <input id="eventTime" type="time">
-                <input id="eventLocation" placeholder="Location / venue">
-                <input id="eventOwner" placeholder="Event owner">
-                <input id="eventExpected" type="number" min="0" placeholder="Expected count">
-                <input id="eventFlyerUrl" placeholder="Flyer image URL (optional)">
-                <input id="eventRegistrationLink" class="span2" placeholder="Registration link / Google Form URL">
-                <input id="eventSheetLink" class="span2" placeholder="Google Sheet link for responses (admin)">
-                <textarea id="eventDescription" class="span4" placeholder="Event details / notes"></textarea>
-                <input id="eventFlyerFile" class="span4" type="file" accept="image/*" onchange="previewEventFlyer(event)">
-                <button id="eventSaveBtn" class="span2" onclick="addEvent()">Create Event</button>
-                <button class="btn-ghost span2" onclick="clearEventForm()">Clear</button>
+              <div class="event-page-actions">
+                <select id="eventReportSelect" class="hidden" onchange="renderEventReport()"></select>
+                <button onclick="openEventModal()">+ Add Event</button>
+                <button class="btn-ghost" onclick="exportSelectedEventReport()">Export Report</button>
               </div>
-
-              <div id="eventFlyerPreview" class="event-flyer hidden" style="width:100%;min-height:180px;margin-bottom:16px;">Flyer preview</div>
-              <div class="saved-events-title"><div><h3>Saved Special Events</h3><p>Your saved event flyers and details will appear here.</p></div></div>
-              <div id="eventList" class="list"></div>
             </div>
-
-            <div class="card">
-              <div class="card-head">
-                <div>
-                  <h2>Event Report</h2>
-                  <p>See who came, who did not come and who is still not marked.</p>
-                </div>
-              </div>
-
-              <div class="toolbar two">
-                <select id="eventReportSelect" onchange="renderEventReport()"></select>
-                <button onclick="exportSelectedEventReport()">Export Report</button>
-              </div>
-
-              <div id="eventReportStats" class="event-report-grid"></div>
-
-              <div class="card-head" style="margin-top:18px;">
-                <div>
-                  <h3>People who did not come</h3>
-                  <p>Includes Absent and Not Marked records for the selected event.</p>
-                </div>
-              </div>
-              <div id="eventAbsentList" class="list"></div>
-            </div>
+            <div class="saved-events-title"><div><h3>Scheduled Events</h3><p>Your saved event flyers and details will appear here.</p></div></div>
+            <div id="eventList" class="list"></div>
           </div>
         </section>
 
-
-        <section id="sundays" class="page">
+<section id="sundays" class="page">
           <div class="card">
             <div class="card-head">
               <div>
@@ -3417,7 +3477,7 @@
             <div class="card-head"><div><h2>Attendance</h2><p>Mark who came to church, youth meeting, training or cell.</p></div></div>
             <div class="toolbar">
               <input id="attendanceDate" type="date">
-              <select id="attendanceEventSelect"></select>
+              <select id="attendanceEventSelect" onchange="syncAttendanceEvent()"></select>
               <input id="attendanceEvent" placeholder="Custom event name">
               <select id="attendanceMember"></select>
               <select id="attendanceStatus"><option>Present</option><option>Late</option><option>Absent</option><option>Newcomer</option></select>
@@ -3514,6 +3574,21 @@
 
         <section id="gameplan" class="page referee-page">
 
+          <div id="gameIntroOverlay" class="game-intro-overlay hidden">
+            <video id="fomoIntroVideo" class="game-intro-video" src="assets/fomo-intro.mp4" playsinline preload="auto"></video>
+            <div class="game-intro-shade"></div>
+            <div class="game-intro-controls">
+              <div class="game-intro-title">
+                <p>FOMO v2 Game Plan</p>
+                <h1>The Ultimate Room</h1>
+              </div>
+              <div class="right-actions">
+                <button id="introStartBtn" class="intro-start-btn hidden" onclick="startGameIntroVideo()">Play Intro</button>
+                <button class="btn-ghost" onclick="finishGameIntro()">Skip Intro</button>
+              </div>
+            </div>
+          </div>
+
           <div class="referee-shell">
             <div class="flying-disc"></div>
 
@@ -3535,6 +3610,7 @@
               <div class="ref-actions">
                 <button onclick="requestFullscreenGame()">Full Screen</button>
                 <button class="btn-purple" onclick="openGameSection('schedule')">Scores</button>
+                <button class="btn-ghost" onclick="playGameIntro(true)">Replay Intro</button>
                 <button class="btn-ghost" onclick="copyGamePlanLink()">Copy Link</button>
                 <button class="btn-ghost" onclick="exitGamePlanMode()">Exit</button>
               </div>
@@ -3730,23 +3806,47 @@
         </section>
 
         <section id="reports" class="page">
-          <div class="card">
-            <div class="card-head"><div><h2>Reports</h2><p>Export data for leader meetings.</p></div></div>
-            <div class="right-actions" style="justify-content:flex-start">
-              <button onclick="exportCSV('youth')">Export People</button>
-              <button class="btn-purple" onclick="exportCSV('attendance')">Export Attendance</button>
-              <button class="btn-ghost" onclick="exportCSV('followups')">Export Follow-ups</button>
-              <button class="btn-ghost" onclick="exportCSV('tasks')">Export Tasks</button>
+          <div class="analytics-hero">
+            <div class="card analytics-title-card">
+              <div class="hero-tag"><span class="pulse"></span> Youth Analytics</div>
+              <h2>Youth <span>Analytics.</span></h2>
+              <p>Automated leadership insights for attendance, events, teams, newcomers, missing people and follow-ups.</p>
+              <div class="right-actions" style="justify-content:flex-start;margin-top:20px;">
+                <button onclick="exportCSV('youth')">Export People</button>
+                <button class="btn-purple" onclick="exportCSV('attendance')">Export Attendance</button>
+                <button class="btn-ghost" onclick="exportCSV('followups')">Export Follow-ups</button>
+                <button class="btn-ghost" onclick="exportCSV('tasks')">Export Tasks</button>
+              </div>
             </div>
-            <div style="height:16px"></div>
-            <div class="grid-2">
-              <div class="card"><h3>Care List</h3><br><div id="missingReport" class="list"></div></div>
-              <div class="card"><h3>Newcomers</h3><br><div id="newcomerReport" class="list"></div></div>
+            <div class="analytics-kpi-grid" id="analyticsStats"></div>
+          </div>
+
+          <div class="analytics-grid">
+            <div class="card chart-card">
+              <div class="card-head"><div><h2>Attendance Trend</h2><p>Last 8 weeks based on marked Present, Late and Newcomer records.</p></div></div>
+              <div id="attendanceTrendChart" class="chart-bars"></div>
+            </div>
+            <div class="card chart-card">
+              <div class="card-head"><div><h2>Team Performance</h2><p>People count by team / ministry.</p></div></div>
+              <div id="teamAnalyticsChart" class="chart-list"></div>
+            </div>
+            <div class="card chart-card">
+              <div class="card-head"><div><h2>Event Attendance</h2><p>Top recent events by people who came.</p></div></div>
+              <div id="eventAnalyticsChart" class="chart-list"></div>
+            </div>
+            <div class="card chart-card">
+              <div class="card-head"><div><h2>Follow-up Health</h2><p>Pending vs completed care work.</p></div></div>
+              <div id="followupAnalyticsChart" class="chart-list"></div>
             </div>
           </div>
-        </section>
 
-        <section id="access" class="page">
+          <div style="height:16px"></div>
+          <div class="grid-2">
+            <div class="card"><div class="card-head"><div><h2>Care List</h2><p>People missing or needing follow-up.</p></div></div><div id="missingReport" class="list"></div></div>
+            <div class="card"><div class="card-head"><div><h2>Newcomers</h2><p>First-time and newcomer records.</p></div></div><div id="newcomerReport" class="list"></div></div>
+          </div>
+        </section>
+<section id="access" class="page">
           <div class="card">
             <div class="card-head"><div><h2>Access</h2><p>Admins can control roles, teams, people, tasks, attendance and cleanup.</p></div></div>
             <div id="accessWarning" class="empty hidden">Only Admins can change roles.</div>
@@ -3797,6 +3897,38 @@
     </div>
   </div>
 
+
+
+  <div id="eventModal" class="modal event-modal">
+    <div class="modal-card">
+      <div class="card-head">
+        <div><h2 id="eventModalTitle">Add Event</h2><p>Create or update a special youth event without taking space from the schedule list.</p></div>
+        <button class="btn-ghost mini-btn" onclick="closeEventModal()">Close</button>
+      </div>
+      <div class="event-form">
+        <select id="eventType">
+          <option>Special Youth Event</option>
+          <option>Sunday Service</option>
+          <option>Other Event</option>
+        </select>
+        <input id="eventTitle" class="span2" placeholder="Event title">
+        <input id="eventDate" type="date">
+        <input id="eventTime" type="time">
+        <input id="eventLocation" placeholder="Location / venue">
+        <input id="eventOwner" placeholder="Event owner">
+        <input id="eventExpected" type="number" min="0" placeholder="Expected count">
+        <input id="eventFlyerUrl" placeholder="Flyer image URL (optional)">
+        <input id="eventRegistrationLink" class="span2" placeholder="Registration link / Google Form URL">
+        <input id="eventSheetLink" class="span2" placeholder="Google Sheet link for responses (admin)">
+        <textarea id="eventDescription" class="span4" placeholder="Event details / notes"></textarea>
+        <input id="eventFlyerFile" class="span4" type="file" accept="image/*" onchange="previewEventFlyer(event)">
+        <button id="eventSaveBtn" class="span2" onclick="addEvent()">Create Event</button>
+        <button class="btn-ghost span2" onclick="clearEventForm()">Clear</button>
+      </div>
+      <div id="eventFlyerPreview" class="event-flyer hidden" style="width:100%;min-height:180px;margin-top:16px;">Flyer preview</div>
+    </div>
+  </div>
+
   <div id="toast" class="toast"></div>
 
   <script type="module">
@@ -3818,7 +3950,7 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
 
-    console.info("Youth Central V7.8 loaded. Login/app visibility fixed. Data recovery listeners enabled.");
+    console.info("Youth Central V12.2 loaded. Requested UX adjustments, analytics and FOMO intro enabled.");
 
 
 
@@ -4010,7 +4142,7 @@
 
       startListeners();
       render();
-      studioLoader("Opening Core team Panel");
+      studioLoader("Opening leadership room");
       handleInitialRoute();
     });
 
@@ -4044,6 +4176,85 @@
       const btn = document.querySelector(`.top-nav-btn[data-page="${pageId}"]`) || document.querySelector(`.nav-btn[data-page="${pageId}"]`) || document.querySelector(`.bottom-nav button[data-page="${pageId}"]`);
       openPage(pageId, btn || null);
     };
+
+    window.openAdminSettings = function(){
+      if(!canAdmin()) return notify("Only Admins can open settings.");
+      openPage("access", null);
+    };
+
+    function updateAdminToolsVisibility(){
+      const btn = $("adminSettingsBtn");
+      if(btn) btn.classList.toggle("hidden", !canAdmin());
+    }
+
+    window.openEventModal = function(){
+      if(!canManage()) return notify("Only Admin or Core Moderator can create events.");
+      editingEventId = null;
+      clearEventForm();
+      if($("eventModalTitle")) $("eventModalTitle").textContent = "Add Event";
+      if($("eventModal")) $("eventModal").classList.add("active");
+    };
+
+    window.closeEventModal = function(){
+      if($("eventModal")) $("eventModal").classList.remove("active");
+    };
+
+    window.syncAttendanceEvent = function(){
+      const id = $("attendanceEventSelect")?.value || "";
+      const eventObj = events.find(e=>e.id===id);
+      if(eventObj){
+        if($("attendanceDate")) $("attendanceDate").value = eventObj.date || todayISO();
+        if($("attendanceEvent")) $("attendanceEvent").value = eventObj.title || "";
+      }else{
+        if($("attendanceEvent")) $("attendanceEvent").value = "";
+      }
+      renderAttendance();
+    };
+
+    window.selectAndOpenGamePlan = function(id){
+      selectedEventId = id;
+      if($("eventReportSelect")) $("eventReportSelect").value = id;
+      openGamePlanFullscreen();
+    };
+
+    window.exportEventReport = function(id){
+      if($("eventReportSelect")) $("eventReportSelect").value = id;
+      selectedEventId = id;
+      exportSelectedEventReport();
+    };
+
+    let gameIntroActive = false;
+    window.playGameIntro = function(force=false){
+      const overlay = $("gameIntroOverlay"), video = $("fomoIntroVideo"), startBtn = $("introStartBtn");
+      if(!overlay || !video) return;
+      gameIntroActive = true;
+      overlay.classList.remove("hidden");
+      if(startBtn) startBtn.classList.add("hidden");
+      try{ video.currentTime = 0; }catch(e){}
+      video.muted = false;
+      const p = video.play();
+      if(p && typeof p.catch === "function"){
+        p.catch(()=>{
+          if(startBtn) startBtn.classList.remove("hidden");
+          notify("Tap Play Intro to start the video.");
+        });
+      }
+      video.onended = () => finishGameIntro();
+    };
+
+    window.startGameIntroVideo = function(){
+      const video = $("fomoIntroVideo"), startBtn = $("introStartBtn");
+      if(startBtn) startBtn.classList.add("hidden");
+      if(video) video.play().catch(()=>notify("Video could not start. Use Skip Intro."));
+    };
+
+    window.finishGameIntro = function(){
+      const overlay = $("gameIntroOverlay"), video = $("fomoIntroVideo");
+      if(video){ try{ video.pause(); }catch(e){} }
+      if(overlay) overlay.classList.add("hidden");
+      gameIntroActive = false;
+    };
+
 
     function clearMemberForm(){
       ["mSerial","mName","mDob","mAge","mPhone","mLocation","mDS","mAddress","mCellLeader","mCellGroup","mMinistry","mTeam","mFirstVisit","mLastAttended","mNotes"].forEach(id=>{ if($(id)) $(id).value=""; });
@@ -4222,6 +4433,7 @@
       if($("profilePhotoUrlInput")) $("profilePhotoUrlInput").value = currentProfile.photoURL || "";
       if($("profileRoleText")) $("profileRoleText").textContent = currentProfile.role || "Member";
       if($("profileEmailText")) $("profileEmailText").textContent = currentProfile.email || currentUser?.email || "-";
+      updateAdminToolsVisibility();
     }
 
     window.previewProfileUpload = function(event){
@@ -4312,6 +4524,7 @@
       pendingEventFlyerData = "";
       editingEventId = null;
       if($("eventSaveBtn")) $("eventSaveBtn").textContent = "Create Event";
+      if($("eventModalTitle")) $("eventModalTitle").textContent = "Add Event";
       $("eventFlyerPreview").classList.add("hidden");
       $("eventFlyerPreview").innerHTML = "Flyer preview";
     };
@@ -4336,6 +4549,8 @@
       $("eventFlyerPreview").classList.toggle("hidden", !(safeImageUrl(e.flyerData) || safeImageUrl(e.flyerURL)));
       $("eventFlyerPreview").innerHTML = eventFlyerHTML(e);
       $("eventSaveBtn").textContent = "Update Event";
+      if($("eventModalTitle")) $("eventModalTitle").textContent = "Edit Event";
+      if($("eventModal")) $("eventModal").classList.add("active");
       openPageByName("events");
       notify("Event loaded for editing");
     };
@@ -4375,6 +4590,7 @@
       }
 
       clearEventForm();
+      closeEventModal();
     };
 
         window.deleteEvent = async function(id){
@@ -5001,7 +5217,10 @@
     window.renderYouthTable=function(){
       const q=($("searchYouth").value||"").toLowerCase(),type=$("filterType").value,leader=$("filterLeader").value,team=$("filterTeam").value;
       const data=youthMembers.filter(m=>(!q||[m.name,m.contactNumber,m.location,m.cellLeader,m.ministry,m.team].join(" ").toLowerCase().includes(q))&&(!type||m.memberType===type)&&(!leader||m.cellLeader===leader)&&(!team||(m.team||m.ministry)===team));
-      $("youthTable").innerHTML=data.length?data.map(m=>`<tr><td><div class="person"><div class="avatar">${initials(m.name)}</div><b>${clean(m.name)}</b></div></td><td>${clean(m.contactNumber)}</td><td>${clean(m.gender)}</td><td>${clean(m.location)}</td><td>${clean(m.team||m.ministry)}</td><td>${clean(m.cellLeader)}</td><td><span class="pill status-${roleKey(m.memberType)}">${clean(m.memberType||"Regular")}</span></td><td>${clean(m.lastAttendedDate||"Never")}</td><td><button class="mini-btn" onclick="editMember('${m.id}')">Edit</button><button class="mini-btn btn-green" onclick="quickPresent('${m.id}')">Present</button><button class="mini-btn btn-danger" onclick="deleteMember('${m.id}')">Delete</button></td></tr>`).join(""):`<tr><td colspan="9">No matching records.</td></tr>`;
+      $("youthTable").innerHTML=data.length?data.map(m=>{
+        const phone = String(m.contactNumber||"").replace(/[^0-9+]/g,"");
+        return `<tr><td><div class="person"><div class="avatar">${initials(m.name)}</div><b>${clean(m.name)}</b></div></td><td>${clean(m.contactNumber)}</td><td>${clean(m.gender)}</td><td>${clean(m.location)}</td><td>${clean(m.team||m.ministry)}</td><td>${clean(m.cellLeader)}</td><td><span class="pill status-${roleKey(m.memberType)}">${clean(m.memberType||"Regular")}</span></td><td>${clean(m.lastAttendedDate||"Never")}</td><td><div class="quick-action-row"><button class="mini-btn" onclick="editMember('${m.id}')">Edit</button><button class="mini-btn btn-green" onclick="quickPresent('${m.id}')">Present</button><button class="mini-btn follow-link" onclick="createFollowUp('${m.id}')">Follow Up</button>${phone ? `<a class="btn mini-btn call-link" href="tel:${clean(phone)}">Call</a>` : `<button class="mini-btn btn-ghost" disabled>No Call</button>`}<button class="mini-btn btn-danger" onclick="deleteMember('${m.id}')">Delete</button></div></td></tr>`;
+      }).join(""):`<tr><td colspan="9">No matching records.</td></tr>`;
     };
 
     window.quickPresent=async id=>{const m=youthMembers.find(x=>x.id===id);if(!m)return;const date=todayISO();await addDoc(collection(db,"attendance"),{memberId:id,memberName:m.name,contactNumber:m.contactNumber||"",date,eventName:"Quick Present",status:"Present",cellLeader:m.cellLeader||"",team:m.team||"",createdAt:serverTimestamp()});await updateDoc(doc(db,"youthMembers",id),{lastAttendedDate:date,updatedAt:serverTimestamp()});notify("Marked present")};
@@ -5079,6 +5298,7 @@
       openPage("gameplan", null);
       renderTournament();
       setTimeout(()=>renderTournament(), 300);
+      setTimeout(()=>playGameIntro(), 450);
     };
 
     window.exitGamePlanMode = function(){
@@ -5244,7 +5464,8 @@
     function renderEvents(){
       if(!$("eventList")) return;
 
-      const specialEvents = events.filter(isSpecialEvent);
+      const specialEvents = events.filter(isSpecialEvent).sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
+      if($("eventReportSelect") && !$("eventReportSelect").value && specialEvents[0]) $("eventReportSelect").value = specialEvents[0].id;
 
       $("eventList").innerHTML = specialEvents.length ? specialEvents.map(e=>{
         const stats = eventStats(e);
@@ -5261,16 +5482,17 @@
                 ${validUrl(e.registrationLink) ? `<a class="btn mini-btn" href="${clean(e.registrationLink)}" target="_blank" rel="noopener">Register</a>` : ""}
                 ${validUrl(e.sheetLink) ? `<a class="btn btn-ghost mini-btn" href="${clean(e.sheetLink)}" target="_blank" rel="noopener">Sheet</a>` : ""}
               </div>
-              <div class="task-actions" style="margin-top:10px;">
+              <div class="event-actions">
                 <button class="mini-btn btn-purple" onclick="openEventDetail('${e.id}')">View Details</button>
+                <button class="mini-btn btn-green" onclick="selectAndOpenGamePlan('${e.id}')">Game Plan</button>
+                <button class="mini-btn" onclick="exportEventReport('${e.id}')">Export Report</button>
                 <button class="mini-btn" onclick="editEvent('${e.id}')">Edit</button>
-                <button class="mini-btn" onclick="selectEventReport('${e.id}')">Quick Report</button>
                 <button class="mini-btn btn-danger" onclick="deleteEvent('${e.id}')">Delete</button>
               </div>
             </div>
           </div>
         `;
-      }).join("") : `<div class="empty">No special events yet. Add your next youth event here. Sunday services are kept separately.</div>`;
+      }).join("") : `<div class="empty">No special events yet. Click + Add Event to create your next youth event.</div>`;
 
       renderEventReport();
     }
@@ -5322,7 +5544,7 @@
     };
 
     window.exportSelectedEventReport = function(){
-      const id = $("eventReportSelect").value || events[0]?.id || "";
+      const id = $("eventReportSelect")?.value || selectedEventId || events.filter(isSpecialEvent)[0]?.id || events[0]?.id || "";
       const eventObj = events.find(e=>e.id===id);
       if(!eventObj) return notify("Select an event first.");
 
@@ -5425,12 +5647,21 @@
 
 
     function renderAttendance(){
-      $("attendanceList").innerHTML=attendance.slice(0,60).map(a=>`
+      const selected = $("attendanceEventSelect")?.value || "";
+      let records = attendance.slice();
+      if(selected){
+        const eventObj = events.find(e=>e.id===selected);
+        records = records.filter(a =>
+          (a.eventId && a.eventId === selected) ||
+          (eventObj && !a.eventId && a.eventName === eventObj.title && a.date === eventObj.date)
+        );
+      }
+      $("attendanceList").innerHTML=records.slice(0,80).map(a=>`
         <div class="list-item">
           <div><h4>${clean(a.memberName)}</h4><p>${clean(a.eventName)} • ${clean(a.date)} • ${clean(a.team||"No team")} • <span class="pill status-${roleKey(a.status)}">${clean(a.status)}</span></p></div>
           <button class="mini-btn btn-danger" onclick="deleteAttendance('${a.id}')">Delete</button>
         </div>
-      `).join("")||`<div class="empty">No attendance yet.</div>`;
+      `).join("")||`<div class="empty">No attendance yet${selected ? " for this selected event" : ""}.</div>`;
     }
 
     function renderTeams(){
@@ -5483,14 +5714,57 @@
 
     function renderReports(){
       const missing=youthMembers.filter(isMissing);
-      $("missingReport").innerHTML=missing.map(m=>`<div class="list-item"><div><h4>${clean(m.name)}</h4><p>${clean(m.contactNumber)} • Last: ${clean(m.lastAttendedDate||"Never")} • ${clean(m.cellLeader||"No leader")}</p></div></div>`).join("")||`<div class="empty">No one missing.</div>`;
-      $("newcomerReport").innerHTML=youthMembers.filter(m=>m.memberType==="Newcomer").map(m=>`<div class="list-item"><div><h4>${clean(m.name)}</h4><p>${clean(m.contactNumber)} • First visit: ${clean(m.firstVisitDate||"")}</p></div></div>`).join("")||`<div class="empty">No newcomers.</div>`;
+      const newcomers=youthMembers.filter(m=>m.memberType==="Newcomer");
+      const presentRecords=attendance.filter(a=>["Present","Late","Newcomer"].includes(a.status));
+      const uniqueThisMonth=new Set(presentRecords.filter(a=>String(a.date||"").startsWith(new Date().toISOString().slice(0,7))).map(a=>a.memberId)).size;
+      const completedFollowups=followUps.filter(f=>f.status==="Completed").length;
+      const pendingFollowups=followUps.filter(f=>f.status!=="Completed").length;
+
+      if($("analyticsStats")) $("analyticsStats").innerHTML = `
+        <div class="analytics-kpi"><p>Total People</p><h3>${youthMembers.length}</h3></div>
+        <div class="analytics-kpi"><p>This Month Active</p><h3>${uniqueThisMonth}</h3></div>
+        <div class="analytics-kpi"><p>Newcomers</p><h3>${newcomers.length}</h3></div>
+        <div class="analytics-kpi"><p>Care List</p><h3>${missing.length}</h3></div>
+      `;
+
+      const weeks=[];
+      const now=new Date();
+      for(let i=7;i>=0;i--){
+        const start=new Date(now); start.setDate(now.getDate() - (i*7)); start.setHours(0,0,0,0);
+        const end=new Date(start); end.setDate(start.getDate()+7);
+        const count=presentRecords.filter(a=>{const d=new Date(a.date);return d>=start && d<end;}).length;
+        weeks.push({label:`W${8-i}`,count});
+      }
+      const maxWeek=Math.max(1,...weeks.map(w=>w.count));
+      if($("attendanceTrendChart")) $("attendanceTrendChart").innerHTML=weeks.map(w=>`<div class="chart-bar-wrap"><div class="chart-bar" style="--h:${Math.max(4,Math.round((w.count/maxWeek)*100))}%"></div><span>${w.label}<br>${w.count}</span></div>`).join("");
+
+      const teamCounts={};
+      youthMembers.forEach(m=>{const k=m.team||m.ministry||"No Team";teamCounts[k]=(teamCounts[k]||0)+1;});
+      const teamRows=Object.entries(teamCounts).sort((a,b)=>b[1]-a[1]).slice(0,8);
+      const maxTeam=Math.max(1,...teamRows.map(x=>x[1]));
+      if($("teamAnalyticsChart")) $("teamAnalyticsChart").innerHTML=teamRows.map(([name,count])=>`<div class="chart-list-row"><div><b>${clean(name)}</b><div class="mini-progress"><i style="--w:${Math.round((count/maxTeam)*100)}%"></i></div></div><strong>${count}</strong></div>`).join("")||`<div class="empty">No team data yet.</div>`;
+
+      const eventRows=events.filter(isSpecialEvent).map(e=>({event:e,stats:eventStats(e)})).sort((a,b)=>String(b.event.date||"").localeCompare(String(a.event.date||""))).slice(0,6);
+      const maxEvent=Math.max(1,...eventRows.map(x=>x.stats.came));
+      if($("eventAnalyticsChart")) $("eventAnalyticsChart").innerHTML=eventRows.map(x=>`<div class="chart-list-row"><div><b>${clean(x.event.title)}</b><p>${clean(x.event.date||"")} • ${x.stats.came} came / ${x.stats.total} total</p><div class="mini-progress"><i style="--w:${Math.round((x.stats.came/maxEvent)*100)}%"></i></div></div><strong>${x.stats.came}</strong></div>`).join("")||`<div class="empty">No event analytics yet.</div>`;
+
+      const totalFollow=Math.max(1,completedFollowups+pendingFollowups);
+      if($("followupAnalyticsChart")) $("followupAnalyticsChart").innerHTML=`
+        <div class="chart-list-row"><div><b>Pending Follow-ups</b><div class="mini-progress"><i style="--w:${Math.round((pendingFollowups/totalFollow)*100)}%"></i></div></div><strong>${pendingFollowups}</strong></div>
+        <div class="chart-list-row"><div><b>Completed Follow-ups</b><div class="mini-progress"><i style="--w:${Math.round((completedFollowups/totalFollow)*100)}%"></i></div></div><strong>${completedFollowups}</strong></div>
+        <div class="chart-list-row"><div><b>Open Tasks</b><div class="mini-progress"><i style="--w:${Math.min(100,tasks.filter(t=>t.status!=="completed").length*10)}%"></i></div></div><strong>${tasks.filter(t=>t.status!=="completed").length}</strong></div>
+      `;
+
+      $("missingReport").innerHTML=missing.map(m=>`<div class="list-item"><div><h4>${clean(m.name)}</h4><p>${clean(m.contactNumber)} • Last: ${clean(m.lastAttendedDate||"Never")} • ${clean(m.cellLeader||"No leader")}</p></div><div class="quick-action-row"><button class="mini-btn follow-link" onclick="createFollowUp('${m.id}')">Follow Up</button>${m.contactNumber?`<a class="btn mini-btn call-link" href="tel:${clean(String(m.contactNumber).replace(/[^0-9+]/g,""))}">Call</a>`:""}</div></div>`).join("")||`<div class="empty">No one missing.</div>`;
+      $("newcomerReport").innerHTML=newcomers.map(m=>`<div class="list-item"><div><h4>${clean(m.name)}</h4><p>${clean(m.contactNumber)} • First visit: ${clean(m.firstVisitDate||"")}</p></div></div>`).join("")||`<div class="empty">No newcomers.</div>`;
     }
 
     function taskCard(t){return `<div class="task"><h4>${clean(t.title)}</h4><p>${clean(t.team||"General")} • ${clean(t.owner||"Unassigned")} • ${clean(t.priority||"Normal")} • Due ${clean(t.due||"")}</p><p>${clean(t.notes||"")}</p><div class="task-actions"><button class="mini-btn" onclick="moveTask('${t.id}','todo')">To Do</button><button class="mini-btn btn-yellow" onclick="moveTask('${t.id}','progress')">Progress</button><button class="mini-btn btn-green" onclick="moveTask('${t.id}','completed')">Done</button><button class="mini-btn btn-danger" onclick="deleteTask('${t.id}')">Delete</button></div></div>`}
     function renderTasks(){$("todoTasks").innerHTML=tasks.filter(t=>t.status==="todo").map(taskCard).join("")||`<div class="empty">No tasks</div>`;$("progressTasks").innerHTML=tasks.filter(t=>t.status==="progress").map(taskCard).join("")||`<div class="empty">No tasks</div>`;$("completedTasks").innerHTML=tasks.filter(t=>t.status==="completed").map(taskCard).join("")||`<div class="empty">No tasks</div>`}
 
     function renderUsers(){
+      updateAdminToolsVisibility();
+      if(!$("accessWarning") || !$("usersTable")) return;
       $("accessWarning").classList.toggle("hidden",canAdmin());
       $("usersTable").innerHTML=userProfiles.map(u=>`<tr><td><div class="person"><div class="profile-mini-photo">${avatarHTML(u,u.name||u.email)}</div><b>${clean(u.name||"User")}</b></div></td><td>${clean(u.email)}</td><td><select id="role-${u.uid||u.id}" ${canAdmin()?"":"disabled"}>${ROLES.map(r=>`<option ${u.role===r?"selected":""}>${r}</option>`).join("")}</select></td><td><input id="team-${u.uid||u.id}" value="${clean(u.team||"")}" placeholder="Team" ${canAdmin()?"":"disabled"}></td><td><select id="ustatus-${u.uid||u.id}" ${canAdmin()?"":"disabled"}><option ${u.status==="Active"?"selected":""}>Active</option><option ${u.status==="Disabled"?"selected":""}>Disabled</option></select></td><td><button class="mini-btn" onclick="updateUserRole('${u.uid||u.id}')">Save</button></td></tr>`).join("")||`<tr><td colspan="6">No users yet.</td></tr>`;
     }
