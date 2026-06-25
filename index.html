@@ -3148,6 +3148,79 @@
     @media(max-width:1100px){.analytics-hero,.analytics-grid{grid-template-columns:1fr!important;}.desktop-nav{grid-template-columns:repeat(5,1fr)!important;}}
     @media(max-width:720px){.analytics-kpi-grid{grid-template-columns:1fr!important;}.event-page-head{display:grid;}.event-page-actions{justify-content:flex-start;}.quick-action-row .mini-btn{padding:8px 9px!important;font-size:10px!important;}}
 
+  
+
+    /* =========================================================
+       Youth Central V13 - FOMO Game Plan Development
+       Game Plan page only: seeded teams, time-sorted schedule,
+       live control center, bouncing frisbees and tournament board.
+       ========================================================= */
+    body.game-mode .ref-content,
+    body.game-mode .ref-top{position:relative;z-index:3;}
+    .game-admin-setup{display:none!important;}
+    .frisbee-field{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+    .bouncing-disc{position:absolute;left:0;top:0;width:54px;height:54px;border-radius:999px;border:6px solid rgba(4,5,2,.96);background:radial-gradient(circle at 44% 42%,#fff 0 8%,#c6f900 9% 34%,#27e8ff 38%,#050505 76%);box-shadow:0 0 22px rgba(198,249,0,.44),0 0 44px rgba(39,232,255,.20);will-change:transform;opacity:.78;mix-blend-mode:screen;}
+    .bouncing-disc::before{content:"";position:absolute;inset:10px;border:2px solid rgba(0,0,0,.75);border-radius:999px;}
+    .bouncing-disc::after{content:"";position:absolute;left:7px;right:7px;top:20px;height:5px;border-radius:999px;background:rgba(0,0,0,.72);transform:rotate(-12deg);}
+    .disc-two{width:42px;height:42px;opacity:.55;}
+    .disc-three{width:70px;height:70px;opacity:.40;}
+    .disc-four{width:48px;height:48px;opacity:.62;}
+
+    .tournament-control-center{display:grid;grid-template-columns:1.25fr .85fr 1fr;gap:12px;margin-bottom:16px;position:sticky;top:82px;z-index:20;}
+    .control-block{border:1px solid rgba(198,249,0,.24);background:linear-gradient(145deg,rgba(5,8,2,.84),rgba(5,5,5,.62));border-radius:26px;padding:16px;box-shadow:0 20px 70px rgba(0,0,0,.38),0 0 34px rgba(198,249,0,.07);backdrop-filter:blur(22px);}
+    .control-eyebrow{display:inline-flex;align-items:center;gap:7px;color:#c6f900;font-size:10px;font-weight:950;letter-spacing:.16em;text-transform:uppercase;}
+    .control-match-title{font-size:clamp(20px,2vw,34px);font-weight:950;letter-spacing:-.075em;line-height:.95;margin-top:8px;color:#fff;}
+    .control-match-meta{color:#cbd5e1;font-size:12px;line-height:1.55;margin-top:8px;font-weight:700;}
+    .control-countdown{font-size:clamp(36px,4vw,72px);font-weight:950;letter-spacing:-.09em;line-height:.9;margin-top:8px;background:linear-gradient(90deg,#c6f900,#27e8ff,#fff);-webkit-background-clip:text;color:transparent;}
+    .court-status-grid{display:grid;gap:8px;margin-top:10px;}
+    .court-status-pill{display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.055);border-radius:999px;padding:9px 11px;font-size:12px;color:#eef2ff;font-weight:850;}
+    .court-status-pill b{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#c6f900;}
+
+    .division-ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+    .division-ref-card{border:1px solid rgba(198,249,0,.20);background:rgba(255,255,255,.045);border-radius:22px;padding:14px;}
+    .division-ref-card h4{font-size:18px;letter-spacing:-.05em;margin-bottom:4px;}
+    .division-ref-card p{color:#9fb0c8;font-size:12px;font-weight:800;}
+    .team-card .team-assignment{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 10px;}
+    .team-assignment .pill{border-color:rgba(198,249,0,.24)!important;color:#f7ffe0!important;}
+
+    .schedule-only-card{max-width:1180px;margin-inline:auto;}
+    .schedule-grid{display:block!important;}
+    .match-timeline-list{display:grid;gap:12px;}
+    .match-card{position:relative;overflow:hidden;}
+    .match-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--match-accent,#c6f900);}
+    .match-card.match-live{border-color:rgba(198,249,0,.44)!important;box-shadow:0 0 50px rgba(198,249,0,.10),0 24px 100px rgba(0,0,0,.42)!important;}
+    .match-card.match-live::after{content:"LIVE";position:absolute;right:14px;top:14px;background:#c6f900;color:#050505;border-radius:999px;padding:6px 10px;font-size:10px;font-weight:950;letter-spacing:.14em;animation:pulse 1.6s infinite;}
+    .match-time-chip{width:92px;height:92px;border-radius:24px;border:1px solid rgba(198,249,0,.22);background:rgba(198,249,0,.08);display:grid;place-items:center;text-align:center;font-weight:950;color:#c6f900;letter-spacing:-.04em;}
+    .match-shell{display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:start;}
+    .match-title-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;}
+    .match-title-row h4{font-size:clamp(18px,2vw,28px);letter-spacing:-.07em;line-height:.95;}
+    .match-versus{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin:12px 0;}
+    .match-team-name{font-weight:950;font-size:clamp(16px,1.8vw,24px);letter-spacing:-.05em;}
+    .match-team-name:last-child{text-align:right;}
+    .match-score-pill{min-width:88px;text-align:center;border-radius:999px;background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.11);padding:8px 12px;font-weight:950;}
+    .match-edit-grid{display:grid;grid-template-columns:1.2fr .65fr .65fr .9fr;gap:8px;align-items:center;margin-top:10px;}
+    .score-pop{position:fixed;z-index:99999;pointer-events:none;font-size:48px;font-weight:950;color:#c6f900;text-shadow:0 0 40px rgba(198,249,0,.65);animation:scorePop .7s ease both;}
+    @keyframes scorePop{from{opacity:0;transform:translate(-50%,-20%) scale(.72)}35%{opacity:1;transform:translate(-50%,-80%) scale(1.14)}to{opacity:0;transform:translate(-50%,-140%) scale(.94)}}
+
+    .podium-board{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:10px;align-items:end;margin:0 0 16px;}
+    .podium-card{border:1px solid rgba(198,249,0,.20);background:rgba(255,255,255,.055);border-radius:24px;padding:16px;text-align:center;min-height:150px;display:grid;align-content:end;position:relative;overflow:hidden;}
+    .podium-card::before{content:attr(data-rank);position:absolute;left:12px;top:8px;font-size:12px;color:#c6f900;font-weight:950;letter-spacing:.12em;}
+    .podium-card.first{min-height:190px;background:linear-gradient(145deg,rgba(198,249,0,.14),rgba(39,232,255,.07));}
+    .podium-card h4{font-size:clamp(18px,2vw,30px);letter-spacing:-.07em;}
+    .podium-card p{color:#aeb9ce;font-size:12px;margin-top:6px;font-weight:800;}
+    .compact-podium{grid-template-columns:1fr 1fr 1fr;}
+    .compact-podium .podium-card{min-height:120px;}
+
+    .public-board-v13{grid-template-columns:1fr 1fr!important;}
+    .public-live-card{grid-column:1/-1;}
+    .timeline-card{display:grid;grid-template-columns:92px 1fr;gap:12px;align-items:center;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);border-radius:22px;padding:12px;}
+    .timeline-time{height:68px;border-radius:18px;display:grid;place-items:center;background:rgba(198,249,0,.08);border:1px solid rgba(198,249,0,.18);font-weight:950;color:#c6f900;}
+    .timeline-card h4{font-size:17px;letter-spacing:-.04em;}
+    .timeline-card p{color:#aeb9ce;font-size:12px;line-height:1.55;margin-top:4px;}
+
+    @media(max-width:1050px){.tournament-control-center{grid-template-columns:1fr;position:relative;top:auto}.division-ref-grid{grid-template-columns:1fr}.public-board-v13{grid-template-columns:1fr!important;}.podium-board{grid-template-columns:1fr}.podium-card.first{min-height:150px}.match-shell{grid-template-columns:1fr}.match-time-chip{width:100%;height:auto;min-height:56px}.match-edit-grid{grid-template-columns:1fr 1fr}.match-versus{grid-template-columns:1fr;}.match-team-name:last-child{text-align:left}.match-score-pill{width:max-content}}
+    @media(max-width:620px){.tournament-control-center{margin:0 10px 14px}.control-block{border-radius:22px}.match-edit-grid{grid-template-columns:1fr}.timeline-card{grid-template-columns:1fr}.public-board-v13 .card{margin-left:0!important;margin-right:0!important}.bouncing-disc{opacity:.38}}
+
   </style>
 </head>
 
@@ -3602,7 +3675,12 @@
           </div>
 
           <div class="referee-shell">
-            <div class="flying-disc"></div>
+            <div id="frisbeeField" class="frisbee-field" aria-hidden="true">
+              <div class="bouncing-disc disc-one"></div>
+              <div class="bouncing-disc disc-two"></div>
+              <div class="bouncing-disc disc-three"></div>
+              <div class="bouncing-disc disc-four"></div>
+            </div>
 
             <div class="ref-top">
               <div class="ref-brand">
@@ -3629,6 +3707,23 @@
             </div>
 
             <div class="ref-content">
+              <div class="tournament-control-center">
+                <div class="control-block live-control-block">
+                  <span class="control-eyebrow"><span class="pulse"></span> CURRENT MATCH</span>
+                  <div id="controlCurrentMatch" class="control-match-title">No live match yet</div>
+                  <div id="controlCurrentMeta" class="control-match-meta">Set a match to Live and it appears here.</div>
+                </div>
+                <div class="control-block next-control-block">
+                  <span class="control-eyebrow">NEXT</span>
+                  <div id="controlNextMatch" class="control-match-title">Schedule loading</div>
+                  <div id="controlCountdown" class="control-countdown">--:--</div>
+                </div>
+                <div class="control-block court-control-block">
+                  <span class="control-eyebrow">COURTS</span>
+                  <div id="controlCourtStatus" class="court-status-grid"></div>
+                </div>
+              </div>
+
               <div class="ref-hero">
                 <div class="ref-live-card">
                   <div class="hero-tag"><span class="pulse"></span> Live Game Plan</div>
@@ -3652,167 +3747,167 @@
                   <div id="refLiveMatchBoard" class="live-match-big"></div>
                 </div>
               </div>
-                  <div class="ref-tabs">
-            <button class="ref-tab active" onclick="openGameSection('setup', this)">Setup</button>
-            <button class="ref-tab" onclick="openGameSection('teams', this)">Teams</button>
-            <button class="ref-tab" onclick="openGameSection('schedule', this)">Schedule + Scores</button>
-            <button class="ref-tab" onclick="openGameSection('standings', this)">Point Table</button>
-            <button class="ref-tab" onclick="openGameSection('public', this)">View Board</button>
-          </div>
 
-          <div id="game-setup" class="game-section active">
-            <div class="card">
-              <div class="card-head">
-                <div>
-                  <h2>Tournament Setup</h2>
-                  <p>Edit this anytime. It updates live for everyone.</p>
-                </div>
+              <div class="ref-tabs">
+                <button class="ref-tab active" data-game-section="teams" onclick="openGameSection('teams', this)">Teams</button>
+                <button class="ref-tab" data-game-section="schedule" onclick="openGameSection('schedule', this)">Schedule + Scores</button>
+                <button class="ref-tab" data-game-section="standings" onclick="openGameSection('standings', this)">Point Table</button>
+                <button class="ref-tab" data-game-section="public" onclick="openGameSection('public', this)">View Board</button>
               </div>
-              <div class="form-grid">
-                <input id="tournamentTitle" class="span2" placeholder="Tournament title">
-                <input id="tournamentSubtitle" class="span2" placeholder="Tagline / subtitle">
-                <input id="tournamentDate" type="date">
-                <input id="tournamentStartTime" type="time">
-                <input id="tournamentVenue" class="span2" placeholder="Venue">
-                <textarea id="tournamentMessage" class="span4" placeholder="Public message / event note"></textarea>
-                <button class="span2" onclick="saveTournamentSettings()">Save Setup</button>
-                <button class="btn-ghost span2" onclick="createSixTeamSlots()">Create 6 Team Slots</button>
-              </div>
-            </div>
-          </div>
 
-          <div id="game-teams" class="game-section">
-            <div class="card">
-              <div class="card-head">
-                <div>
-                  <h2>Team Builder</h2>
-                  <p>Add names later. Captains, colors and players can be updated on the go.</p>
-                </div>
-                <button onclick="addTournamentTeam()">+ Add Team</button>
-              </div>
-              <div id="tournamentTeamsList" class="team-builder-grid"></div>
-            </div>
-          </div>
-
-          <div id="game-schedule" class="game-section">
-            <div class="schedule-grid">
-              <div class="card">
-                <div class="card-head">
-                  <div>
-                    <h2>Match Schedule</h2>
-                    <p>Create fixtures and update scores live.</p>
+              <div id="game-setup" class="game-section game-admin-setup hidden">
+                <div class="card">
+                  <div class="card-head">
+                    <div>
+                      <h2>Tournament Setup</h2>
+                      <p>Edit this anytime. It updates live for everyone.</p>
+                    </div>
+                  </div>
+                  <div class="form-grid">
+                    <input id="tournamentTitle" class="span2" placeholder="Tournament title">
+                    <input id="tournamentSubtitle" class="span2" placeholder="Tagline / subtitle">
+                    <input id="tournamentDate" type="date">
+                    <input id="tournamentStartTime" type="time">
+                    <input id="tournamentVenue" class="span2" placeholder="Venue">
+                    <textarea id="tournamentMessage" class="span4" placeholder="Public message / event note"></textarea>
+                    <button class="span2" onclick="saveTournamentSettings()">Save Setup</button>
+                    <button class="btn-ghost span2" onclick="createSixTeamSlots()">Create 6 Team Slots</button>
                   </div>
                 </div>
-
-                <div class="form-grid">
-                  <input id="matchLabel" placeholder="Match e.g. Match 01">
-                  <input id="matchTime" type="time">
-                  <select id="matchTeamA"></select>
-                  <select id="matchTeamB"></select>
-                  <input id="matchCourt" placeholder="Court / Ground">
-                  <select id="matchStatus">
-                    <option>Upcoming</option>
-                    <option>Live</option>
-                    <option>Completed</option>
-                  </select>
-                  <input id="matchScoreA" type="number" placeholder="Team A score">
-                  <input id="matchScoreB" type="number" placeholder="Team B score">
-                  <button class="span4" onclick="addTournamentMatch()">Add Match</button>
-                </div>
-
-                <div style="height:16px"></div>
-                <div id="tournamentMatchesList" class="list"></div>
               </div>
 
-              <div class="card">
-                <div class="card-head">
-                  <div>
-                    <h2>Leaderboard</h2>
-                    <p>Auto-calculated from completed match scores.</p>
+              <div id="game-teams" class="game-section active">
+                <div class="card">
+                  <div class="card-head">
+                    <div>
+                      <h2>Team Builder</h2>
+                      <p>Add names later. Captains, colors and players can be updated on the go.</p>
+                    </div>
+                    <div class="right-actions">
+                      <button onclick="seedFomoTeams(true)">Insert FOMO Teams</button>
+                      <button class="btn-ghost" onclick="addTournamentTeam()">+ Add Team</button>
+                    </div>
+                  </div>
+                  <div class="division-ref-grid" id="divisionRefGrid"></div>
+                  <div id="tournamentTeamsList" class="team-builder-grid"></div>
+                </div>
+              </div>
+
+              <div id="game-schedule" class="game-section">
+                <div class="card schedule-only-card">
+                  <div class="card-head">
+                    <div>
+                      <h2>Match Schedule</h2>
+                      <p>Create fixtures and update scores live.</p>
+                    </div>
+                  </div>
+
+                  <div class="form-grid">
+                    <input id="matchLabel" placeholder="Match e.g. Match 01">
+                    <input id="matchTime" type="time">
+                    <select id="matchTeamA"></select>
+                    <select id="matchTeamB"></select>
+                    <input id="matchCourt" placeholder="Court / Ground">
+                    <select id="matchStatus">
+                      <option>Upcoming</option>
+                      <option>Live</option>
+                      <option>Completed</option>
+                    </select>
+                    <input id="matchScoreA" type="number" placeholder="Team A score">
+                    <input id="matchScoreB" type="number" placeholder="Team B score">
+                    <button class="span4" onclick="addTournamentMatch()">Add Match</button>
+                  </div>
+
+                  <div style="height:16px"></div>
+                  <div id="tournamentMatchesList" class="match-timeline-list"></div>
+                </div>
+              </div>
+
+              <div id="game-standings" class="game-section">
+                <div class="grid-2">
+                  <div class="card">
+                    <div class="card-head">
+                      <div>
+                        <h2>Point Table</h2>
+                        <p>Auto-calculated from completed match scores.</p>
+                      </div>
+                    </div>
+                    <div id="podiumBoard" class="podium-board"></div>
+                    <div class="table-wrap">
+                      <table class="standings-table">
+                        <thead><tr><th>Team</th><th>Played</th><th>Won</th><th>Lost</th><th>Draw</th><th>Points</th><th>Diff</th></tr></thead>
+                        <tbody id="tournamentStandingsMain"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-head">
+                      <div>
+                        <h2>Division Progress</h2>
+                        <p>Updated as matches are completed.</p>
+                      </div>
+                    </div>
+                    <div id="divisionProgressBoard" class="chart-list"></div>
                   </div>
                 </div>
-                <div class="table-wrap">
-                  <table class="standings-table">
-                    <thead><tr><th>Team</th><th>P</th><th>W</th><th>L</th><th>D</th><th>Pts</th><th>Diff</th></tr></thead>
-                    <tbody id="tournamentStandings"></tbody>
-                  </table>
-                </div>
               </div>
-            </div>
-          </div>
 
-
-          <div id="game-standings" class="game-section">
-            <div class="card">
-              <div class="card-head">
-                <div>
-                  <h2>Point Table</h2>
-                  <p>Auto-calculated from completed match scores.</p>
-                </div>
-              </div>
-              <div class="table-wrap">
-                <table class="standings-table">
-                  <thead><tr><th>Team</th><th>Played</th><th>Won</th><th>Lost</th><th>Draw</th><th>Points</th><th>Diff</th></tr></thead>
-                  <tbody id="tournamentStandingsMain"></tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <div id="game-rules" class="game-section">
-            <div class="grid-2">
-              <div class="card">
-                <div class="card-head">
-                  <div>
-                    <h2>Rules & Regulations</h2>
-                    <p>Keep it simple. Update anytime before the event.</p>
+              <div id="game-rules" class="game-section hidden">
+                <div class="grid-2">
+                  <div class="card">
+                    <div class="card-head">
+                      <div>
+                        <h2>Rules & Regulations</h2>
+                        <p>Keep it simple. Update anytime before the event.</p>
+                      </div>
+                    </div>
+                    <textarea id="tournamentRulesText" placeholder="Add rules, scoring system, tie-breaker, best deco and best cheer rules..."></textarea>
+                    <div style="height:12px"></div>
+                    <button onclick="saveTournamentRules()">Save Rules</button>
+                  </div>
+                  <div class="card">
+                    <div class="card-head"><div><h2>Rules Preview</h2><p>This is what leaders/teams will see.</p></div></div>
+                    <div id="rulesPreview" class="rules-preview"></div>
                   </div>
                 </div>
-                <textarea id="tournamentRulesText" placeholder="Add rules, scoring system, tie-breaker, best deco and best cheer rules..."></textarea>
-                <div style="height:12px"></div>
-                <button onclick="saveTournamentRules()">Save Rules</button>
               </div>
-              <div class="card">
-                <div class="card-head"><div><h2>Rules Preview</h2><p>This is what leaders/teams will see.</p></div></div>
-                <div id="rulesPreview" class="rules-preview"></div>
-              </div>
-            </div>
-          </div>
 
-          <div id="game-public" class="game-section">
-            <div class="public-board">
-              <div class="card">
-                <div class="card-head">
-                  <div>
-                    <h2 id="publicTournamentTitle">FOMO v2</h2>
-                    <p id="publicTournamentSubtitle">The Ultimate Room</p>
+              <div id="game-public" class="game-section">
+                <div class="public-board public-board-v13">
+                  <div class="card public-live-card">
+                    <div class="card-head">
+                      <div>
+                        <h2 id="publicTournamentTitle">FOMO v2</h2>
+                        <p id="publicTournamentSubtitle">The Ultimate Room</p>
+                      </div>
+                      <span class="live-badge"><span class="pulse"></span> Live</span>
+                    </div>
+                    <div id="publicLiveBoard" class="live-match-big"></div>
+                    <div id="publicTournamentMeta" class="list"></div>
                   </div>
-                  <span class="live-badge"><span class="pulse"></span> Live</span>
+
+                  <div class="card">
+                    <div class="card-head"><div><h2>Live Leaderboard</h2><p>Updated as scores are entered.</p></div></div>
+                    <div id="publicPodium" class="podium-board compact-podium"></div>
+                    <div class="table-wrap">
+                      <table class="standings-table">
+                        <thead><tr><th>Team</th><th>P</th><th>W</th><th>Pts</th><th>Diff</th></tr></thead>
+                        <tbody id="publicStandings"></tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-head"><div><h2>Teams</h2><p>Colors, captains and players.</p></div></div>
+                    <div id="publicTeams" class="list"></div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-head"><div><h2>Matches</h2><p>Schedule and scores.</p></div></div>
+                    <div id="publicMatches" class="match-timeline-list"></div>
+                  </div>
                 </div>
-                <div id="publicTournamentMeta" class="list"></div>
               </div>
-
-              <div class="card">
-                <div class="card-head"><div><h2>Live Leaderboard</h2><p>Updated as scores are entered.</p></div></div>
-                <div class="table-wrap">
-                  <table class="standings-table">
-                    <thead><tr><th>Team</th><th>P</th><th>W</th><th>Pts</th><th>Diff</th></tr></thead>
-                    <tbody id="publicStandings"></tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div class="card">
-                <div class="card-head"><div><h2>Teams</h2><p>Colors, captains and players.</p></div></div>
-                <div id="publicTeams" class="list"></div>
-              </div>
-
-              <div class="card">
-                <div class="card-head"><div><h2>Matches</h2><p>Schedule and scores.</p></div></div>
-                <div id="publicMatches" class="list"></div>
-              </div>
-            </div>
-          </div>
             </div><!-- ref-content -->
           </div><!-- referee shell close -->
         </section>
@@ -4796,13 +4891,25 @@
 
 
     window.openGameSection = function(name, btn){
+      if(name === "setup") name = "teams";
       document.querySelectorAll(".game-section").forEach(s=>s.classList.remove("active"));
       document.querySelectorAll(".ref-tab").forEach(b=>b.classList.remove("active"));
       const section = $(`game-${name}`);
       if(section) section.classList.add("active");
-      if(btn) btn.classList.add("active");
+      const activeBtn = btn || document.querySelector(`.ref-tab[data-game-section="${name}"]`);
+      if(activeBtn) activeBtn.classList.add("active");
+      renderTournament();
       window.scrollTo({top:0,behavior:"smooth"});
     };
+
+    const FOMO_DEFAULT_TEAMS = [
+      {slot:1,name:"Dishan",captain:"Dishan",division:"Division 1",referee:"Shapthi",color:"#c6f900",players:["Lakeesha","Deanna","Andy","Shaven","Navindu","Joshua"]},
+      {slot:2,name:"Mishael",captain:"Mishael",division:"Division 1",referee:"Shapthi",color:"#27e8ff",players:["Nishmi","Ashcharya","Anuk W","Dilhaan","Lukesh","Dwane"]},
+      {slot:3,name:"Bhagya",captain:"Bhagya",division:"Division 1",referee:"Shapthi",color:"#9b6cff",players:["Abigail","Leon","Yohan","Sithanga","Anuk Het","Dilhan C"]},
+      {slot:4,name:"Ciara",captain:"Ciara",division:"Division 2",referee:"Yohan",color:"#ff5edb",players:["Tayara","Shem","Mario Silva","Yashen","Dulain","Shapthi"]},
+      {slot:5,name:"Samuel",captain:"Samuel",division:"Division 2",referee:"Yohan",color:"#f6b445",players:["Bianca","Onesh","Nuran","Kevin","Sahas","Shanara"]},
+      {slot:6,name:"Oshara",captain:"Oshara",division:"Division 2",referee:"Yohan",color:"#f5f0e6",players:["Dyleena","Shannal","Dan","Migara","Vinuja"]}
+    ];
 
     function activeTournamentId(){
       return selectedEventId || "fomo-v2";
@@ -4817,9 +4924,39 @@
       return tournamentTeams.filter(t => (t.tournamentId || "fomo-v2") === id);
     }
 
+    function timeToMinutes(value){
+      const text = String(value || "").trim();
+      const match = text.match(/^(\d{1,2}):(\d{2})/);
+      if(!match) return 99999;
+      return Number(match[1]) * 60 + Number(match[2]);
+    }
+
+    function formatMatchTime(value){
+      if(!value) return "TBC";
+      const [h,m] = String(value).split(":").map(Number);
+      if(Number.isNaN(h) || Number.isNaN(m)) return clean(value);
+      const suffix = h >= 12 ? "PM" : "AM";
+      const hour = ((h + 11) % 12) + 1;
+      return `${hour}:${String(m).padStart(2,"0")} ${suffix}`;
+    }
+
+    function sortedMatches(list){
+      return [...(list || [])].sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time) || String(a.label||"").localeCompare(String(b.label||"")));
+    }
+
     function activeTournamentMatches(){
       const id = activeTournamentId();
-      return tournamentMatches.filter(m => (m.tournamentId || "fomo-v2") === id);
+      return sortedMatches(tournamentMatches.filter(m => (m.tournamentId || "fomo-v2") === id));
+    }
+
+    function matchDivision(a,b){
+      if(a?.division && a?.division === b?.division) return a.division;
+      return [a?.division,b?.division].filter(Boolean).join(" / ") || "Open";
+    }
+
+    function matchReferee(a,b){
+      if(a?.referee && a?.referee === b?.referee) return a.referee;
+      return [a?.referee,b?.referee].filter(Boolean).join(" / ") || "TBC";
     }
 
     window.saveTournamentSettings = async function(){
@@ -4828,38 +4965,67 @@
       const selectedEvent = events.find(e=>e.id===id);
       const data = {
         eventId:id,
-        title: $("tournamentTitle").value.trim() || selectedEvent?.title || "FOMO v2",
-        subtitle: $("tournamentSubtitle").value.trim() || "The Ultimate Room",
-        date: $("tournamentDate").value || selectedEvent?.date || "",
-        startTime: $("tournamentStartTime").value || selectedEvent?.time || "",
-        venue: $("tournamentVenue").value.trim() || selectedEvent?.location || "",
-        message: $("tournamentMessage").value.trim(),
+        title: $("tournamentTitle")?.value.trim() || selectedEvent?.title || "FOMO v2",
+        subtitle: $("tournamentSubtitle")?.value.trim() || "The Ultimate Room",
+        date: $("tournamentDate")?.value || selectedEvent?.date || "2026-06-27",
+        startTime: $("tournamentStartTime")?.value || selectedEvent?.time || "15:00",
+        venue: $("tournamentVenue")?.value.trim() || selectedEvent?.location || "Infinity Sports Arena",
+        message: $("tournamentMessage")?.value.trim() || selectedEvent?.description || "",
         updatedAt: serverTimestamp()
       };
       await setDoc(doc(db,"tournamentSettings",id), data, { merge:true });
       notify("Game plan setup saved");
     };
 
-    window.createSixTeamSlots = async function(){
+    window.seedFomoTeams = async function(force=false){
       if(!canManage()) return notify("Only Admin or Core Moderator can create team slots.");
       const id = activeTournamentId();
       const currentTeams = activeTournamentTeams();
-      const existing = currentTeams.length;
-      const colors = ["#22d3ee","#f59e0b","#22c55e","#ec4899","#8b5cf6","#ef4444"];
-      for(let i=existing; i<6; i++){
-        await addDoc(collection(db,"tournamentTeams"), {
+      if(!force && currentTeams.length >= 6) return;
+      const bySlot = new Map(currentTeams.map(t=>[Number(t.slot||0),t]));
+      for(const team of FOMO_DEFAULT_TEAMS){
+        const data = {
           tournamentId:id,
-          slot:i+1,
-          name:`Team ${i+1}`,
-          color:colors[i] || "#35b8ff",
-          captain:"",
-          players:[],
-          notes:"",
-          createdAt:serverTimestamp(),
+          slot:team.slot,
+          name:team.name,
+          color:team.color,
+          captain:team.captain,
+          division:team.division,
+          referee:team.referee,
+          players:team.players,
+          notes:`${team.division} • Ref: ${team.referee}`,
           updatedAt:serverTimestamp()
-        });
+        };
+        const existing = bySlot.get(team.slot);
+        if(existing){
+          await updateDoc(doc(db,"tournamentTeams",existing.id), data);
+        }else{
+          await addDoc(collection(db,"tournamentTeams"), {...data, createdAt:serverTimestamp()});
+        }
       }
-      notify("6 team slots are ready");
+      notify("FOMO teams inserted");
+    };
+
+    async function ensureFomoTeamsSeeded(){
+      if(!canManage()) return;
+      const id = activeTournamentId();
+      const teams = activeTournamentTeams();
+      const defaultNames = new Set(FOMO_DEFAULT_TEAMS.map(t=>t.name));
+      const hasDefaultSet = FOMO_DEFAULT_TEAMS.every(t=>teams.some(x=>(x.name||"")===t.name));
+      const seedKey = `yc-fomo-teams-seeded-${id}`;
+      if(!teams.length){
+        await seedFomoTeams(false);
+        try{ localStorage.setItem(seedKey,"1"); }catch(e){}
+        return;
+      }
+      if(!hasDefaultSet && !localStorage.getItem(seedKey)){
+        await seedFomoTeams(true);
+        try{ localStorage.setItem(seedKey,"1"); }catch(e){}
+      }
+    }
+
+    window.createSixTeamSlots = async function(){
+      await seedFomoTeams(true);
     };
 
     window.addTournamentTeam = async function(){
@@ -4870,8 +5036,10 @@
         tournamentId:id,
         slot:currentTeams.length + 1,
         name:`Team ${currentTeams.length + 1}`,
-        color:"#35b8ff",
+        color:"#c6f900",
         captain:"",
+        division:"",
+        referee:"",
         players:[],
         notes:"",
         createdAt:serverTimestamp(),
@@ -4886,8 +5054,10 @@
       const players = playersText.split("\n").map(x=>x.trim()).filter(Boolean);
       await updateDoc(doc(db,"tournamentTeams",id), {
         name:$(`team-name-${id}`).value.trim() || "Unnamed Team",
-        color:$(`team-color-${id}`).value || "#35b8ff",
+        color:$(`team-color-${id}`).value || "#c6f900",
         captain:$(`team-captain-${id}`).value.trim(),
+        division:$(`team-division-${id}`).value.trim(),
+        referee:$(`team-referee-${id}`).value.trim(),
         players,
         notes:$(`team-notes-${id}`).value.trim(),
         updatedAt:serverTimestamp()
@@ -4910,39 +5080,18 @@
       if(!teamA || !teamB || teamA === teamB) return notify("Select two different teams.");
       const teams = activeTournamentTeams();
       const matches = activeTournamentMatches();
-
-      if($("refTournamentTitle")) $("refTournamentTitle").textContent = `${tournamentSettings.title || selectedEvent?.title || "FOMO v2"} Game Plan`;
-      if($("refTeamCount")) $("refTeamCount").textContent = teams.length;
-      if($("refMatchCount")) $("refMatchCount").textContent = matches.length;
-      if($("refLiveCount")) $("refLiveCount").textContent = matches.filter(m=>m.status==="Live").length;
-      if($("refDoneCount")) $("refDoneCount").textContent = matches.filter(m=>m.status==="Completed").length;
-
-      const liveMatch = matches.find(m=>m.status==="Live") || matches.find(m=>m.status==="Upcoming") || matches[0];
-      if($("refLiveMatchBoard")){
-        if(liveMatch){
-          $("refLiveMatchBoard").innerHTML = `
-            <div class="live-team">
-              <h3>${clean(teamById(liveMatch.teamAId).name || liveMatch.teamAName || "Team A")}</h3>
-              <div class="score">${Number(liveMatch.scoreA||0)}</div>
-            </div>
-            <div class="vs-pill">VS</div>
-            <div class="live-team">
-              <h3>${clean(teamById(liveMatch.teamBId).name || liveMatch.teamBName || "Team B")}</h3>
-              <div class="score">${Number(liveMatch.scoreB||0)}</div>
-            </div>
-          `;
-        }else{
-          $("refLiveMatchBoard").innerHTML = `<div class="empty">No matches yet. Create your first match in Schedule + Scores.</div>`;
-        }
-      }
-
       const a = teams.find(t=>t.id===teamA);
       const b = teams.find(t=>t.id===teamB);
+      const division = matchDivision(a,b);
+      const referee = matchReferee(a,b);
+      const sameDivisionCount = matches.filter(m=>(m.division||"")===division).length + 1;
       await addDoc(collection(db,"tournamentMatches"), {
         tournamentId:activeTournamentId(),
-        label:$("matchLabel").value.trim() || `Match ${matches.length + 1}`,
+        label:$("matchLabel").value.trim() || `${division.replace("Division ","Div ")} - M${sameDivisionCount}`,
         time:$("matchTime").value,
         court:$("matchCourt").value.trim(),
+        division,
+        referee,
         teamAId:teamA,
         teamBId:teamB,
         teamAName:a?.name || "Team A",
@@ -4957,6 +5106,15 @@
       notify("Match added");
     };
 
+    function flashScore(text="+1"){
+      const el = document.createElement("div");
+      el.className = "score-pop";
+      el.textContent = text;
+      el.style.left = `${Math.min(window.innerWidth - 80, Math.max(80, window.innerWidth/2))}px`;
+      el.style.top = `${Math.min(window.innerHeight - 120, Math.max(160, window.innerHeight/2))}px`;
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(), 760);
+    }
 
     window.quickScore = async function(id, side, amount=1){
       if(!canManage()) return notify("Only Admin or Core Moderator can update scores.");
@@ -4966,6 +5124,7 @@
       if(side === "A") updates.scoreA = Number(match.scoreA || 0) + amount;
       if(side === "B") updates.scoreB = Number(match.scoreB || 0) + amount;
       await updateDoc(doc(db,"tournamentMatches",id), updates);
+      flashScore(`+${amount}`);
     };
 
     window.saveTournamentMatch = async function(id){
@@ -4999,7 +5158,7 @@
       const matches = activeTournamentMatches();
 
       teams.forEach(t=>{
-        table[t.id] = { id:t.id, name:t.name || `Team ${t.slot||""}`, color:t.color || "#35b8ff", played:0, won:0, lost:0, draw:0, pts:0, diff:0 };
+        table[t.id] = { id:t.id, name:t.name || `Team ${t.slot||""}`, color:t.color || "#c6f900", division:t.division||"", referee:t.referee||"", played:0, won:0, lost:0, draw:0, pts:0, diff:0 };
       });
 
       matches.filter(m=>m.status==="Completed").forEach(m=>{
@@ -5017,6 +5176,105 @@
       return Object.values(table).sort((a,b)=> b.pts - a.pts || b.diff - a.diff || a.name.localeCompare(b.name));
     }
 
+    function liveMatchFrom(matches){
+      return matches.find(m=>m.status==="Live") || matches.find(m=>m.status==="Upcoming") || matches[0];
+    }
+
+    function nextUpcomingMatch(matches){
+      return matches.filter(m=>m.status!=="Completed").sort((a,b)=>timeToMinutes(a.time)-timeToMinutes(b.time))[0] || null;
+    }
+
+    function renderPodium(rows, targetId){
+      const target = $(targetId);
+      if(!target) return;
+      const top = [rows[1], rows[0], rows[2]];
+      const labels = ["02", "01", "03"];
+      target.innerHTML = rows.length ? top.map((r,i)=> r ? `
+        <div class="podium-card ${i===1?"first":""}" data-rank="${labels[i]}" style="border-color:${clean(r.color)}">
+          <h4>${clean(r.name)}</h4>
+          <p>${r.pts} pts • Diff ${r.diff}</p>
+        </div>
+      ` : `<div class="podium-card" data-rank="${labels[i]}"><h4>-</h4><p>Waiting</p></div>`).join("") : `<div class="empty" style="grid-column:1/-1">No teams yet.</div>`;
+    }
+
+    function renderDivisionProgress(matches){
+      const target = $("divisionProgressBoard");
+      if(!target) return;
+      const divisions = [...new Set(activeTournamentTeams().map(t=>t.division).filter(Boolean))];
+      target.innerHTML = divisions.length ? divisions.map(div=>{
+        const total = matches.filter(m=>(m.division||"")===div).length;
+        const done = matches.filter(m=>(m.division||"")===div && m.status==="Completed").length;
+        const pct = total ? Math.round(done / total * 100) : 0;
+        const referee = (activeTournamentTeams().find(t=>t.division===div)||{}).referee || "TBC";
+        return `<div class="chart-list-row"><div><b>${clean(div)}</b><div class="mini-progress"><i style="--w:${pct}%"></i></div><p style="color:#aeb9ce;font-size:12px;margin-top:8px;">${done}/${total} matches • Ref: ${clean(referee)}</p></div><strong>${pct}%</strong></div>`;
+      }).join("") : `<div class="empty">Division progress will appear once teams are inserted.</div>`;
+    }
+
+    function renderControlCenter(matches, rows, tournamentSettings, selectedEvent){
+      const live = matches.find(m=>m.status==="Live");
+      const current = live || matches.find(m=>m.status==="Upcoming") || matches[0];
+      const next = nextUpcomingMatch(matches);
+      if($("controlCurrentMatch")){
+        $("controlCurrentMatch").textContent = current ? `${teamById(current.teamAId).name || current.teamAName || "Team A"} ${Number(current.scoreA||0)} — ${Number(current.scoreB||0)} ${teamById(current.teamBId).name || current.teamBName || "Team B"}` : "No live match yet";
+      }
+      if($("controlCurrentMeta")){
+        $("controlCurrentMeta").textContent = current ? `${current.label || "Match"} • ${formatMatchTime(current.time)} • ${current.court || "Ground TBC"} • ${current.status || "Upcoming"}` : "Set a match to Live and it appears here.";
+      }
+      if($("controlNextMatch")){
+        $("controlNextMatch").textContent = next ? `${teamById(next.teamAId).name || next.teamAName || "Team A"} vs ${teamById(next.teamBId).name || next.teamBName || "Team B"}` : "No upcoming match";
+      }
+      updateCountdown(next, tournamentSettings, selectedEvent);
+      const courts = [...new Set(matches.map(m=>m.court || "Court / Ground").filter(Boolean))].slice(0,4);
+      if($("controlCourtStatus")){
+        $("controlCourtStatus").innerHTML = courts.length ? courts.map(c=>{
+          const onCourt = matches.find(m=>(m.court||"Court / Ground")===c && m.status==="Live") || matches.find(m=>(m.court||"Court / Ground")===c && m.status==="Upcoming");
+          return `<div class="court-status-pill"><span>${clean(c)}</span><b>${clean(onCourt?.status || "Ready")}</b></div>`;
+        }).join("") : `<div class="court-status-pill"><span>Court status</span><b>Ready</b></div>`;
+      }
+    }
+
+    let countdownMatchKey = "";
+    let countdownTimer = null;
+    function updateCountdown(match, tournamentSettings, selectedEvent){
+      const box = $("controlCountdown");
+      if(!box) return;
+      if(!match || !match.time){ box.textContent = "TBC"; return; }
+      const date = tournamentSettings.date || selectedEvent?.date || "2026-06-27";
+      countdownMatchKey = `${date}T${match.time}`;
+      const tick = ()=>{
+        const target = new Date(`${date}T${match.time}:00`);
+        const diff = target.getTime() - Date.now();
+        if(Number.isNaN(target.getTime())) return box.textContent = formatMatchTime(match.time);
+        if(diff <= 0) return box.textContent = match.status === "Live" ? "LIVE" : "NOW";
+        const totalM = Math.floor(diff/60000);
+        const h = Math.floor(totalM/60);
+        const m = totalM % 60;
+        box.textContent = h ? `${h}h ${String(m).padStart(2,"0")}m` : `${m}m`;
+      };
+      tick();
+      if(!countdownTimer){ countdownTimer = setInterval(()=>{ const m = nextUpcomingMatch(activeTournamentMatches()); updateCountdown(m, activeTournamentSettings(), events.find(e=>e.id===activeTournamentId())); }, 30000); }
+    }
+
+    function renderLiveBoard(match, targetId){
+      const target = $(targetId);
+      if(!target) return;
+      if(match){
+        target.innerHTML = `
+          <div class="live-team">
+            <h3>${clean(teamById(match.teamAId).name || match.teamAName || "Team A")}</h3>
+            <div class="score">${Number(match.scoreA||0)}</div>
+          </div>
+          <div class="vs-pill">VS</div>
+          <div class="live-team">
+            <h3>${clean(teamById(match.teamBId).name || match.teamBName || "Team B")}</h3>
+            <div class="score">${Number(match.scoreB||0)}</div>
+          </div>
+        `;
+      }else{
+        target.innerHTML = `<div class="empty">No matches yet. Create your first match in Schedule + Scores.</div>`;
+      }
+    }
+
     function renderTournament(){
       if(!$("tournamentTeamsList")) return;
 
@@ -5024,38 +5282,58 @@
       const tournamentSettings = activeTournamentSettings();
       const teams = activeTournamentTeams().sort((a,b)=>(a.slot||0)-(b.slot||0));
       const matches = activeTournamentMatches();
+      const rows = standings();
+      const liveOrNext = liveMatchFrom(matches);
 
-      $("tournamentTitle").value = tournamentSettings.title || selectedEvent?.title || "FOMO v2";
-      $("tournamentSubtitle").value = tournamentSettings.subtitle || "The Ultimate Room";
-      $("tournamentDate").value = tournamentSettings.date || selectedEvent?.date || "";
-      $("tournamentStartTime").value = tournamentSettings.startTime || selectedEvent?.time || "";
-      $("tournamentVenue").value = tournamentSettings.venue || selectedEvent?.location || "";
-      $("tournamentMessage").value = tournamentSettings.message || selectedEvent?.description || "";
+      if($("tournamentTitle")) $("tournamentTitle").value = tournamentSettings.title || selectedEvent?.title || "FOMO v2";
+      if($("tournamentSubtitle")) $("tournamentSubtitle").value = tournamentSettings.subtitle || "The Ultimate Room";
+      if($("tournamentDate")) $("tournamentDate").value = tournamentSettings.date || selectedEvent?.date || "2026-06-27";
+      if($("tournamentStartTime")) $("tournamentStartTime").value = tournamentSettings.startTime || selectedEvent?.time || "15:00";
+      if($("tournamentVenue")) $("tournamentVenue").value = tournamentSettings.venue || selectedEvent?.location || "Infinity Sports Arena";
+      if($("tournamentMessage")) $("tournamentMessage").value = tournamentSettings.message || selectedEvent?.description || "";
 
-      $("publicTournamentTitle").textContent = tournamentSettings.title || selectedEvent?.title || "FOMO v2";
-      $("publicTournamentSubtitle").textContent = tournamentSettings.subtitle || "The Ultimate Room";
-      $("publicTournamentMeta").innerHTML = `
-        <div class="list-item"><div><h4>Date & Time</h4><p>${clean(tournamentSettings.date||selectedEvent?.date||"TBC")} • ${clean(tournamentSettings.startTime||selectedEvent?.time||"TBC")}</p></div></div>
-        <div class="list-item"><div><h4>Venue</h4><p>${clean(tournamentSettings.venue||selectedEvent?.location||"TBC")}</p></div></div>
+      if($("refTournamentTitle")) $("refTournamentTitle").textContent = `${tournamentSettings.title || selectedEvent?.title || "FOMO v2"} Game Plan`;
+      if($("refTeamCount")) $("refTeamCount").textContent = teams.length;
+      if($("refMatchCount")) $("refMatchCount").textContent = matches.length;
+      if($("refLiveCount")) $("refLiveCount").textContent = matches.filter(m=>m.status==="Live").length;
+      if($("refDoneCount")) $("refDoneCount").textContent = matches.filter(m=>m.status==="Completed").length;
+
+      if($("publicTournamentTitle")) $("publicTournamentTitle").textContent = tournamentSettings.title || selectedEvent?.title || "FOMO v2";
+      if($("publicTournamentSubtitle")) $("publicTournamentSubtitle").textContent = tournamentSettings.subtitle || "The Ultimate Room";
+      if($("publicTournamentMeta")) $("publicTournamentMeta").innerHTML = `
+        <div class="list-item"><div><h4>Date & Time</h4><p>${clean(tournamentSettings.date||selectedEvent?.date||"2026-06-27")} • ${clean(tournamentSettings.startTime||selectedEvent?.time||"03:00 PM")}</p></div></div>
+        <div class="list-item"><div><h4>Venue</h4><p>${clean(tournamentSettings.venue||selectedEvent?.location||"Infinity Sports Arena")}</p></div></div>
         <div class="list-item"><div><h4>Note</h4><p>${clean(tournamentSettings.message||"Game plan will be updated live.")}</p></div></div>
       `;
 
-      $("matchTeamA").innerHTML = `<option value="">Team A</option>` + teams.map(t=>`<option value="${t.id}">${clean(t.name)}</option>`).join("");
-      $("matchTeamB").innerHTML = `<option value="">Team B</option>` + teams.map(t=>`<option value="${t.id}">${clean(t.name)}</option>`).join("");
+      if($("divisionRefGrid")){
+        const groups = ["Division 1","Division 2"].map(div=>{
+          const groupTeams = teams.filter(t=>t.division===div);
+          const ref = groupTeams[0]?.referee || (div==="Division 1" ? "Shapthi" : "Yohan");
+          return `<div class="division-ref-card"><h4>${div}</h4><p>Ref: ${clean(ref)} • ${groupTeams.map(t=>t.name).join(" / ") || "Teams loading"}</p></div>`;
+        }).join("");
+        $("divisionRefGrid").innerHTML = groups;
+      }
+
+      if($("matchTeamA")) $("matchTeamA").innerHTML = `<option value="">Team A</option>` + teams.map(t=>`<option value="${t.id}">${clean(t.name)}${t.division ? ` • ${clean(t.division)}` : ""}</option>`).join("");
+      if($("matchTeamB")) $("matchTeamB").innerHTML = `<option value="">Team B</option>` + teams.map(t=>`<option value="${t.id}">${clean(t.name)}${t.division ? ` • ${clean(t.division)}` : ""}</option>`).join("");
 
       $("tournamentTeamsList").innerHTML = teams.length ? teams.map(t=>{
         const playersText = (t.players || []).join("\n");
         const chips = (t.players || []).slice(0,12).map(p=>`<span class="player-chip">${clean(p)}</span>`).join("");
         return `
-          <div class="team-card" style="--team-color:${clean(t.color||"#35b8ff")}">
+          <div class="team-card" style="--team-color:${clean(t.color||"#c6f900")}">
             <div class="team-color-strip"></div>
             <h4>${clean(t.name||"Unnamed Team")}</h4>
+            <div class="team-assignment"><span class="pill">${clean(t.division||"Division TBC")}</span><span class="pill">Ref: ${clean(t.referee||"TBC")}</span></div>
             <div class="team-meta">
               <input id="team-name-${t.id}" value="${clean(t.name||"")}" placeholder="Team name">
               <div class="color-picker-row">
                 <input id="team-captain-${t.id}" value="${clean(t.captain||"")}" placeholder="Captain">
-                <input id="team-color-${t.id}" type="color" value="${clean(t.color||"#35b8ff")}">
+                <input id="team-color-${t.id}" type="color" value="${clean(t.color||"#c6f900")}">
               </div>
+              <input id="team-division-${t.id}" value="${clean(t.division||"")}" placeholder="Division">
+              <input id="team-referee-${t.id}" value="${clean(t.referee||"")}" placeholder="Referee">
             </div>
             <textarea id="players-${t.id}" placeholder="Players - one name per line">${clean(playersText)}</textarea>
             <input id="team-notes-${t.id}" value="${clean(t.notes||"")}" placeholder="Team notes">
@@ -5066,40 +5344,48 @@
             </div>
           </div>
         `;
-      }).join("") : `<div class="empty">No teams yet. Click Create 6 Team Slots.</div>`;
+      }).join("") : `<div class="empty">No teams yet. Click Insert FOMO Teams.</div>`;
 
-      $("tournamentMatchesList").innerHTML = matches.length ? matches.map(m=>`
-        <div class="match-card">
-          <div class="match-line">
-            <span>${clean(m.label||"Match")}</span>
-            <span class="pill status-${roleKey(m.status)}">${clean(m.status||"Upcoming")}</span>
-          </div>
-          <div class="match-line">
-            <span>${clean(teamById(m.teamAId).name || m.teamAName || "Team A")}</span>
-            <span>${Number(m.scoreA||0)} - ${Number(m.scoreB||0)}</span>
-            <span>${clean(teamById(m.teamBId).name || m.teamBName || "Team B")}</span>
-          </div>
-          <div class="score-inputs">
-            <input id="time-${m.id}" type="time" value="${clean(m.time||"")}">
-            <input id="scoreA-${m.id}" type="number" value="${Number(m.scoreA||0)}">
-            <input id="scoreB-${m.id}" type="number" value="${Number(m.scoreB||0)}">
-            <select id="status-${m.id}">
-              <option ${m.status==="Upcoming"?"selected":""}>Upcoming</option>
-              <option ${m.status==="Live"?"selected":""}>Live</option>
-              <option ${m.status==="Completed"?"selected":""}>Completed</option>
-            </select>
-          </div>
-          <input id="court-${m.id}" value="${clean(m.court||"")}" placeholder="Court / Ground">
-          <div class="big-touch-actions">
-            <button class="mini-btn" onclick="quickScore('${m.id}','A',1)">+1 ${clean(teamById(m.teamAId).name || "A")}</button>
-            <button class="mini-btn" onclick="quickScore('${m.id}','B',1)">+1 ${clean(teamById(m.teamBId).name || "B")}</button>
-            <button class="mini-btn btn-yellow" onclick="saveTournamentMatch('${m.id}')">Save Score</button>
-            <button class="mini-btn btn-danger" onclick="deleteTournamentMatch('${m.id}')">Delete</button>
+      if($("tournamentMatchesList")) $("tournamentMatchesList").innerHTML = matches.length ? matches.map(m=>{
+        const aName = teamById(m.teamAId).name || m.teamAName || "Team A";
+        const bName = teamById(m.teamBId).name || m.teamBName || "Team B";
+        const accent = teamById(m.teamAId).color || "#c6f900";
+        return `
+        <div class="match-card ${m.status==="Live"?"match-live":""}" style="--match-accent:${clean(accent)}">
+          <div class="match-shell">
+            <div class="match-time-chip">${formatMatchTime(m.time)}</div>
+            <div>
+              <div class="match-title-row">
+                <div><h4>${clean(m.label||"Match")}</h4><p class="control-match-meta">${clean(m.division||"Open")} • Ref: ${clean(m.referee||"TBC")} • ${clean(m.court||"Ground TBC")}</p></div>
+                <span class="pill status-${roleKey(m.status)}">${clean(m.status||"Upcoming")}</span>
+              </div>
+              <div class="match-versus">
+                <span class="match-team-name">${clean(aName)}</span>
+                <span class="match-score-pill">${Number(m.scoreA||0)} - ${Number(m.scoreB||0)}</span>
+                <span class="match-team-name">${clean(bName)}</span>
+              </div>
+              <div class="match-edit-grid">
+                <input id="time-${m.id}" type="time" value="${clean(m.time||"")}">
+                <input id="scoreA-${m.id}" type="number" value="${Number(m.scoreA||0)}">
+                <input id="scoreB-${m.id}" type="number" value="${Number(m.scoreB||0)}">
+                <select id="status-${m.id}">
+                  <option ${m.status==="Upcoming"?"selected":""}>Upcoming</option>
+                  <option ${m.status==="Live"?"selected":""}>Live</option>
+                  <option ${m.status==="Completed"?"selected":""}>Completed</option>
+                </select>
+              </div>
+              <input id="court-${m.id}" value="${clean(m.court||"")}" placeholder="Court / Ground" style="margin-top:8px;">
+              <div class="big-touch-actions">
+                <button class="mini-btn" onclick="quickScore('${m.id}','A',1)">+1 ${clean(aName)}</button>
+                <button class="mini-btn" onclick="quickScore('${m.id}','B',1)">+1 ${clean(bName)}</button>
+                <button class="mini-btn btn-yellow" onclick="saveTournamentMatch('${m.id}')">Save Score</button>
+                <button class="mini-btn btn-danger" onclick="deleteTournamentMatch('${m.id}')">Delete</button>
+              </div>
+            </div>
           </div>
         </div>
-      `).join("") : `<div class="empty">No matches yet. Create matches when the teams are ready.</div>`;
+      `}).join("") : `<div class="empty">No matches yet. Create matches when the teams are ready.</div>`;
 
-      const rows = standings();
       const fullRows = rows.map(r=>`
         <tr><td><span class="pill" style="border-color:${clean(r.color)}">${clean(r.name)}</span></td><td>${r.played}</td><td>${r.won}</td><td>${r.lost}</td><td>${r.draw}</td><td>${r.pts}</td><td>${r.diff}</td></tr>
       `).join("") || `<tr><td colspan="7">No teams yet.</td></tr>`;
@@ -5107,25 +5393,66 @@
       if($("tournamentStandings")) $("tournamentStandings").innerHTML = fullRows;
       if($("tournamentStandingsMain")) $("tournamentStandingsMain").innerHTML = fullRows;
 
-      $("publicStandings").innerHTML = rows.map(r=>`
+      if($("publicStandings")) $("publicStandings").innerHTML = rows.map(r=>`
         <tr><td><span class="pill" style="border-color:${clean(r.color)}">${clean(r.name)}</span></td><td>${r.played}</td><td>${r.won}</td><td>${r.pts}</td><td>${r.diff}</td></tr>
       `).join("") || `<tr><td colspan="5">No teams yet.</td></tr>`;
 
-      $("publicTeams").innerHTML = teams.length ? teams.map(t=>`
+      renderPodium(rows, "podiumBoard");
+      renderPodium(rows, "publicPodium");
+      renderDivisionProgress(matches);
+      renderControlCenter(matches, rows, tournamentSettings, selectedEvent);
+      renderLiveBoard(liveOrNext, "refLiveMatchBoard");
+      renderLiveBoard(liveOrNext, "publicLiveBoard");
+
+      if($("publicTeams")) $("publicTeams").innerHTML = teams.length ? teams.map(t=>`
         <div class="list-item">
-          <div><h4><span class="pill" style="border-color:${clean(t.color||"#35b8ff")}">${clean(t.name)}</span></h4><p>Captain: ${clean(t.captain||"TBC")} • ${(t.players||[]).length} players</p></div>
+          <div><h4><span class="pill" style="border-color:${clean(t.color||"#c6f900")}">${clean(t.name)}</span></h4><p>Captain: ${clean(t.captain||"TBC")} • ${clean(t.division||"Division TBC")} • Ref: ${clean(t.referee||"TBC")} • ${(t.players||[]).length} players</p></div>
         </div>
       `).join("") : `<div class="empty">Teams will appear here.</div>`;
 
-      $("publicMatches").innerHTML = matches.length ? matches.map(m=>`
-        <div class="list-item">
-          <div><h4>${clean(m.label||"Match")}: ${clean(teamById(m.teamAId).name||m.teamAName||"Team A")} vs ${clean(teamById(m.teamBId).name||m.teamBName||"Team B")}</h4><p>${clean(m.time||"TBC")} • ${clean(m.court||"Ground TBC")} • ${clean(m.status||"Upcoming")} • Score ${Number(m.scoreA||0)} - ${Number(m.scoreB||0)}</p></div>
+      if($("publicMatches")) $("publicMatches").innerHTML = matches.length ? matches.map(m=>`
+        <div class="timeline-card">
+          <div class="timeline-time">${formatMatchTime(m.time)}</div>
+          <div><h4>${clean(m.label||"Match")}: ${clean(teamById(m.teamAId).name||m.teamAName||"Team A")} vs ${clean(teamById(m.teamBId).name||m.teamBName||"Team B")}</h4><p>${clean(m.division||"Open")} • Ref: ${clean(m.referee||"TBC")} • ${clean(m.court||"Ground TBC")} • ${clean(m.status||"Upcoming")} • Score ${Number(m.scoreA||0)} - ${Number(m.scoreB||0)}</p></div>
         </div>
       `).join("") : `<div class="empty">Match schedule will appear here.</div>`;
     }
 
-
-
+    let frisbeeAnimationId = null;
+    let frisbeeState = [];
+    function initFrisbeeEngine(){
+      const field = $("frisbeeField");
+      if(!field || frisbeeAnimationId) return;
+      const discs = [...field.querySelectorAll(".bouncing-disc")];
+      frisbeeState = discs.map((el,i)=>({
+        el,
+        x: 40 + i * 120,
+        y: 70 + i * 80,
+        vx: (i % 2 ? -1 : 1) * (1.4 + i * .42),
+        vy: (i % 2 ? 1 : -1) * (1.1 + i * .36),
+        rot: i * 40,
+        hit: 0,
+        size: i===2 ? 70 : (i===1 ? 42 : (i===3 ? 48 : 54))
+      }));
+      const step = ()=>{
+        const rect = field.getBoundingClientRect();
+        const w = Math.max(320, rect.width), h = Math.max(320, rect.height);
+        frisbeeState.forEach((d,idx)=>{
+          d.x += d.vx; d.y += d.vy; d.rot += (idx+1) * 3.8;
+          let bounced = false;
+          if(d.x <= 0){ d.x = 0; d.vx = Math.abs(d.vx) * (1 + Math.random()*.03); bounced = true; }
+          if(d.x + d.size >= w){ d.x = w - d.size; d.vx = -Math.abs(d.vx) * (1 + Math.random()*.03); bounced = true; }
+          if(d.y <= 0){ d.y = 0; d.vy = Math.abs(d.vy) * (1 + Math.random()*.03); bounced = true; }
+          if(d.y + d.size >= h){ d.y = h - d.size; d.vy = -Math.abs(d.vy) * (1 + Math.random()*.03); bounced = true; }
+          if(bounced) d.hit = 1;
+          d.hit = Math.max(0, d.hit - .045);
+          const scale = 1 + d.hit * .55;
+          d.el.style.transform = `translate3d(${d.x}px,${d.y}px,0) rotate(${d.rot}deg) scale(${scale})`;
+        });
+        frisbeeAnimationId = requestAnimationFrame(step);
+      };
+      step();
+    }
 
     function showAppLoader(label="Opening command interface"){
       const loader = $("appLoader");
@@ -5312,9 +5639,12 @@
       if(eventId) selectedEventId = eventId;
       document.body.classList.add("game-mode");
       openPage("gameplan", null);
+      openGameSection("teams");
+      initFrisbeeEngine();
       renderTournament();
-      setTimeout(()=>renderTournament(), 300);
-      setTimeout(()=>playGameIntro(), 450);
+      setTimeout(()=>ensureFomoTeamsSeeded(), 250);
+      setTimeout(()=>renderTournament(), 450);
+      setTimeout(()=>playGameIntro(), 650);
     };
 
     window.exitGamePlanMode = function(){
