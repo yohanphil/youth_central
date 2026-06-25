@@ -3221,118 +3221,285 @@
     @media(max-width:1050px){.tournament-control-center{grid-template-columns:1fr;position:relative;top:auto}.division-ref-grid{grid-template-columns:1fr}.public-board-v13{grid-template-columns:1fr!important;}.podium-board{grid-template-columns:1fr}.podium-card.first{min-height:150px}.match-shell{grid-template-columns:1fr}.match-time-chip{width:100%;height:auto;min-height:56px}.match-edit-grid{grid-template-columns:1fr 1fr}.match-versus{grid-template-columns:1fr;}.match-team-name:last-child{text-align:left}.match-score-pill{width:max-content}}
     @media(max-width:620px){.tournament-control-center{margin:0 10px 14px}.control-block{border-radius:22px}.match-edit-grid{grid-template-columns:1fr}.timeline-card{grid-template-columns:1fr}.public-board-v13 .card{margin-left:0!important;margin-right:0!important}.bouncing-disc{opacity:.38}}
 
-
+  
 
     /* =========================================================
-       Youth Central V14 - Referee-first Game Plan UX Revamp
-       Theme preserved, interface simplified for real game-day use.
+       Youth Central V14 - Referee-first Game Plan UX
+       Cleaner live control center, fewer distractions, faster scoring.
+       Theme preserved: FOMO dark / lime / cyan sports energy.
        ========================================================= */
+
     body.game-mode .referee-shell-v14{
       border-radius:28px!important;
       min-height:calc(100vh - 28px)!important;
       background:
-        radial-gradient(circle at 14% 8%,rgba(217,255,0,.16),transparent 27%),
-        radial-gradient(circle at 92% 12%,rgba(39,232,255,.16),transparent 32%),
-        linear-gradient(135deg,#030500,#080b05 48%,#06070b)!important;
-      border:1px solid rgba(217,255,0,.26)!important;
+        radial-gradient(circle at 18% 8%,rgba(198,249,0,.18),transparent 26%),
+        radial-gradient(circle at 88% 10%,rgba(39,232,255,.16),transparent 32%),
+        linear-gradient(135deg,#040500,#070a04 48%,#080b10)!important;
+      border:1px solid rgba(198,249,0,.26)!important;
     }
-    body.game-mode .ref-content-v14{padding:12px!important;}
-    body.game-mode .frisbee-field{opacity:.38!important;}
-    body.game-mode .bouncing-disc{opacity:.34!important;filter:saturate(.95)!important;}
-
+    body.game-mode .frisbee-field{opacity:.42!important;}
+    body.game-mode .bouncing-disc:nth-child(n+3){display:none!important;}
+    .ref-content-v14{padding:14px!important;}
     .ref-top-v14{
-      position:sticky!important;
-      top:0!important;
-      z-index:60!important;
-      display:flex!important;
-      align-items:center!important;
-      justify-content:space-between!important;
-      gap:14px!important;
-      padding:12px 14px!important;
-      background:rgba(3,5,2,.82)!important;
-      border-bottom:1px solid rgba(217,255,0,.24)!important;
+      gap:18px!important;
+      padding:14px 16px!important;
+      background:rgba(5,8,2,.84)!important;
+      border-bottom:1px solid rgba(198,249,0,.20)!important;
     }
-    .ref-actions-v14{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap;}
-    .ref-actions-v14 button{min-height:42px!important;padding:10px 13px!important;border-radius:14px!important;font-size:12px!important;}
-    .ref-tabs-v14{
-      position:sticky!important;
-      top:75px!important;
-      z-index:55!important;
-      display:grid!important;
-      grid-template-columns:repeat(5,minmax(0,1fr))!important;
-      gap:8px!important;
-      margin:0 0 12px!important;
-      padding:8px!important;
-      border:1px solid rgba(217,255,0,.18)!important;
-      background:rgba(4,6,3,.74)!important;
-      border-radius:22px!important;
-      backdrop-filter:blur(22px)!important;
+    .ref-actions-v14 button{min-height:42px!important;}
+    .game-mode-switch{
+      display:flex;
+      gap:8px;
+      overflow-x:auto;
+      padding:0 0 14px;
+      scrollbar-width:none;
+      position:sticky;
+      top:74px;
+      z-index:26;
+      background:linear-gradient(180deg,rgba(5,8,2,.96),rgba(5,8,2,.72),transparent);
+      backdrop-filter:blur(18px);
     }
-    .ref-tabs-v14 .ref-tab{
-      border-radius:16px!important;
-      min-height:48px!important;
-      padding:10px 12px!important;
-      text-align:center!important;
-      font-size:12px!important;
-      letter-spacing:.02em!important;
+    .game-mode-switch::-webkit-scrollbar{display:none}
+    .game-mode-switch .ref-tab{
+      flex:0 0 auto;
+      min-height:46px;
+      padding:12px 16px!important;
+      font-size:13px!important;
     }
 
-    .live-command-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(340px,.65fr);gap:12px;align-items:stretch;}
-    .live-control-card{
-      position:relative;
-      overflow:hidden;
-      border:1px solid rgba(217,255,0,.28);
-      border-radius:32px;
-      padding:clamp(18px,3vw,34px);
-      min-height:430px;
-      background:
-        radial-gradient(circle at 18% 10%,rgba(217,255,0,.16),transparent 32%),
-        radial-gradient(circle at 80% 8%,rgba(39,232,255,.14),transparent 34%),
-        linear-gradient(145deg,rgba(10,14,5,.92),rgba(3,5,4,.72));
-      box-shadow:0 28px 110px rgba(0,0,0,.54),0 0 64px rgba(217,255,0,.06);
-      backdrop-filter:blur(22px);
+    .ref-control-grid{
       display:grid;
-      align-content:space-between;
-      gap:20px;
+      grid-template-columns:minmax(0,1.35fr) minmax(330px,.65fr);
+      gap:14px;
+      align-items:stretch;
+      margin-bottom:14px;
     }
-    .live-control-card::after{
+    .live-control-panel,
+    .control-block{
+      border:1px solid rgba(198,249,0,.22)!important;
+      background:linear-gradient(145deg,rgba(6,8,4,.84),rgba(3,5,3,.66))!important;
+      border-radius:28px!important;
+      box-shadow:0 24px 90px rgba(0,0,0,.42),0 0 44px rgba(198,249,0,.06)!important;
+      backdrop-filter:blur(22px) saturate(1.12)!important;
+    }
+    .live-control-panel{
+      min-height:610px;
+      display:grid;
+      align-content:stretch;
+      padding:18px;
+      overflow:hidden;
+      position:relative;
+    }
+    .live-control-panel::before{
       content:"";
       position:absolute;
-      right:-120px;top:-140px;
-      width:420px;height:420px;border-radius:999px;
-      border:1px solid rgba(217,255,0,.18);
-      background:radial-gradient(circle,rgba(39,232,255,.10),transparent 65%);
+      inset:auto -80px -120px auto;
+      width:360px;
+      height:360px;
+      border-radius:999px;
+      background:radial-gradient(circle,rgba(198,249,0,.12),transparent 62%);
       pointer-events:none;
     }
-    .live-status-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;position:relative;z-index:2;}
-    .live-label{display:inline-flex;align-items:center;gap:8px;background:#c6f900;color:#050505;border-radius:999px;padding:8px 12px;font-size:11px;font-weight:950;letter-spacing:.14em;text-transform:uppercase;}
-    .live-meta-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);border-radius:999px;padding:8px 11px;color:#e2e8f0;font-size:12px;font-weight:850;}
-    .live-match-title{font-size:clamp(24px,3vw,44px);line-height:.95;letter-spacing:-.08em;color:#fff;font-weight:950;margin-top:14px;position:relative;z-index:2;}
-    .live-score-grid{position:relative;z-index:2;display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch;margin:14px 0;}
-    .live-score-team{border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.055);border-radius:28px;padding:18px;text-align:center;display:grid;gap:12px;align-content:center;min-height:210px;}
-    .live-score-team h3{font-size:clamp(22px,3vw,44px);letter-spacing:-.08em;line-height:.92;}
-    .live-score-number{font-size:clamp(76px,10vw,150px);line-height:.72;font-weight:950;letter-spacing:-.1em;background:linear-gradient(90deg,#c6f900,#27e8ff,#fff);-webkit-background-clip:text;color:transparent;}
-    .live-vs{align-self:center;width:64px;height:64px;border-radius:999px;display:grid;place-items:center;background:#c6f900;color:#050505;font-weight:950;box-shadow:0 0 45px rgba(198,249,0,.26);}
-    .score-button-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;}
-    .score-button-grid button{min-height:56px!important;border-radius:18px!important;font-size:15px!important;}
-    .score-button-grid .score-minus{background:rgba(255,255,255,.07)!important;color:#f7ffe0!important;border:1px solid rgba(217,255,0,.18)!important;}
-    .score-button-grid .score-complete{background:linear-gradient(135deg,#c6f900,#27e8ff)!important;color:#050505!important;}
-    .live-empty-state{position:relative;z-index:2;display:grid;gap:12px;align-content:center;text-align:left;min-height:360px;}
-    .live-empty-state h2{font-size:clamp(38px,6vw,86px);line-height:.82;letter-spacing:-.1em;}
-    .live-empty-state p{color:#cbd5e1;line-height:1.7;max-width:640px;}
-
-    .live-side-stack{display:grid;gap:12px;align-content:start;}
-    .next-match-panel,.mini-leaderboard-panel,.match-queue-panel,.court-control-block-simple{
-      border-radius:28px!important;
-      border:1px solid rgba(217,255,0,.20)!important;
-      background:rgba(7,10,4,.72)!important;
-      box-shadow:0 20px 70px rgba(0,0,0,.38)!important;
-      backdrop-filter:blur(22px)!important;
-    }
-    .next-queue-list,.mini-standings-list,.match-queue-list{display:grid;gap:8px;margin-top:12px;}
-    .queue-row,.mini-standing-row{
+    .live-control-board{
+      position:relative;
+      z-index:2;
       display:grid;
-      grid-template-columns:auto 1fr auto;
+      align-content:center;
+      min-height:360px;
+    }
+    .live-empty-state{
+      border:1px dashed rgba(198,249,0,.22);
+      border-radius:24px;
+      padding:34px;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      min-height:380px;
+      color:#dce7bf;
+    }
+    .live-empty-state h3{
+      font-size:clamp(32px,5vw,70px);
+      line-height:.88;
+      letter-spacing:-.09em;
+      margin-bottom:12px;
+      color:white;
+    }
+    .live-score-layout{
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      gap:18px;
+      align-items:center;
+    }
+    .score-team-panel{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.055);
+      border-radius:28px;
+      padding:22px;
+      min-height:290px;
+      display:grid;
+      align-content:center;
+      text-align:center;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+    }
+    .score-team-panel h3{
+      font-size:clamp(24px,3.2vw,54px);
+      line-height:.92;
+      letter-spacing:-.085em;
+      margin-bottom:18px;
+      color:#ffffff;
+    }
+    .score-number{
+      font-size:clamp(84px,12vw,190px);
+      line-height:.78;
+      font-weight:950;
+      letter-spacing:-.1em;
+      background:linear-gradient(90deg,#c6f900,#27e8ff,#ffffff);
+      -webkit-background-clip:text;
+      color:transparent;
+    }
+    .score-versus{
+      width:68px;
+      height:68px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      background:#c6f900;
+      color:#050505;
+      font-weight:950;
+      box-shadow:0 0 40px rgba(198,249,0,.24);
+    }
+    .live-match-meta-bar{
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+    .live-score-actions{
+      position:relative;
+      z-index:2;
+      display:grid;
+      gap:10px;
+      margin-top:14px;
+    }
+    .score-action-grid{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:8px;
+    }
+    .score-action-grid button{
+      min-height:58px!important;
+      font-size:15px!important;
+      border-radius:18px!important;
+    }
+    .score-action-grid .score-main-action{
+      min-height:64px!important;
+      font-size:16px!important;
+    }
+    .match-flow-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:8px;
+    }
+    .match-flow-actions button{min-height:52px!important;}
+
+    .side-control-stack{
+      display:grid;
+      gap:14px;
+      align-content:start;
+    }
+    .control-block{
+      padding:16px;
+    }
+    .compact-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .compact-head h3{
+      font-size:24px;
+      letter-spacing:-.07em;
+      margin-top:4px;
+    }
+    .next-match-queue{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+    .next-main-card{
+      border:1px solid rgba(198,249,0,.20);
+      background:rgba(198,249,0,.075);
+      border-radius:22px;
+      padding:14px;
+    }
+    .next-main-card h3{
+      font-size:clamp(22px,2.6vw,38px);
+      letter-spacing:-.075em;
+      line-height:.95;
+      margin-bottom:6px;
+    }
+    .next-main-card p,
+    .next-small-card p,
+    .queue-card p{
+      color:#aeb9ce;
+      font-size:12px;
+      line-height:1.55;
+      font-weight:750;
+    }
+    .next-small-card{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.045);
+      border-radius:18px;
+      padding:12px;
+      display:grid;
+      grid-template-columns:78px 1fr;
+      gap:10px;
+      align-items:center;
+    }
+    .next-small-card b{
+      color:#c6f900;
+      font-size:13px;
+    }
+    .game-pulse-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      margin-top:12px;
+    }
+    .game-pulse-grid div{
+      border:1px solid rgba(255,255,255,.09);
+      background:rgba(255,255,255,.045);
+      border-radius:18px;
+      padding:12px;
+      min-height:92px;
+      display:grid;
+      align-content:end;
+    }
+    .game-pulse-grid p{
+      color:#aeb9ce;
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-weight:950;
+    }
+    .game-pulse-grid h3{
+      font-size:34px;
+      line-height:.9;
+      letter-spacing:-.08em;
+      color:white;
+      margin-top:7px;
+    }
+    .mini-leaderboard{
+      display:grid;
+      gap:8px;
+      margin-top:12px;
+    }
+    .leader-row{
+      display:grid;
+      grid-template-columns:34px 1fr auto;
       gap:10px;
       align-items:center;
       border:1px solid rgba(255,255,255,.10);
@@ -3340,15 +3507,43 @@
       border-radius:18px;
       padding:10px;
     }
-    .queue-time{min-width:70px;height:42px;border-radius:14px;display:grid;place-items:center;background:rgba(198,249,0,.09);border:1px solid rgba(198,249,0,.18);color:#c6f900;font-weight:950;font-size:12px;}
-    .queue-row h4,.mini-standing-row h4{font-size:14px;line-height:1.15;letter-spacing:-.035em;}
-    .queue-row p,.mini-standing-row p{color:#9fb0c8;font-size:11px;margin-top:4px;font-weight:750;}
-    .mini-rank{width:34px;height:34px;border-radius:13px;display:grid;place-items:center;background:#c6f900;color:#050505;font-size:12px;font-weight:950;}
-    .mini-points{font-size:20px;font-weight:950;color:#f7ffe0;letter-spacing:-.06em;}
-    .live-bottom-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:12px;margin-top:12px;align-items:start;}
-    .section-flex-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;}
-    .section-flex-head h2{font-size:clamp(22px,2.5vw,36px);letter-spacing:-.08em;line-height:.95;margin-top:6px;}
-    .match-queue-card{
+    .leader-rank{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:rgba(198,249,0,.11);
+      color:#c6f900;
+      font-weight:950;
+      font-size:12px;
+    }
+    .leader-row h4{
+      font-size:14px;
+      line-height:1.15;
+    }
+    .leader-row p{
+      font-size:11px;
+      color:#aeb9ce;
+      margin-top:3px;
+    }
+    .leader-points{
+      color:#ffffff;
+      font-weight:950;
+      font-size:16px;
+    }
+
+    .control-bottom-grid{
+      display:grid;
+      grid-template-columns:1.45fr .55fr;
+      gap:14px;
+      margin-bottom:14px;
+    }
+    .match-queue-list{
+      display:grid;
+      gap:9px;
+    }
+    .queue-card{
       display:grid;
       grid-template-columns:92px 1fr auto;
       gap:12px;
@@ -3358,46 +3553,196 @@
       border-radius:20px;
       padding:12px;
     }
-    .match-queue-card.live-now{border-color:rgba(198,249,0,.45);background:rgba(198,249,0,.08);}
-    .match-queue-card.completed{opacity:.64;}
-    .match-queue-card h4{font-size:16px;letter-spacing:-.045em;line-height:1.05;}
-    .match-queue-card p{color:#9fb0c8;font-size:12px;margin-top:5px;}
-    .match-queue-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
-    .match-queue-actions .mini-btn{border-radius:12px!important;}
-
-    .fixtures-layout{display:grid;grid-template-columns:minmax(300px,.42fr) minmax(0,.58fr);gap:12px;align-items:start;}
-    .fixture-create-card{position:sticky;top:145px;}
-    .fixture-form-grid{grid-template-columns:1fr!important;}
-    .fixture-form-grid .span4{grid-column:auto!important;}
-    .fixture-list-card .match-card{box-shadow:none!important;}
-
-    .public-board-v14{display:grid!important;grid-template-columns:1.1fr .9fr!important;gap:12px!important;}
-    .public-display-card{grid-column:1/-1;}
-    .public-live-board-v14{min-height:220px;}
+    .queue-time{
+      color:#c6f900;
+      font-weight:950;
+      font-size:14px;
+    }
+    .queue-card h4{
+      font-size:16px;
+      letter-spacing:-.045em;
+    }
+    .queue-card.live{
+      border-color:rgba(198,249,0,.42);
+      background:rgba(198,249,0,.085);
+    }
+    .fixture-form{
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.035);
+      border-radius:24px;
+      padding:14px;
+    }
+    .public-board-v14{
+      display:grid!important;
+      grid-template-columns:1.15fr .85fr!important;
+      gap:14px!important;
+    }
+    .public-board-v14 .public-live-card{
+      grid-column:1/-1;
+    }
 
     @media(max-width:1180px){
-      .live-command-grid,.live-bottom-grid,.fixtures-layout,.public-board-v14{grid-template-columns:1fr!important;}
-      .fixture-create-card{position:relative;top:auto;}
-      .score-button-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
-      .score-button-grid .score-complete{grid-column:1/-1;}
+      .ref-control-grid,
+      .control-bottom-grid,
+      .public-board-v14{
+        grid-template-columns:1fr!important;
+      }
+      .live-control-panel{min-height:auto;}
+      .score-action-grid{grid-template-columns:repeat(3,1fr);}
+      .game-mode-switch{top:66px;}
     }
     @media(max-width:760px){
-      body.game-mode .main{padding:0!important;}
-      body.game-mode .referee-shell-v14{border-radius:0!important;border-left:0!important;border-right:0!important;min-height:100vh!important;}
-      .ref-top-v14{display:grid!important;grid-template-columns:1fr!important;align-items:start!important;}
-      .ref-actions-v14{justify-content:flex-start;display:grid;grid-template-columns:1fr 1fr;width:100%;}
+      body.game-mode .referee-shell-v14{
+        border-radius:0!important;
+        min-height:100vh!important;
+        border-left:0!important;
+        border-right:0!important;
+      }
+      .ref-content-v14{padding:10px!important;}
+      .ref-top-v14{display:grid!important;grid-template-columns:1fr!important;}
+      .ref-actions-v14{display:grid!important;grid-template-columns:1fr 1fr!important;}
       .ref-actions-v14 button{width:100%;}
-      .ref-tabs-v14{top:0!important;grid-template-columns:repeat(5, max-content)!important;overflow-x:auto!important;justify-content:flex-start!important;border-radius:0!important;margin-left:-12px!important;margin-right:-12px!important;}
-      .live-control-card{border-radius:24px;min-height:auto;padding:18px;}
-      .live-score-grid{grid-template-columns:1fr;gap:10px;}
-      .live-vs{margin:auto;width:48px;height:48px;}
-      .live-score-team{min-height:150px;border-radius:22px;padding:14px;}
-      .live-score-number{font-size:82px;}
-      .score-button-grid{grid-template-columns:1fr 1fr;}
-      .match-queue-card{grid-template-columns:1fr;}
-      .match-queue-actions{justify-content:flex-start;}
-      .queue-row,.mini-standing-row{grid-template-columns:auto 1fr;}
-      .mini-points{grid-column:1/-1;}
+      .game-mode-switch{
+        margin:0 -2px;
+        top:0;
+        position:relative;
+      }
+      .live-score-layout{
+        grid-template-columns:1fr;
+      }
+      .score-versus{
+        margin:auto;
+        width:54px;
+        height:54px;
+      }
+      .score-team-panel{
+        min-height:190px;
+        padding:18px;
+      }
+      .score-number{
+        font-size:clamp(84px,26vw,128px);
+      }
+      .score-action-grid,
+      .match-flow-actions,
+      .game-pulse-grid{
+        grid-template-columns:1fr 1fr;
+      }
+      .match-flow-actions button:last-child{
+        grid-column:1/-1;
+      }
+      .queue-card{
+        grid-template-columns:1fr;
+      }
+      .next-small-card{
+        grid-template-columns:1fr;
+      }
+    }
+
+
+
+    /* =========================================================
+       Youth Central V15 - Team Editing + Division Filters
+       Keeps the FOMO game theme but makes team management easier.
+       ========================================================= */
+    .game-filter-select{
+      width:auto!important;
+      min-width:180px!important;
+      max-width:260px!important;
+      min-height:44px!important;
+      border-radius:16px!important;
+      font-size:12px!important;
+      font-weight:900!important;
+      color:#f7ffe0!important;
+      border-color:rgba(198,249,0,.24)!important;
+      background:rgba(255,255,255,.065)!important;
+    }
+    .team-tool-row,
+    .fixture-tool-row,
+    .standings-tool-row{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(260px,420px) auto;
+      gap:10px;
+      align-items:center;
+      margin:14px 0 16px;
+      padding:12px;
+      border:1px solid rgba(198,249,0,.18);
+      background:rgba(255,255,255,.045);
+      border-radius:24px;
+    }
+    .team-filter-pills{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .team-filter-pill{
+      border:1px solid rgba(198,249,0,.20)!important;
+      background:rgba(255,255,255,.055)!important;
+      color:#f7ffe0!important;
+      border-radius:999px!important;
+      padding:9px 12px!important;
+      font-size:11px!important;
+      box-shadow:none!important;
+    }
+    .team-filter-pill.active{
+      background:linear-gradient(135deg,#c6f900,#27e8ff)!important;
+      color:#050505!important;
+      border-color:transparent!important;
+    }
+    .team-edit-hint{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin:0 0 14px;
+      padding:12px 14px;
+      border-radius:20px;
+      border:1px solid rgba(39,232,255,.18);
+      background:rgba(39,232,255,.065);
+      color:#d9fbff;
+      font-size:12px;
+      font-weight:800;
+      line-height:1.5;
+    }
+    .team-edit-hint b{color:#c6f900;}
+    .team-card.team-card-hidden{display:none!important;}
+    .team-card .team-meta input,
+    .team-card textarea,
+    .team-card > input{
+      font-weight:850!important;
+    }
+    .team-card .team-card-actions{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .team-save-group,
+    .team-delete-group{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .filter-count-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(198,249,0,.22);
+      background:rgba(198,249,0,.08);
+      color:#c6f900;
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:11px;
+      font-weight:950;
+      white-space:nowrap;
+    }
+    @media(max-width:980px){
+      .team-tool-row,
+      .fixture-tool-row,
+      .standings-tool-row{grid-template-columns:1fr;}
+      .game-filter-select{width:100%!important;max-width:none!important;}
     }
 
   </style>
@@ -3857,8 +4202,6 @@
             <div id="frisbeeField" class="frisbee-field" aria-hidden="true">
               <div class="bouncing-disc disc-one"></div>
               <div class="bouncing-disc disc-two"></div>
-              <div class="bouncing-disc disc-three"></div>
-              <div class="bouncing-disc disc-four"></div>
             </div>
 
             <div class="ref-top ref-top-v14">
@@ -3872,112 +4215,141 @@
                   </svg>
                 </div>
                 <div>
-                  <h1 id="refTournamentTitle">FOMO v2 Game Plan</h1>
-                  <p id="refTournamentMetaLine">The Ultimate Room • Live Control</p>
+                  <h1 id="refTournamentTitle">FOMO 2.0 Game Plan</h1>
+                  <p>Infinity Sports Arena • Referee Control Center</p>
                 </div>
               </div>
               <div class="ref-actions ref-actions-v14">
                 <button onclick="requestFullscreenGame()">Full Screen</button>
                 <button class="btn-purple" onclick="openGameSection('public')">Public View</button>
-                <button class="btn-ghost" onclick="playGameIntro(true)">Replay Intro</button>
-                <button class="btn-ghost" onclick="copyGamePlanLink()">Copy Link</button>
+                <button class="btn-ghost" onclick="playGameIntro(true)">Intro</button>
                 <button class="btn-ghost" onclick="exitGamePlanMode()">Exit</button>
               </div>
             </div>
 
             <div class="ref-content ref-content-v14">
-              <div class="ref-tabs ref-tabs-v14">
-                <button class="ref-tab active" data-game-section="live" onclick="openGameSection('live', this)">Live Control</button>
-                <button class="ref-tab" data-game-section="schedule" onclick="openGameSection('schedule', this)">Fixtures</button>
+              <div class="game-mode-switch">
+                <button class="ref-tab active" data-game-section="control" onclick="openGameSection('control', this)">Live Control</button>
+                <button class="ref-tab" data-game-section="fixtures" onclick="openGameSection('fixtures', this)">Fixtures</button>
                 <button class="ref-tab" data-game-section="standings" onclick="openGameSection('standings', this)">Point Table</button>
                 <button class="ref-tab" data-game-section="teams" onclick="openGameSection('teams', this)">Teams</button>
-                <button class="ref-tab" data-game-section="public" onclick="openGameSection('public', this)">Big Screen View</button>
+                <button class="ref-tab" data-game-section="public" onclick="openGameSection('public', this)">Big Screen</button>
               </div>
 
-              <div id="game-live" class="game-section active">
-                <div class="live-command-grid">
-                  <div id="liveControlPanel" class="live-control-card"></div>
-
-                  <aside class="live-side-stack">
-                    <div class="control-block next-match-panel">
-                      <span class="control-eyebrow">UP NEXT</span>
-                      <div id="controlNextMatch" class="control-match-title">Schedule loading</div>
-                      <div id="controlCountdown" class="control-countdown">--:--</div>
-                      <div id="liveNextQueue" class="next-queue-list"></div>
-                    </div>
-
-                    <div class="control-block mini-leaderboard-panel">
-                      <span class="control-eyebrow">LEADERBOARD</span>
-                      <div id="liveMiniStandings" class="mini-standings-list"></div>
-                    </div>
-                  </aside>
-                </div>
-
-                <div class="live-bottom-grid">
-                  <div class="control-block match-queue-panel">
-                    <div class="section-flex-head">
-                      <div>
-                        <span class="control-eyebrow">MATCH QUEUE</span>
-                        <h2>Today’s fixtures</h2>
-                      </div>
-                      <button class="btn-ghost" onclick="openGameSection('schedule')">Manage Fixtures</button>
-                    </div>
-                    <div id="liveMatchQueue" class="match-queue-list"></div>
+              <div id="game-control" class="game-section active">
+                <div class="ref-control-grid">
+                  <div class="live-control-panel">
+                    <div class="control-eyebrow"><span class="pulse"></span> LIVE MATCH</div>
+                    <div id="liveControlBoard" class="live-control-board"></div>
+                    <div id="liveControlActions" class="live-score-actions"></div>
                   </div>
 
-                  <div class="control-block court-control-block-simple">
-                    <span class="control-eyebrow">COURTS</span>
+                  <div class="side-control-stack">
+                    <div class="control-block next-match-panel">
+                      <span class="control-eyebrow">UP NEXT</span>
+                      <div id="nextMatchQueue" class="next-match-queue"></div>
+                    </div>
+
+                    <div class="control-block">
+                      <span class="control-eyebrow">TOURNAMENT PULSE</span>
+                      <div class="game-pulse-grid">
+                        <div><p>Teams</p><h3 id="refTeamCount">0</h3></div>
+                        <div><p>Matches</p><h3 id="refMatchCount">0</h3></div>
+                        <div><p>Live</p><h3 id="refLiveCount">0</h3></div>
+                        <div><p>Done</p><h3 id="refDoneCount">0</h3></div>
+                      </div>
+                    </div>
+
+                    <div class="control-block">
+                      <span class="control-eyebrow">MINI LEADERBOARD</span>
+                      <div id="miniLeaderboard" class="mini-leaderboard"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="control-bottom-grid">
+                  <div class="control-block">
+                    <div class="compact-head">
+                      <div>
+                        <span class="control-eyebrow">MATCH QUEUE</span>
+                        <h3>What happens next</h3>
+                      </div>
+                      <button class="mini-btn btn-ghost" onclick="openGameSection('fixtures')">Manage Fixtures</button>
+                    </div>
+                    <div id="gameMatchQueue" class="match-queue-list"></div>
+                  </div>
+
+                  <div class="control-block">
+                    <div class="compact-head">
+                      <div>
+                        <span class="control-eyebrow">COURTS</span>
+                        <h3>Ground status</h3>
+                      </div>
+                    </div>
                     <div id="controlCourtStatus" class="court-status-grid"></div>
                   </div>
                 </div>
               </div>
 
-              <div id="game-schedule" class="game-section">
-                <div class="fixtures-layout">
-                  <div class="card fixture-create-card">
-                    <div class="card-head">
-                      <div>
-                        <h2>Add Match</h2>
-                        <p>Create the fixture once. During the event, use Live Control for scores.</p>
-                      </div>
+              <div id="game-fixtures" class="game-section">
+                <div class="card schedule-only-card">
+                  <div class="card-head">
+                    <div>
+                      <h2>Fixtures</h2>
+                      <p>Add, start and finish matches without hunting through the page.</p>
                     </div>
-                    <div class="form-grid fixture-form-grid">
-                      <input id="matchLabel" placeholder="Match e.g. Match 01">
-                      <input id="matchTime" type="time">
-                      <select id="matchTeamA"></select>
-                      <select id="matchTeamB"></select>
-                      <input id="matchCourt" placeholder="Court / Ground">
-                      <select id="matchStatus">
-                        <option>Upcoming</option>
-                        <option>Live</option>
-                        <option>Completed</option>
+                    <div class="right-actions">
+                      <select id="fixtureDivisionFilter" class="game-filter-select" onchange="setFixtureDivisionFilter(this.value)">
+                        <option value="">All Divisions</option>
                       </select>
-                      <input id="matchScoreA" type="number" placeholder="Team A score">
-                      <input id="matchScoreB" type="number" placeholder="Team B score">
-                      <button class="span4" onclick="addTournamentMatch()">Add Match</button>
                     </div>
                   </div>
 
-                  <div class="card fixture-list-card">
-                    <div class="card-head">
-                      <div>
-                        <h2>Fixtures + Scores</h2>
-                        <p>Sorted by time. Set a match Live, edit score, or complete it.</p>
-                      </div>
-                    </div>
-                    <div id="tournamentMatchesList" class="match-timeline-list"></div>
+                  <div class="fixture-tool-row">
+                    <div id="fixtureDivisionQuickFilters" class="team-filter-pills"></div>
+                    <div class="filter-count-badge" id="fixtureFilterCount">All matches</div>
+                    <button class="btn-ghost mini-btn" onclick="setFixtureDivisionFilter('')">Clear Filter</button>
                   </div>
+
+                  <div class="form-grid fixture-form">
+                    <input id="matchLabel" placeholder="Match e.g. Match 01">
+                    <input id="matchTime" type="time">
+                    <select id="matchTeamA"></select>
+                    <select id="matchTeamB"></select>
+                    <input id="matchCourt" placeholder="Court / Ground">
+                    <select id="matchStatus">
+                      <option>Upcoming</option>
+                      <option>Live</option>
+                      <option>Completed</option>
+                    </select>
+                    <input id="matchScoreA" type="number" placeholder="Team A score">
+                    <input id="matchScoreB" type="number" placeholder="Team B score">
+                    <button class="span4" onclick="addTournamentMatch()">Add Match</button>
+                  </div>
+
+                  <div style="height:16px"></div>
+                  <div id="tournamentMatchesList" class="match-timeline-list"></div>
                 </div>
               </div>
 
               <div id="game-standings" class="game-section">
-                <div class="grid-2 standings-grid-v14">
+                <div class="grid-2">
                   <div class="card">
                     <div class="card-head">
                       <div>
                         <h2>Point Table</h2>
                         <p>Auto-calculated from completed matches.</p>
                       </div>
+                      <div class="right-actions">
+                        <select id="standingsDivisionFilter" class="game-filter-select" onchange="setStandingsDivisionFilter(this.value)">
+                          <option value="">All Divisions</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="standings-tool-row">
+                      <div id="standingsDivisionQuickFilters" class="team-filter-pills"></div>
+                      <div class="filter-count-badge" id="standingsFilterCount">All teams</div>
+                      <button class="btn-ghost mini-btn" onclick="setStandingsDivisionFilter('')">Clear Filter</button>
                     </div>
                     <div id="podiumBoard" class="podium-board"></div>
                     <div class="table-wrap">
@@ -3991,7 +4363,7 @@
                     <div class="card-head">
                       <div>
                         <h2>Division Progress</h2>
-                        <p>See how much of each group is completed.</p>
+                        <p>See which division is moving and what is still pending.</p>
                       </div>
                     </div>
                     <div id="divisionProgressBoard" class="chart-list"></div>
@@ -4004,75 +4376,47 @@
                   <div class="card-head">
                     <div>
                       <h2>Teams</h2>
-                      <p>Use this before the event. Live Control is for game-day scoring.</p>
+                      <p>Prepare captains, divisions, referees and players before the tournament starts.</p>
                     </div>
                     <div class="right-actions">
+                      <select id="teamDivisionFilter" class="game-filter-select" onchange="setTeamDivisionFilter(this.value)">
+                        <option value="">All Divisions</option>
+                      </select>
+                      <button class="btn-ghost" onclick="saveVisibleTournamentTeams()">Save Visible</button>
                       <button onclick="seedFomoTeams(true)">Insert FOMO Teams</button>
                       <button class="btn-ghost" onclick="addTournamentTeam()">+ Add Team</button>
                     </div>
                   </div>
                   <div class="division-ref-grid" id="divisionRefGrid"></div>
+                  <div class="team-tool-row">
+                    <div id="teamDivisionQuickFilters" class="team-filter-pills"></div>
+                    <input id="teamSearchFilter" placeholder="Search team, captain, referee or player" oninput="setTeamSearchFilter(this.value)">
+                    <button class="btn-ghost mini-btn" onclick="clearTeamFilters()">Clear</button>
+                  </div>
+                  <div class="team-edit-hint">
+                    <span><b>Editable teams:</b> change any name, captain, division, referee, color, player list or notes. Press Save on one team or Save Visible for the filtered set.</span>
+                    <span id="teamFilterCount" class="filter-count-badge">All teams</span>
+                  </div>
                   <div id="tournamentTeamsList" class="team-builder-grid"></div>
-                </div>
-              </div>
-
-              <div id="game-setup" class="game-section game-admin-setup hidden">
-                <div class="card">
-                  <div class="card-head">
-                    <div>
-                      <h2>Tournament Setup</h2>
-                      <p>Edit this anytime. It updates live for everyone.</p>
-                    </div>
-                  </div>
-                  <div class="form-grid">
-                    <input id="tournamentTitle" class="span2" placeholder="Tournament title">
-                    <input id="tournamentSubtitle" class="span2" placeholder="Tagline / subtitle">
-                    <input id="tournamentDate" type="date">
-                    <input id="tournamentStartTime" type="time">
-                    <input id="tournamentVenue" class="span2" placeholder="Venue">
-                    <textarea id="tournamentMessage" class="span4" placeholder="Public message / event note"></textarea>
-                    <button class="span2" onclick="saveTournamentSettings()">Save Setup</button>
-                    <button class="btn-ghost span2" onclick="createSixTeamSlots()">Create 6 Team Slots</button>
-                  </div>
-                </div>
-              </div>
-
-              <div id="game-rules" class="game-section hidden">
-                <div class="grid-2">
-                  <div class="card">
-                    <div class="card-head">
-                      <div>
-                        <h2>Rules & Regulations</h2>
-                        <p>Keep it simple. Update anytime before the event.</p>
-                      </div>
-                    </div>
-                    <textarea id="tournamentRulesText" placeholder="Add rules, scoring system, tie-breaker, best deco and best cheer rules..."></textarea>
-                    <div style="height:12px"></div>
-                    <button onclick="saveTournamentRules()">Save Rules</button>
-                  </div>
-                  <div class="card">
-                    <div class="card-head"><div><h2>Rules Preview</h2><p>This is what leaders/teams will see.</p></div></div>
-                    <div id="rulesPreview" class="rules-preview"></div>
-                  </div>
                 </div>
               </div>
 
               <div id="game-public" class="game-section">
                 <div class="public-board public-board-v14">
-                  <div class="card public-live-card public-display-card">
+                  <div class="card public-live-card">
                     <div class="card-head">
                       <div>
-                        <h2 id="publicTournamentTitle">FOMO v2</h2>
+                        <h2 id="publicTournamentTitle">FOMO 2.0</h2>
                         <p id="publicTournamentSubtitle">The Ultimate Room</p>
                       </div>
                       <span class="live-badge"><span class="pulse"></span> Live</span>
                     </div>
-                    <div id="publicLiveBoard" class="live-match-big public-live-board-v14"></div>
+                    <div id="publicLiveBoard" class="live-match-big"></div>
                     <div id="publicTournamentMeta" class="list"></div>
                   </div>
 
-                  <div class="card public-leaderboard-card">
-                    <div class="card-head"><div><h2>Leaderboard</h2><p>Updated as scores are entered.</p></div></div>
+                  <div class="card">
+                    <div class="card-head"><div><h2>Live Leaderboard</h2><p>Updated as scores are entered.</p></div></div>
                     <div id="publicPodium" class="podium-board compact-podium"></div>
                     <div class="table-wrap">
                       <table class="standings-table">
@@ -4093,8 +4437,8 @@
                   </div>
                 </div>
               </div>
-            </div><!-- ref-content -->
-          </div><!-- referee shell close -->
+            </div>
+          </div>
         </section>
 
         <section id="reports" class="page">
@@ -5087,6 +5431,121 @@
       window.scrollTo({top:0,behavior:"smooth"});
     };
 
+
+    let teamDivisionFilter = "";
+    let teamSearchFilter = "";
+    let fixtureDivisionFilter = "";
+    let standingsDivisionFilter = "";
+    let lastVisibleTournamentTeamIds = [];
+
+    function divisionNamesFromTeams(teams){
+      return [...new Set((teams || []).map(t=>String(t.division || "").trim()).filter(Boolean))]
+        .sort((a,b)=>a.localeCompare(b, undefined, {numeric:true, sensitivity:"base"}));
+    }
+
+    function escapeJs(value){
+      return String(value ?? "").replace(/\\/g,"\\\\").replace(/'/g,"\\'").replace(/\n/g," ").replace(/\r/g," ");
+    }
+
+    function divisionMatch(value, selected){
+      if(!selected) return true;
+      const text = String(value || "").trim();
+      if(text === selected) return true;
+      return text.split("/").map(x=>x.trim()).includes(selected);
+    }
+
+    function teamMatchesSearch(team, query){
+      const q = String(query || "").trim().toLowerCase();
+      if(!q) return true;
+      const haystack = [
+        team.name,
+        team.captain,
+        team.division,
+        team.referee,
+        team.notes,
+        ...(team.players || [])
+      ].join(" ").toLowerCase();
+      return haystack.includes(q);
+    }
+
+    function filteredTeamsForEditor(teams){
+      return (teams || []).filter(t=>divisionMatch(t.division, teamDivisionFilter)).filter(t=>teamMatchesSearch(t, teamSearchFilter));
+    }
+
+    function filteredMatchesForFixtures(matches){
+      return (matches || []).filter(m=>divisionMatch(m.division, fixtureDivisionFilter));
+    }
+
+    function filteredRowsForStandings(rows){
+      return (rows || []).filter(r=>divisionMatch(r.division, standingsDivisionFilter));
+    }
+
+    function renderDivisionSelect(id, selected, divisions, label, setterName){
+      const el = $(id);
+      if(!el) return;
+      const current = selected || "";
+      el.innerHTML = `<option value="">${label}</option>` + divisions.map(div=>`<option value="${clean(div)}" ${div===current?"selected":""}>${clean(div)}</option>`).join("");
+      el.value = current;
+      el.onchange = () => window[setterName](el.value);
+    }
+
+    function renderDivisionPills(id, selected, divisions, setterName){
+      const target = $(id);
+      if(!target) return;
+      target.innerHTML = `
+        <button class="team-filter-pill ${!selected ? "active" : ""}" onclick="${setterName}('')">All</button>
+        ${divisions.map(div=>`<button class="team-filter-pill ${div===selected ? "active" : ""}" onclick="${setterName}('${escapeJs(div)}')">${clean(div)}</button>`).join("")}
+      `;
+    }
+
+    function syncTournamentFilters(teams, matches, rows){
+      const divisions = divisionNamesFromTeams(teams);
+      if(teamDivisionFilter && !divisions.includes(teamDivisionFilter)) teamDivisionFilter = "";
+      if(fixtureDivisionFilter && !divisions.includes(fixtureDivisionFilter)) fixtureDivisionFilter = "";
+      if(standingsDivisionFilter && !divisions.includes(standingsDivisionFilter)) standingsDivisionFilter = "";
+
+      renderDivisionSelect("teamDivisionFilter", teamDivisionFilter, divisions, "All Divisions", "setTeamDivisionFilter");
+      renderDivisionSelect("fixtureDivisionFilter", fixtureDivisionFilter, divisions, "All Divisions", "setFixtureDivisionFilter");
+      renderDivisionSelect("standingsDivisionFilter", standingsDivisionFilter, divisions, "All Divisions", "setStandingsDivisionFilter");
+      renderDivisionPills("teamDivisionQuickFilters", teamDivisionFilter, divisions, "setTeamDivisionFilter");
+      renderDivisionPills("fixtureDivisionQuickFilters", fixtureDivisionFilter, divisions, "setFixtureDivisionFilter");
+      renderDivisionPills("standingsDivisionQuickFilters", standingsDivisionFilter, divisions, "setStandingsDivisionFilter");
+
+      if($("teamSearchFilter") && $("teamSearchFilter").value !== teamSearchFilter) $("teamSearchFilter").value = teamSearchFilter;
+      const visibleTeams = filteredTeamsForEditor(teams);
+      const visibleMatches = filteredMatchesForFixtures(matches);
+      const visibleRows = filteredRowsForStandings(rows);
+      if($("teamFilterCount")) $("teamFilterCount").textContent = `${visibleTeams.length}/${teams.length} teams`;
+      if($("fixtureFilterCount")) $("fixtureFilterCount").textContent = `${visibleMatches.length}/${matches.length} matches`;
+      if($("standingsFilterCount")) $("standingsFilterCount").textContent = `${visibleRows.length}/${rows.length} teams`;
+    }
+
+    window.setTeamDivisionFilter = function(value){
+      teamDivisionFilter = value || "";
+      renderTournament();
+    };
+
+    window.setTeamSearchFilter = function(value){
+      teamSearchFilter = value || "";
+      renderTournament();
+    };
+
+    window.clearTeamFilters = function(){
+      teamDivisionFilter = "";
+      teamSearchFilter = "";
+      renderTournament();
+    };
+
+    window.setFixtureDivisionFilter = function(value){
+      fixtureDivisionFilter = value || "";
+      renderTournament();
+    };
+
+    window.setStandingsDivisionFilter = function(value){
+      standingsDivisionFilter = value || "";
+      renderTournament();
+    };
+
     const FOMO_DEFAULT_TEAMS = [
       {slot:1,name:"Dishan",captain:"Dishan",division:"Division 1",referee:"Shapthi",color:"#c6f900",players:["Lakeesha","Deanna","Andy","Shaven","Navindu","Joshua"]},
       {slot:2,name:"Mishael",captain:"Mishael",division:"Division 1",referee:"Shapthi",color:"#27e8ff",players:["Nishmi","Ashcharya","Anuk W","Dilhaan","Lukesh","Dwane"]},
@@ -5183,12 +5642,24 @@
         };
         const existing = bySlot.get(team.slot);
         if(existing){
-          await updateDoc(doc(db,"tournamentTeams",existing.id), data);
+          const merged = {
+            tournamentId:id,
+            slot:existing.slot || team.slot,
+            name:existing.name && !String(existing.name).startsWith("Team ") ? existing.name : team.name,
+            color:existing.color || team.color,
+            captain:existing.captain || team.captain,
+            division:existing.division || team.division,
+            referee:existing.referee || team.referee,
+            players:Array.isArray(existing.players) && existing.players.length ? existing.players : team.players,
+            notes:existing.notes || `${team.division} • Ref: ${team.referee}`,
+            updatedAt:serverTimestamp()
+          };
+          await updateDoc(doc(db,"tournamentTeams",existing.id), merged);
         }else{
           await addDoc(collection(db,"tournamentTeams"), {...data, createdAt:serverTimestamp()});
         }
       }
-      notify("FOMO teams inserted");
+      notify("FOMO teams inserted. Existing edits were kept.");
     };
 
     async function ensureFomoTeamsSeeded(){
@@ -5233,21 +5704,39 @@
       notify("Team added");
     };
 
-    window.saveTournamentTeam = async function(id){
-      if(!canManage()) return notify("Only Admin or Core Moderator can edit teams.");
-      const playersText = $(`players-${id}`).value || "";
+    async function saveTournamentTeamById(id, silent=false){
+      if(!canManage()){
+        if(!silent) notify("Only Admin or Core Moderator can edit teams.");
+        return false;
+      }
+      const playersText = $(`players-${id}`)?.value || "";
       const players = playersText.split("\n").map(x=>x.trim()).filter(Boolean);
       await updateDoc(doc(db,"tournamentTeams",id), {
-        name:$(`team-name-${id}`).value.trim() || "Unnamed Team",
-        color:$(`team-color-${id}`).value || "#c6f900",
-        captain:$(`team-captain-${id}`).value.trim(),
-        division:$(`team-division-${id}`).value.trim(),
-        referee:$(`team-referee-${id}`).value.trim(),
+        name:$(`team-name-${id}`)?.value.trim() || "Unnamed Team",
+        color:$(`team-color-${id}`)?.value || "#c6f900",
+        captain:$(`team-captain-${id}`)?.value.trim() || "",
+        division:$(`team-division-${id}`)?.value.trim() || "",
+        referee:$(`team-referee-${id}`)?.value.trim() || "",
         players,
-        notes:$(`team-notes-${id}`).value.trim(),
+        notes:$(`team-notes-${id}`)?.value.trim() || "",
         updatedAt:serverTimestamp()
       });
-      notify("Team saved");
+      if(!silent) notify("Team saved");
+      return true;
+    }
+
+    window.saveTournamentTeam = async function(id){
+      await saveTournamentTeamById(id, false);
+    };
+
+    window.saveVisibleTournamentTeams = async function(){
+      if(!canManage()) return notify("Only Admin or Core Moderator can edit teams.");
+      const ids = lastVisibleTournamentTeamIds.length ? lastVisibleTournamentTeamIds : filteredTeamsForEditor(activeTournamentTeams()).map(t=>t.id);
+      if(!ids.length) return notify("No visible teams to save.");
+      for(const id of ids){
+        if($(`team-name-${id}`)) await saveTournamentTeamById(id, true);
+      }
+      notify(`${ids.length} visible team${ids.length===1?"":"s"} saved`);
     };
 
     window.deleteTournamentTeam = async function(id){
@@ -5306,11 +5795,11 @@
       const match = tournamentMatches.find(m=>m.id===id);
       if(!match) return notify("Match not found.");
       const updates = { updatedAt: serverTimestamp() };
-      if(side === "A") updates.scoreA = Math.max(0, Number(match.scoreA || 0) + Number(amount || 0));
-      if(side === "B") updates.scoreB = Math.max(0, Number(match.scoreB || 0) + Number(amount || 0));
+      const delta = Number(amount || 0);
+      if(side === "A") updates.scoreA = Math.max(0, Number(match.scoreA || 0) + delta);
+      if(side === "B") updates.scoreB = Math.max(0, Number(match.scoreB || 0) + delta);
       await updateDoc(doc(db,"tournamentMatches",id), updates);
-      lastScoreAction = Number(amount || 0) > 0 ? { id, side, amount:Number(amount || 0) } : null;
-      flashScore(`${Number(amount || 0) > 0 ? "+" : ""}${amount}`);
+      flashScore(`${delta > 0 ? "+" : ""}${delta}`);
     };
 
     window.saveTournamentMatch = async function(id){
@@ -5324,6 +5813,38 @@
         updatedAt:serverTimestamp()
       });
       notify("Match updated");
+    };
+
+
+    window.setTournamentMatchLive = async function(id){
+      if(!canManage()) return notify("Only Admin or Core Moderator can start matches.");
+      const matches = activeTournamentMatches();
+      for(const m of matches){
+        if(m.id !== id && m.status === "Live"){
+          await updateDoc(doc(db,"tournamentMatches",m.id), { status:"Upcoming", updatedAt:serverTimestamp() });
+        }
+      }
+      await updateDoc(doc(db,"tournamentMatches",id), { status:"Live", updatedAt:serverTimestamp() });
+      notify("Match is now live");
+    };
+
+    window.pauseTournamentMatch = async function(id){
+      if(!canManage()) return notify("Only Admin or Core Moderator can pause matches.");
+      await updateDoc(doc(db,"tournamentMatches",id), { status:"Upcoming", updatedAt:serverTimestamp() });
+      notify("Match moved back to upcoming");
+    };
+
+    window.completeTournamentMatch = async function(id){
+      if(!canManage()) return notify("Only Admin or Core Moderator can complete matches.");
+      await updateDoc(doc(db,"tournamentMatches",id), { status:"Completed", updatedAt:serverTimestamp() });
+      notify("Match completed");
+    };
+
+    window.startNextTournamentMatch = async function(){
+      if(!canManage()) return notify("Only Admin or Core Moderator can start matches.");
+      const next = activeTournamentMatches().find(m=>m.status==="Upcoming");
+      if(!next) return notify("No upcoming match found.");
+      await window.setTournamentMatchLive(next.id);
     };
 
     window.deleteTournamentMatch = async function(id){
@@ -5461,156 +5982,6 @@
       }
     }
 
-
-    let lastScoreAction = null;
-
-    function matchTeamNames(match){
-      return {
-        a: teamById(match?.teamAId).name || match?.teamAName || "Team A",
-        b: teamById(match?.teamBId).name || match?.teamBName || "Team B"
-      };
-    }
-
-    window.setMatchLive = async function(id){
-      if(!canManage()) return notify("Only Admin or Core Moderator can update matches.");
-      const matches = activeTournamentMatches();
-      const updates = matches
-        .filter(m=>m.status === "Live" && m.id !== id)
-        .map(m=>updateDoc(doc(db,"tournamentMatches",m.id), { status:"Upcoming", updatedAt:serverTimestamp() }));
-      updates.push(updateDoc(doc(db,"tournamentMatches",id), { status:"Live", updatedAt:serverTimestamp() }));
-      await Promise.all(updates);
-      notify("Match set to Live");
-    };
-
-    window.pauseLiveMatch = async function(id){
-      if(!canManage()) return notify("Only Admin or Core Moderator can update matches.");
-      await updateDoc(doc(db,"tournamentMatches",id), { status:"Upcoming", updatedAt:serverTimestamp() });
-      notify("Match moved back to Upcoming");
-    };
-
-    window.completeMatch = async function(id){
-      if(!canManage()) return notify("Only Admin or Core Moderator can update matches.");
-      await updateDoc(doc(db,"tournamentMatches",id), { status:"Completed", updatedAt:serverTimestamp() });
-      notify("Match completed");
-    };
-
-    window.startNextMatch = async function(){
-      const next = activeTournamentMatches().find(m=>m.status === "Upcoming");
-      if(!next) return notify("No upcoming match found.");
-      await setMatchLive(next.id);
-    };
-
-    window.undoLastScore = async function(){
-      if(!canManage()) return notify("Only Admin or Core Moderator can update scores.");
-      if(!lastScoreAction) return notify("No score action to undo yet.");
-      const {id, side, amount} = lastScoreAction;
-      const match = tournamentMatches.find(m=>m.id===id);
-      if(!match) return notify("Match not found.");
-      const updates = { updatedAt: serverTimestamp() };
-      if(side === "A") updates.scoreA = Math.max(0, Number(match.scoreA || 0) - Number(amount || 0));
-      if(side === "B") updates.scoreB = Math.max(0, Number(match.scoreB || 0) - Number(amount || 0));
-      await updateDoc(doc(db,"tournamentMatches",id), updates);
-      lastScoreAction = null;
-      flashScore("UNDO");
-    };
-
-    function renderLiveControl(match, matches, rows){
-      const panel = $("liveControlPanel");
-      if(!panel) return;
-      if(!match){
-        panel.innerHTML = `
-          <div class="live-empty-state">
-            <span class="live-label"><span class="pulse"></span> Ready</span>
-            <h2>No match selected yet.</h2>
-            <p>Add fixtures first, then press Start Next Match. Once a match is Live, this page becomes the main referee control screen.</p>
-            <div class="score-button-grid" style="grid-template-columns:1fr 1fr;">
-              <button onclick="openGameSection('schedule')">Create Fixtures</button>
-              <button class="btn-ghost" onclick="openGameSection('teams')">Check Teams</button>
-            </div>
-          </div>`;
-        return;
-      }
-      const names = matchTeamNames(match);
-      const status = match.status || "Upcoming";
-      const liveText = status === "Live" ? "LIVE NOW" : status === "Completed" ? "COMPLETED" : "READY TO START";
-      panel.innerHTML = `
-        <div>
-          <div class="live-status-row">
-            <span class="live-label"><span class="pulse"></span> ${clean(liveText)}</span>
-            <span class="live-meta-pill">${clean(match.label || "Match")} • ${formatMatchTime(match.time)} • ${clean(match.court || "Ground TBC")}</span>
-          </div>
-          <div class="live-match-title">${clean(names.a)} vs ${clean(names.b)}</div>
-        </div>
-        <div class="live-score-grid">
-          <div class="live-score-team" style="border-color:${clean(teamById(match.teamAId).color || '#c6f900')}">
-            <h3>${clean(names.a)}</h3>
-            <div class="live-score-number">${Number(match.scoreA||0)}</div>
-          </div>
-          <div class="live-vs">VS</div>
-          <div class="live-score-team" style="border-color:${clean(teamById(match.teamBId).color || '#27e8ff')}">
-            <h3>${clean(names.b)}</h3>
-            <div class="live-score-number">${Number(match.scoreB||0)}</div>
-          </div>
-        </div>
-        <div class="score-button-grid">
-          <button onclick="quickScore('${match.id}','A',1)">+1 ${clean(names.a)}</button>
-          <button class="score-minus" onclick="quickScore('${match.id}','A',-1)">-1 ${clean(names.a)}</button>
-          <button class="btn-ghost" onclick="undoLastScore()">Undo</button>
-          <button onclick="quickScore('${match.id}','B',1)">+1 ${clean(names.b)}</button>
-          <button class="score-minus" onclick="quickScore('${match.id}','B',-1)">-1 ${clean(names.b)}</button>
-          ${status === "Live" ? `<button class="btn-ghost" onclick="pauseLiveMatch('${match.id}')">Pause</button>` : `<button onclick="setMatchLive('${match.id}')">Set Live</button>`}
-          <button class="score-complete" onclick="completeMatch('${match.id}')">Complete Match</button>
-          <button class="btn-ghost" onclick="startNextMatch()">Start Next Match</button>
-          <button class="btn-ghost" onclick="openGameSection('schedule')">Fixtures</button>
-          <button class="btn-ghost" onclick="openGameSection('standings')">Point Table</button>
-        </div>`;
-    }
-
-    function renderLiveNextQueue(matches){
-      const target = $("liveNextQueue");
-      if(!target) return;
-      const currentLive = matches.find(m=>m.status === "Live");
-      const upcoming = matches.filter(m=>m.status !== "Completed" && m.id !== currentLive?.id).slice(0,3);
-      target.innerHTML = upcoming.length ? upcoming.map(m=>{
-        const n = matchTeamNames(m);
-        return `<div class="queue-row"><div class="queue-time">${formatMatchTime(m.time)}</div><div><h4>${clean(n.a)} vs ${clean(n.b)}</h4><p>${clean(m.label||"Match")} • ${clean(m.court||"Ground TBC")}</p></div><span class="pill status-${roleKey(m.status)}">${clean(m.status||"Upcoming")}</span></div>`;
-      }).join("") : `<div class="empty">No upcoming matches after this.</div>`;
-    }
-
-    function renderMiniStandings(rows){
-      const target = $("liveMiniStandings");
-      if(!target) return;
-      target.innerHTML = rows.length ? rows.slice(0,5).map((r,i)=>`
-        <div class="mini-standing-row">
-          <div class="mini-rank">${i+1}</div>
-          <div><h4>${clean(r.name)}</h4><p>${r.played} played • Diff ${r.diff}</p></div>
-          <div class="mini-points">${r.pts}</div>
-        </div>
-      `).join("") : `<div class="empty">Point table will appear once teams are added.</div>`;
-    }
-
-    function renderLiveMatchQueue(matches){
-      const target = $("liveMatchQueue");
-      if(!target) return;
-      target.innerHTML = matches.length ? matches.map(m=>{
-        const n = matchTeamNames(m);
-        const cls = m.status === "Live" ? "live-now" : m.status === "Completed" ? "completed" : "";
-        return `
-          <div class="match-queue-card ${cls}">
-            <div class="queue-time">${formatMatchTime(m.time)}</div>
-            <div>
-              <h4>${clean(n.a)} ${Number(m.scoreA||0)} — ${Number(m.scoreB||0)} ${clean(n.b)}</h4>
-              <p>${clean(m.label||"Match")} • ${clean(m.division||"Open")} • ${clean(m.court||"Ground TBC")} • Ref: ${clean(m.referee||"TBC")}</p>
-            </div>
-            <div class="match-queue-actions">
-              <span class="pill status-${roleKey(m.status)}">${clean(m.status||"Upcoming")}</span>
-              ${m.status !== "Live" && m.status !== "Completed" ? `<button class="mini-btn" onclick="setMatchLive('${m.id}')">Set Live</button>` : ""}
-              ${m.status !== "Completed" ? `<button class="mini-btn btn-yellow" onclick="completeMatch('${m.id}')">Complete</button>` : ""}
-            </div>
-          </div>`;
-      }).join("") : `<div class="empty">No fixtures yet. Go to Fixtures and add the match schedule.</div>`;
-    }
-
     function renderTournament(){
       if(!$("tournamentTeamsList")) return;
 
@@ -5619,27 +5990,39 @@
       const teams = activeTournamentTeams().sort((a,b)=>(a.slot||0)-(b.slot||0));
       const matches = activeTournamentMatches();
       const rows = standings();
-      const liveOrNext = liveMatchFrom(matches);
+      syncTournamentFilters(teams, matches, rows);
+      const visibleTeams = filteredTeamsForEditor(teams);
+      const visibleFixtureMatches = filteredMatchesForFixtures(matches);
+      const visibleStandingRows = filteredRowsForStandings(rows);
+      const live = matches.find(m=>m.status==="Live");
+      const next = matches.find(m=>m.status==="Upcoming");
+      const current = live || next || matches.find(m=>m.status!=="Completed") || matches[0] || null;
+      const upcomingQueue = matches.filter(m=>m.status!=="Completed").filter(m=>!live || m.id!==live.id).slice(0,5);
+      const liveOrNext = current;
 
-      if($("tournamentTitle")) $("tournamentTitle").value = tournamentSettings.title || selectedEvent?.title || "FOMO v2";
-      if($("tournamentSubtitle")) $("tournamentSubtitle").value = tournamentSettings.subtitle || "The Ultimate Room";
-      if($("tournamentDate")) $("tournamentDate").value = tournamentSettings.date || selectedEvent?.date || "2026-06-27";
+      const title = tournamentSettings.title || selectedEvent?.title || "FOMO 2.0";
+      const subtitle = tournamentSettings.subtitle || "The Ultimate Room";
+      const date = tournamentSettings.date || selectedEvent?.date || "2026-06-27";
+      const venue = tournamentSettings.venue || selectedEvent?.location || "Infinity Sports Arena";
+
+      if($("tournamentTitle")) $("tournamentTitle").value = title;
+      if($("tournamentSubtitle")) $("tournamentSubtitle").value = subtitle;
+      if($("tournamentDate")) $("tournamentDate").value = date;
       if($("tournamentStartTime")) $("tournamentStartTime").value = tournamentSettings.startTime || selectedEvent?.time || "15:00";
-      if($("tournamentVenue")) $("tournamentVenue").value = tournamentSettings.venue || selectedEvent?.location || "Infinity Sports Arena";
+      if($("tournamentVenue")) $("tournamentVenue").value = venue;
       if($("tournamentMessage")) $("tournamentMessage").value = tournamentSettings.message || selectedEvent?.description || "";
 
-      if($("refTournamentTitle")) $("refTournamentTitle").textContent = `${tournamentSettings.title || selectedEvent?.title || "FOMO v2"} Game Plan`;
-      if($("refTournamentMetaLine")) $("refTournamentMetaLine").textContent = `${tournamentSettings.subtitle || "The Ultimate Room"} • ${tournamentSettings.venue || selectedEvent?.location || "Infinity Sports Arena"}`;
+      if($("refTournamentTitle")) $("refTournamentTitle").textContent = `${title} Game Plan`;
       if($("refTeamCount")) $("refTeamCount").textContent = teams.length;
       if($("refMatchCount")) $("refMatchCount").textContent = matches.length;
       if($("refLiveCount")) $("refLiveCount").textContent = matches.filter(m=>m.status==="Live").length;
       if($("refDoneCount")) $("refDoneCount").textContent = matches.filter(m=>m.status==="Completed").length;
 
-      if($("publicTournamentTitle")) $("publicTournamentTitle").textContent = tournamentSettings.title || selectedEvent?.title || "FOMO v2";
-      if($("publicTournamentSubtitle")) $("publicTournamentSubtitle").textContent = tournamentSettings.subtitle || "The Ultimate Room";
+      if($("publicTournamentTitle")) $("publicTournamentTitle").textContent = title;
+      if($("publicTournamentSubtitle")) $("publicTournamentSubtitle").textContent = subtitle;
       if($("publicTournamentMeta")) $("publicTournamentMeta").innerHTML = `
-        <div class="list-item"><div><h4>Date & Time</h4><p>${clean(tournamentSettings.date||selectedEvent?.date||"2026-06-27")} • ${clean(tournamentSettings.startTime||selectedEvent?.time||"03:00 PM")}</p></div></div>
-        <div class="list-item"><div><h4>Venue</h4><p>${clean(tournamentSettings.venue||selectedEvent?.location||"Infinity Sports Arena")}</p></div></div>
+        <div class="list-item"><div><h4>Date & Time</h4><p>${clean(date)} • ${clean(tournamentSettings.startTime||selectedEvent?.time||"03:00 PM")}</p></div></div>
+        <div class="list-item"><div><h4>Venue</h4><p>${clean(venue)}</p></div></div>
         <div class="list-item"><div><h4>Note</h4><p>${clean(tournamentSettings.message||"Game plan will be updated live.")}</p></div></div>
       `;
 
@@ -5647,43 +6030,144 @@
         const groups = ["Division 1","Division 2"].map(div=>{
           const groupTeams = teams.filter(t=>t.division===div);
           const ref = groupTeams[0]?.referee || (div==="Division 1" ? "Shapthi" : "Yohan");
-          return `<div class="division-ref-card"><h4>${div}</h4><p>Ref: ${clean(ref)} • ${groupTeams.map(t=>t.name).join(" / ") || "Teams loading"}</p></div>`;
+          return `<div class="division-ref-card"><h4>${div}</h4><p>Ref: ${clean(ref)} • ${groupTeams.map(t=>clean(t.name)).join(" / ") || "Teams loading"}</p></div>`;
         }).join("");
         $("divisionRefGrid").innerHTML = groups;
       }
 
-      if($("matchTeamA")) $("matchTeamA").innerHTML = `<option value="">Team A</option>` + teams.map(t=>`<option value="${t.id}">${clean(t.name)}${t.division ? ` • ${clean(t.division)}` : ""}</option>`).join("");
-      if($("matchTeamB")) $("matchTeamB").innerHTML = `<option value="">Team B</option>` + teams.map(t=>`<option value="${t.id}">${clean(t.name)}${t.division ? ` • ${clean(t.division)}` : ""}</option>`).join("");
+      const matchSelectTeams = fixtureDivisionFilter ? teams.filter(t=>divisionMatch(t.division, fixtureDivisionFilter)) : teams;
+      if($("matchTeamA")) $("matchTeamA").innerHTML = `<option value="">Team A</option>` + matchSelectTeams.map(t=>`<option value="${t.id}">${clean(t.name)}${t.division ? ` • ${clean(t.division)}` : ""}</option>`).join("");
+      if($("matchTeamB")) $("matchTeamB").innerHTML = `<option value="">Team B</option>` + matchSelectTeams.map(t=>`<option value="${t.id}">${clean(t.name)}${t.division ? ` • ${clean(t.division)}` : ""}</option>`).join("");
 
-      $("tournamentTeamsList").innerHTML = teams.length ? teams.map(t=>{
-        const playersText = (t.players || []).join("\n");
-        const chips = (t.players || []).slice(0,12).map(p=>`<span class="player-chip">${clean(p)}</span>`).join("");
-        return `
-          <div class="team-card" style="--team-color:${clean(t.color||"#c6f900")}">
-            <div class="team-color-strip"></div>
-            <h4>${clean(t.name||"Unnamed Team")}</h4>
-            <div class="team-assignment"><span class="pill">${clean(t.division||"Division TBC")}</span><span class="pill">Ref: ${clean(t.referee||"TBC")}</span></div>
-            <div class="team-meta">
-              <input id="team-name-${t.id}" value="${clean(t.name||"")}" placeholder="Team name">
-              <div class="color-picker-row">
-                <input id="team-captain-${t.id}" value="${clean(t.captain||"")}" placeholder="Captain">
-                <input id="team-color-${t.id}" type="color" value="${clean(t.color||"#c6f900")}">
+      if($("liveControlBoard")){
+        if(current){
+          const aName = teamById(current.teamAId).name || current.teamAName || "Team A";
+          const bName = teamById(current.teamBId).name || current.teamBName || "Team B";
+          $("liveControlBoard").innerHTML = `
+            <div class="live-score-layout">
+              <div class="score-team-panel" style="border-color:${clean(teamById(current.teamAId).color||"rgba(255,255,255,.10)")}">
+                <h3>${clean(aName)}</h3>
+                <div class="score-number">${Number(current.scoreA||0)}</div>
               </div>
-              <input id="team-division-${t.id}" value="${clean(t.division||"")}" placeholder="Division">
-              <input id="team-referee-${t.id}" value="${clean(t.referee||"")}" placeholder="Referee">
+              <div class="score-versus">VS</div>
+              <div class="score-team-panel" style="border-color:${clean(teamById(current.teamBId).color||"rgba(255,255,255,.10)")}">
+                <h3>${clean(bName)}</h3>
+                <div class="score-number">${Number(current.scoreB||0)}</div>
+              </div>
             </div>
-            <textarea id="players-${t.id}" placeholder="Players - one name per line">${clean(playersText)}</textarea>
-            <input id="team-notes-${t.id}" value="${clean(t.notes||"")}" placeholder="Team notes">
-            <div class="player-chips">${chips}</div>
-            <div class="task-actions" style="margin-top:12px;">
-              <button class="mini-btn" onclick="saveTournamentTeam('${t.id}')">Save</button>
-              <button class="mini-btn btn-danger" onclick="deleteTournamentTeam('${t.id}')">Delete</button>
+            <div class="live-match-meta-bar">
+              <span class="pill status-${roleKey(current.status)}">${clean(current.status||"Upcoming")}</span>
+              <span class="pill">${clean(current.label||"Match")}</span>
+              <span class="pill">${formatMatchTime(current.time)}</span>
+              <span class="pill">${clean(current.court||"Ground TBC")}</span>
+              <span class="pill">Ref: ${clean(current.referee||"TBC")}</span>
             </div>
-          </div>
-        `;
-      }).join("") : `<div class="empty">No teams yet. Click Insert FOMO Teams.</div>`;
+          `;
+          $("liveControlActions").innerHTML = `
+            <div class="score-action-grid">
+              <button class="score-main-action" onclick="quickScore('${current.id}','A',1)">+1 ${clean(aName)}</button>
+              <button class="btn-ghost" onclick="quickScore('${current.id}','A',-1)">-1 ${clean(aName)}</button>
+              <button class="btn-yellow" onclick="current.status==='Live'?pauseTournamentMatch('${current.id}'):setTournamentMatchLive('${current.id}')">${current.status==="Live" ? "Pause" : "Start Live"}</button>
+              <button class="btn-purple" onclick="completeTournamentMatch('${current.id}')">Complete</button>
+              <button class="btn-ghost" onclick="quickScore('${current.id}','B',-1)">-1 ${clean(bName)}</button>
+              <button class="score-main-action" onclick="quickScore('${current.id}','B',1)">+1 ${clean(bName)}</button>
+            </div>
+            <div class="match-flow-actions">
+              <button class="btn-ghost" onclick="openGameSection('fixtures')">Open Fixtures</button>
+              <button class="btn-ghost" onclick="startNextTournamentMatch()">Start Next Match</button>
+              <button class="btn-danger" onclick="completeTournamentMatch('${current.id}')">Finish Current Match</button>
+            </div>
+          `;
+        }else{
+          $("liveControlBoard").innerHTML = `
+            <div class="live-empty-state">
+              <div>
+                <h3>No match is live yet.</h3>
+                <p>Add fixtures or start the next upcoming match to begin the tournament.</p>
+              </div>
+            </div>
+          `;
+          $("liveControlActions").innerHTML = `
+            <div class="match-flow-actions">
+              <button onclick="openGameSection('fixtures')">Add Fixtures</button>
+              <button class="btn-ghost" onclick="seedFomoTeams(true)">Insert FOMO Teams</button>
+              <button class="btn-purple" onclick="startNextTournamentMatch()">Start Next Match</button>
+            </div>
+          `;
+        }
+      }
 
-      if($("tournamentMatchesList")) $("tournamentMatchesList").innerHTML = matches.length ? matches.map(m=>{
+      if($("nextMatchQueue")){
+        const queue = upcomingQueue.length ? upcomingQueue : (next ? [next] : []);
+        $("nextMatchQueue").innerHTML = queue.length ? queue.map((m,i)=>{
+          const aName = teamById(m.teamAId).name || m.teamAName || "Team A";
+          const bName = teamById(m.teamBId).name || m.teamBName || "Team B";
+          if(i===0){
+            return `<div class="next-main-card"><h3>${clean(aName)} vs ${clean(bName)}</h3><p>${clean(m.label||"Match")} • ${formatMatchTime(m.time)} • ${clean(m.court||"Ground TBC")} • Ref: ${clean(m.referee||"TBC")}</p><div style="height:10px"></div><button class="mini-btn" onclick="setTournamentMatchLive('${m.id}')">Set Live</button></div>`;
+          }
+          return `<div class="next-small-card"><b>${formatMatchTime(m.time)}</b><p>${clean(aName)} vs ${clean(bName)}<br>${clean(m.court||"Ground TBC")}</p></div>`;
+        }).join("") : `<div class="empty">No upcoming matches.</div>`;
+      }
+
+      if($("miniLeaderboard")){
+        $("miniLeaderboard").innerHTML = rows.length ? rows.slice(0,5).map((r,i)=>`
+          <div class="leader-row">
+            <span class="leader-rank">${i+1}</span>
+            <div><h4>${clean(r.name)}</h4><p>${r.played} played • Diff ${r.diff}</p></div>
+            <strong class="leader-points">${r.pts}</strong>
+          </div>
+        `).join("") : `<div class="empty">Standings will appear after teams are added.</div>`;
+      }
+
+      if($("gameMatchQueue")){
+        $("gameMatchQueue").innerHTML = matches.length ? matches.slice(0,8).map(m=>{
+          const aName = teamById(m.teamAId).name || m.teamAName || "Team A";
+          const bName = teamById(m.teamBId).name || m.teamBName || "Team B";
+          return `<div class="queue-card ${m.status==="Live"?"live":""}">
+            <div class="queue-time">${formatMatchTime(m.time)}</div>
+            <div><h4>${clean(aName)} vs ${clean(bName)}</h4><p>${clean(m.label||"Match")} • ${clean(m.court||"Ground TBC")} • ${clean(m.status||"Upcoming")} • ${Number(m.scoreA||0)} - ${Number(m.scoreB||0)}</p></div>
+            <button class="mini-btn ${m.status==="Live"?"btn-yellow":""}" onclick="${m.status==="Live" ? `completeTournamentMatch('${m.id}')` : `setTournamentMatchLive('${m.id}')`}">${m.status==="Live" ? "Complete" : "Set Live"}</button>
+          </div>`;
+        }).join("") : `<div class="empty">Match queue is empty.</div>`;
+      }
+
+      if($("tournamentTeamsList")) {
+        lastVisibleTournamentTeamIds = visibleTeams.map(t=>t.id);
+        $("tournamentTeamsList").innerHTML = teams.length ? (visibleTeams.length ? visibleTeams.map(t=>{
+          const playersText = (t.players || []).join("\n");
+          const chips = (t.players || []).slice(0,12).map(p=>`<span class="player-chip">${clean(p)}</span>`).join("");
+          return `
+            <div class="team-card" style="--team-color:${clean(t.color||"#c6f900")}">
+              <div class="team-color-strip"></div>
+              <h4>${clean(t.name||"Unnamed Team")}</h4>
+              <div class="team-assignment"><span class="pill">${clean(t.division||"Division TBC")}</span><span class="pill">Ref: ${clean(t.referee||"TBC")}</span></div>
+              <div class="team-meta">
+                <input id="team-name-${t.id}" value="${clean(t.name||"")}" placeholder="Team name">
+                <div class="color-picker-row">
+                  <input id="team-captain-${t.id}" value="${clean(t.captain||"")}" placeholder="Captain">
+                  <input id="team-color-${t.id}" type="color" value="${clean(t.color||"#c6f900")}">
+                </div>
+                <input id="team-division-${t.id}" value="${clean(t.division||"")}" placeholder="Division e.g. Division 1">
+                <input id="team-referee-${t.id}" value="${clean(t.referee||"")}" placeholder="Referee">
+              </div>
+              <textarea id="players-${t.id}" placeholder="Players - one name per line">${clean(playersText)}</textarea>
+              <input id="team-notes-${t.id}" value="${clean(t.notes||"")}" placeholder="Team notes">
+              <div class="player-chips">${chips}</div>
+              <div class="team-card-actions">
+                <div class="team-save-group">
+                  <button class="mini-btn" onclick="saveTournamentTeam('${t.id}')">Save Team</button>
+                  <button class="mini-btn btn-ghost" onclick="openGameSection('fixtures')">Fixtures</button>
+                </div>
+                <div class="team-delete-group">
+                  <button class="mini-btn btn-danger" onclick="deleteTournamentTeam('${t.id}')">Delete</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join("") : `<div class="empty">No teams match this division/search filter. Clear filters to see all teams.</div>`) : `<div class="empty">No teams yet. Click Insert FOMO Teams.</div>`;
+      }
+
+      if($("tournamentMatchesList")) $("tournamentMatchesList").innerHTML = visibleFixtureMatches.length ? visibleFixtureMatches.map(m=>{
         const aName = teamById(m.teamAId).name || m.teamAName || "Team A";
         const bName = teamById(m.teamBId).name || m.teamBName || "Team B";
         const accent = teamById(m.teamAId).color || "#c6f900";
@@ -5713,21 +6197,21 @@
               </div>
               <input id="court-${m.id}" value="${clean(m.court||"")}" placeholder="Court / Ground" style="margin-top:8px;">
               <div class="big-touch-actions">
+                <button class="mini-btn" onclick="setTournamentMatchLive('${m.id}')">Set Live</button>
                 <button class="mini-btn" onclick="quickScore('${m.id}','A',1)">+1 ${clean(aName)}</button>
                 <button class="mini-btn" onclick="quickScore('${m.id}','B',1)">+1 ${clean(bName)}</button>
-                <button class="mini-btn btn-ghost" onclick="setMatchLive('${m.id}')">Set Live</button>
-                <button class="mini-btn btn-green" onclick="completeMatch('${m.id}')">Complete</button>
                 <button class="mini-btn btn-yellow" onclick="saveTournamentMatch('${m.id}')">Save</button>
+                <button class="mini-btn btn-purple" onclick="completeTournamentMatch('${m.id}')">Complete</button>
                 <button class="mini-btn btn-danger" onclick="deleteTournamentMatch('${m.id}')">Delete</button>
               </div>
             </div>
           </div>
         </div>
-      `}).join("") : `<div class="empty">No matches yet. Create matches when the teams are ready.</div>`;
+      `}).join("") : `<div class="empty">No matches found for this division. Clear the filter or create matches when the teams are ready.</div>`;
 
-      const fullRows = rows.map(r=>`
+      const fullRows = visibleStandingRows.map(r=>`
         <tr><td><span class="pill" style="border-color:${clean(r.color)}">${clean(r.name)}</span></td><td>${r.played}</td><td>${r.won}</td><td>${r.lost}</td><td>${r.draw}</td><td>${r.pts}</td><td>${r.diff}</td></tr>
-      `).join("") || `<tr><td colspan="7">No teams yet.</td></tr>`;
+      `).join("") || `<tr><td colspan="7">No teams found for this division.</td></tr>`;
 
       if($("tournamentStandings")) $("tournamentStandings").innerHTML = fullRows;
       if($("tournamentStandingsMain")) $("tournamentStandingsMain").innerHTML = fullRows;
@@ -5736,14 +6220,10 @@
         <tr><td><span class="pill" style="border-color:${clean(r.color)}">${clean(r.name)}</span></td><td>${r.played}</td><td>${r.won}</td><td>${r.pts}</td><td>${r.diff}</td></tr>
       `).join("") || `<tr><td colspan="5">No teams yet.</td></tr>`;
 
-      renderPodium(rows, "podiumBoard");
+      renderPodium(visibleStandingRows, "podiumBoard");
       renderPodium(rows, "publicPodium");
       renderDivisionProgress(matches);
       renderControlCenter(matches, rows, tournamentSettings, selectedEvent);
-      renderLiveControl(liveOrNext, matches, rows);
-      renderLiveNextQueue(matches);
-      renderMiniStandings(rows);
-      renderLiveMatchQueue(matches);
       renderLiveBoard(liveOrNext, "refLiveMatchBoard");
       renderLiveBoard(liveOrNext, "publicLiveBoard");
 
@@ -5982,7 +6462,7 @@
       if(eventId) selectedEventId = eventId;
       document.body.classList.add("game-mode");
       openPage("gameplan", null);
-      openGameSection("live");
+      openGameSection("teams");
       initFrisbeeEngine();
       renderTournament();
       setTimeout(()=>ensureFomoTeamsSeeded(), 250);
