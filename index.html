@@ -4148,6 +4148,8 @@
                   <button class="btn-ghost" onclick="openPageByName('events')">← Back to Events</button>
                   <a id="detailRegistrationBtn" class="btn" target="_blank" rel="noopener">Register Now</a>
                   <button id="detailGamePlanBtn" onclick="openGamePlanFullscreen()">Open Game Plan</button>
+                  <button class="btn-green" onclick="openPublicGamePlan()">Open Public Live Page</button>
+                  <button class="btn-ghost" onclick="copyPublicGamePlanLink()">Copy Public Link</button>
                   <button class="btn-purple" onclick="openPageByName('attendance')">Mark Attendance</button>
                   <a id="detailSheetBtn" class="btn btn-ghost" target="_blank" rel="noopener">Registration Sheet</a>
                   <button class="btn-ghost" onclick="exportSelectedEventReport()">Export Event Report</button>
@@ -6447,6 +6449,15 @@
       return url.toString();
     }
 
+    function publicGamePlanUrl(eventId){
+      const url = new URL(window.location.href);
+      url.search = "";
+      url.hash = "";
+      url.pathname = url.pathname.replace(/[^\/]*$/, "fomo-live.html");
+      if(eventId) url.searchParams.set("event", eventId);
+      return url.toString();
+    }
+
     window.openGamePlanFullscreen = function(){
       if(!selectedEventId && $("eventReportSelect")) selectedEventId = $("eventReportSelect").value;
       const eventObj = events.find(e=>e.id===selectedEventId);
@@ -6500,6 +6511,23 @@
         notify("Game Plan link copied");
       }catch(e){
         prompt("Copy this Game Plan link:", link);
+      }
+    };
+
+
+    window.openPublicGamePlan = function(){
+      if(!selectedEventId && $("eventReportSelect")) selectedEventId = $("eventReportSelect").value;
+      if(!selectedEventId) return notify("Open an event first.");
+      window.open(publicGamePlanUrl(selectedEventId), "_blank");
+    };
+
+    window.copyPublicGamePlanLink = async function(){
+      const link = publicGamePlanUrl(selectedEventId);
+      try{
+        await navigator.clipboard.writeText(link);
+        notify("Public live link copied");
+      }catch(e){
+        prompt("Copy this public live link:", link);
       }
     };
 
