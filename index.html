@@ -3221,6 +3221,185 @@
     @media(max-width:1050px){.tournament-control-center{grid-template-columns:1fr;position:relative;top:auto}.division-ref-grid{grid-template-columns:1fr}.public-board-v13{grid-template-columns:1fr!important;}.podium-board{grid-template-columns:1fr}.podium-card.first{min-height:150px}.match-shell{grid-template-columns:1fr}.match-time-chip{width:100%;height:auto;min-height:56px}.match-edit-grid{grid-template-columns:1fr 1fr}.match-versus{grid-template-columns:1fr;}.match-team-name:last-child{text-align:left}.match-score-pill{width:max-content}}
     @media(max-width:620px){.tournament-control-center{margin:0 10px 14px}.control-block{border-radius:22px}.match-edit-grid{grid-template-columns:1fr}.timeline-card{grid-template-columns:1fr}.public-board-v13 .card{margin-left:0!important;margin-right:0!important}.bouncing-disc{opacity:.38}}
 
+
+
+    /* =========================================================
+       Youth Central V14 - Referee-first Game Plan UX Revamp
+       Theme preserved, interface simplified for real game-day use.
+       ========================================================= */
+    body.game-mode .referee-shell-v14{
+      border-radius:28px!important;
+      min-height:calc(100vh - 28px)!important;
+      background:
+        radial-gradient(circle at 14% 8%,rgba(217,255,0,.16),transparent 27%),
+        radial-gradient(circle at 92% 12%,rgba(39,232,255,.16),transparent 32%),
+        linear-gradient(135deg,#030500,#080b05 48%,#06070b)!important;
+      border:1px solid rgba(217,255,0,.26)!important;
+    }
+    body.game-mode .ref-content-v14{padding:12px!important;}
+    body.game-mode .frisbee-field{opacity:.38!important;}
+    body.game-mode .bouncing-disc{opacity:.34!important;filter:saturate(.95)!important;}
+
+    .ref-top-v14{
+      position:sticky!important;
+      top:0!important;
+      z-index:60!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:space-between!important;
+      gap:14px!important;
+      padding:12px 14px!important;
+      background:rgba(3,5,2,.82)!important;
+      border-bottom:1px solid rgba(217,255,0,.24)!important;
+    }
+    .ref-actions-v14{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap;}
+    .ref-actions-v14 button{min-height:42px!important;padding:10px 13px!important;border-radius:14px!important;font-size:12px!important;}
+    .ref-tabs-v14{
+      position:sticky!important;
+      top:75px!important;
+      z-index:55!important;
+      display:grid!important;
+      grid-template-columns:repeat(5,minmax(0,1fr))!important;
+      gap:8px!important;
+      margin:0 0 12px!important;
+      padding:8px!important;
+      border:1px solid rgba(217,255,0,.18)!important;
+      background:rgba(4,6,3,.74)!important;
+      border-radius:22px!important;
+      backdrop-filter:blur(22px)!important;
+    }
+    .ref-tabs-v14 .ref-tab{
+      border-radius:16px!important;
+      min-height:48px!important;
+      padding:10px 12px!important;
+      text-align:center!important;
+      font-size:12px!important;
+      letter-spacing:.02em!important;
+    }
+
+    .live-command-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(340px,.65fr);gap:12px;align-items:stretch;}
+    .live-control-card{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(217,255,0,.28);
+      border-radius:32px;
+      padding:clamp(18px,3vw,34px);
+      min-height:430px;
+      background:
+        radial-gradient(circle at 18% 10%,rgba(217,255,0,.16),transparent 32%),
+        radial-gradient(circle at 80% 8%,rgba(39,232,255,.14),transparent 34%),
+        linear-gradient(145deg,rgba(10,14,5,.92),rgba(3,5,4,.72));
+      box-shadow:0 28px 110px rgba(0,0,0,.54),0 0 64px rgba(217,255,0,.06);
+      backdrop-filter:blur(22px);
+      display:grid;
+      align-content:space-between;
+      gap:20px;
+    }
+    .live-control-card::after{
+      content:"";
+      position:absolute;
+      right:-120px;top:-140px;
+      width:420px;height:420px;border-radius:999px;
+      border:1px solid rgba(217,255,0,.18);
+      background:radial-gradient(circle,rgba(39,232,255,.10),transparent 65%);
+      pointer-events:none;
+    }
+    .live-status-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;position:relative;z-index:2;}
+    .live-label{display:inline-flex;align-items:center;gap:8px;background:#c6f900;color:#050505;border-radius:999px;padding:8px 12px;font-size:11px;font-weight:950;letter-spacing:.14em;text-transform:uppercase;}
+    .live-meta-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);border-radius:999px;padding:8px 11px;color:#e2e8f0;font-size:12px;font-weight:850;}
+    .live-match-title{font-size:clamp(24px,3vw,44px);line-height:.95;letter-spacing:-.08em;color:#fff;font-weight:950;margin-top:14px;position:relative;z-index:2;}
+    .live-score-grid{position:relative;z-index:2;display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch;margin:14px 0;}
+    .live-score-team{border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.055);border-radius:28px;padding:18px;text-align:center;display:grid;gap:12px;align-content:center;min-height:210px;}
+    .live-score-team h3{font-size:clamp(22px,3vw,44px);letter-spacing:-.08em;line-height:.92;}
+    .live-score-number{font-size:clamp(76px,10vw,150px);line-height:.72;font-weight:950;letter-spacing:-.1em;background:linear-gradient(90deg,#c6f900,#27e8ff,#fff);-webkit-background-clip:text;color:transparent;}
+    .live-vs{align-self:center;width:64px;height:64px;border-radius:999px;display:grid;place-items:center;background:#c6f900;color:#050505;font-weight:950;box-shadow:0 0 45px rgba(198,249,0,.26);}
+    .score-button-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;}
+    .score-button-grid button{min-height:56px!important;border-radius:18px!important;font-size:15px!important;}
+    .score-button-grid .score-minus{background:rgba(255,255,255,.07)!important;color:#f7ffe0!important;border:1px solid rgba(217,255,0,.18)!important;}
+    .score-button-grid .score-complete{background:linear-gradient(135deg,#c6f900,#27e8ff)!important;color:#050505!important;}
+    .live-empty-state{position:relative;z-index:2;display:grid;gap:12px;align-content:center;text-align:left;min-height:360px;}
+    .live-empty-state h2{font-size:clamp(38px,6vw,86px);line-height:.82;letter-spacing:-.1em;}
+    .live-empty-state p{color:#cbd5e1;line-height:1.7;max-width:640px;}
+
+    .live-side-stack{display:grid;gap:12px;align-content:start;}
+    .next-match-panel,.mini-leaderboard-panel,.match-queue-panel,.court-control-block-simple{
+      border-radius:28px!important;
+      border:1px solid rgba(217,255,0,.20)!important;
+      background:rgba(7,10,4,.72)!important;
+      box-shadow:0 20px 70px rgba(0,0,0,.38)!important;
+      backdrop-filter:blur(22px)!important;
+    }
+    .next-queue-list,.mini-standings-list,.match-queue-list{display:grid;gap:8px;margin-top:12px;}
+    .queue-row,.mini-standing-row{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      gap:10px;
+      align-items:center;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.045);
+      border-radius:18px;
+      padding:10px;
+    }
+    .queue-time{min-width:70px;height:42px;border-radius:14px;display:grid;place-items:center;background:rgba(198,249,0,.09);border:1px solid rgba(198,249,0,.18);color:#c6f900;font-weight:950;font-size:12px;}
+    .queue-row h4,.mini-standing-row h4{font-size:14px;line-height:1.15;letter-spacing:-.035em;}
+    .queue-row p,.mini-standing-row p{color:#9fb0c8;font-size:11px;margin-top:4px;font-weight:750;}
+    .mini-rank{width:34px;height:34px;border-radius:13px;display:grid;place-items:center;background:#c6f900;color:#050505;font-size:12px;font-weight:950;}
+    .mini-points{font-size:20px;font-weight:950;color:#f7ffe0;letter-spacing:-.06em;}
+    .live-bottom-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:12px;margin-top:12px;align-items:start;}
+    .section-flex-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;}
+    .section-flex-head h2{font-size:clamp(22px,2.5vw,36px);letter-spacing:-.08em;line-height:.95;margin-top:6px;}
+    .match-queue-card{
+      display:grid;
+      grid-template-columns:92px 1fr auto;
+      gap:12px;
+      align-items:center;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.045);
+      border-radius:20px;
+      padding:12px;
+    }
+    .match-queue-card.live-now{border-color:rgba(198,249,0,.45);background:rgba(198,249,0,.08);}
+    .match-queue-card.completed{opacity:.64;}
+    .match-queue-card h4{font-size:16px;letter-spacing:-.045em;line-height:1.05;}
+    .match-queue-card p{color:#9fb0c8;font-size:12px;margin-top:5px;}
+    .match-queue-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+    .match-queue-actions .mini-btn{border-radius:12px!important;}
+
+    .fixtures-layout{display:grid;grid-template-columns:minmax(300px,.42fr) minmax(0,.58fr);gap:12px;align-items:start;}
+    .fixture-create-card{position:sticky;top:145px;}
+    .fixture-form-grid{grid-template-columns:1fr!important;}
+    .fixture-form-grid .span4{grid-column:auto!important;}
+    .fixture-list-card .match-card{box-shadow:none!important;}
+
+    .public-board-v14{display:grid!important;grid-template-columns:1.1fr .9fr!important;gap:12px!important;}
+    .public-display-card{grid-column:1/-1;}
+    .public-live-board-v14{min-height:220px;}
+
+    @media(max-width:1180px){
+      .live-command-grid,.live-bottom-grid,.fixtures-layout,.public-board-v14{grid-template-columns:1fr!important;}
+      .fixture-create-card{position:relative;top:auto;}
+      .score-button-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+      .score-button-grid .score-complete{grid-column:1/-1;}
+    }
+    @media(max-width:760px){
+      body.game-mode .main{padding:0!important;}
+      body.game-mode .referee-shell-v14{border-radius:0!important;border-left:0!important;border-right:0!important;min-height:100vh!important;}
+      .ref-top-v14{display:grid!important;grid-template-columns:1fr!important;align-items:start!important;}
+      .ref-actions-v14{justify-content:flex-start;display:grid;grid-template-columns:1fr 1fr;width:100%;}
+      .ref-actions-v14 button{width:100%;}
+      .ref-tabs-v14{top:0!important;grid-template-columns:repeat(5, max-content)!important;overflow-x:auto!important;justify-content:flex-start!important;border-radius:0!important;margin-left:-12px!important;margin-right:-12px!important;}
+      .live-control-card{border-radius:24px;min-height:auto;padding:18px;}
+      .live-score-grid{grid-template-columns:1fr;gap:10px;}
+      .live-vs{margin:auto;width:48px;height:48px;}
+      .live-score-team{min-height:150px;border-radius:22px;padding:14px;}
+      .live-score-number{font-size:82px;}
+      .score-button-grid{grid-template-columns:1fr 1fr;}
+      .match-queue-card{grid-template-columns:1fr;}
+      .match-queue-actions{justify-content:flex-start;}
+      .queue-row,.mini-standing-row{grid-template-columns:auto 1fr;}
+      .mini-points{grid-column:1/-1;}
+    }
+
   </style>
 </head>
 
@@ -3674,7 +3853,7 @@
             </div>
           </div>
 
-          <div class="referee-shell">
+          <div class="referee-shell referee-shell-v14">
             <div id="frisbeeField" class="frisbee-field" aria-hidden="true">
               <div class="bouncing-disc disc-one"></div>
               <div class="bouncing-disc disc-two"></div>
@@ -3682,7 +3861,7 @@
               <div class="bouncing-disc disc-four"></div>
             </div>
 
-            <div class="ref-top">
+            <div class="ref-top ref-top-v14">
               <div class="ref-brand">
                 <div class="mark">
                   <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
@@ -3694,65 +3873,147 @@
                 </div>
                 <div>
                   <h1 id="refTournamentTitle">FOMO v2 Game Plan</h1>
-                  <p>Referee / Umpire Control Room</p>
+                  <p id="refTournamentMetaLine">The Ultimate Room • Live Control</p>
                 </div>
               </div>
-              <div class="ref-actions">
+              <div class="ref-actions ref-actions-v14">
                 <button onclick="requestFullscreenGame()">Full Screen</button>
-                <button class="btn-purple" onclick="openGameSection('schedule')">Scores</button>
+                <button class="btn-purple" onclick="openGameSection('public')">Public View</button>
                 <button class="btn-ghost" onclick="playGameIntro(true)">Replay Intro</button>
                 <button class="btn-ghost" onclick="copyGamePlanLink()">Copy Link</button>
                 <button class="btn-ghost" onclick="exitGamePlanMode()">Exit</button>
               </div>
             </div>
 
-            <div class="ref-content">
-              <div class="tournament-control-center">
-                <div class="control-block live-control-block">
-                  <span class="control-eyebrow"><span class="pulse"></span> CURRENT MATCH</span>
-                  <div id="controlCurrentMatch" class="control-match-title">No live match yet</div>
-                  <div id="controlCurrentMeta" class="control-match-meta">Set a match to Live and it appears here.</div>
+            <div class="ref-content ref-content-v14">
+              <div class="ref-tabs ref-tabs-v14">
+                <button class="ref-tab active" data-game-section="live" onclick="openGameSection('live', this)">Live Control</button>
+                <button class="ref-tab" data-game-section="schedule" onclick="openGameSection('schedule', this)">Fixtures</button>
+                <button class="ref-tab" data-game-section="standings" onclick="openGameSection('standings', this)">Point Table</button>
+                <button class="ref-tab" data-game-section="teams" onclick="openGameSection('teams', this)">Teams</button>
+                <button class="ref-tab" data-game-section="public" onclick="openGameSection('public', this)">Big Screen View</button>
+              </div>
+
+              <div id="game-live" class="game-section active">
+                <div class="live-command-grid">
+                  <div id="liveControlPanel" class="live-control-card"></div>
+
+                  <aside class="live-side-stack">
+                    <div class="control-block next-match-panel">
+                      <span class="control-eyebrow">UP NEXT</span>
+                      <div id="controlNextMatch" class="control-match-title">Schedule loading</div>
+                      <div id="controlCountdown" class="control-countdown">--:--</div>
+                      <div id="liveNextQueue" class="next-queue-list"></div>
+                    </div>
+
+                    <div class="control-block mini-leaderboard-panel">
+                      <span class="control-eyebrow">LEADERBOARD</span>
+                      <div id="liveMiniStandings" class="mini-standings-list"></div>
+                    </div>
+                  </aside>
                 </div>
-                <div class="control-block next-control-block">
-                  <span class="control-eyebrow">NEXT</span>
-                  <div id="controlNextMatch" class="control-match-title">Schedule loading</div>
-                  <div id="controlCountdown" class="control-countdown">--:--</div>
-                </div>
-                <div class="control-block court-control-block">
-                  <span class="control-eyebrow">COURTS</span>
-                  <div id="controlCourtStatus" class="court-status-grid"></div>
+
+                <div class="live-bottom-grid">
+                  <div class="control-block match-queue-panel">
+                    <div class="section-flex-head">
+                      <div>
+                        <span class="control-eyebrow">MATCH QUEUE</span>
+                        <h2>Today’s fixtures</h2>
+                      </div>
+                      <button class="btn-ghost" onclick="openGameSection('schedule')">Manage Fixtures</button>
+                    </div>
+                    <div id="liveMatchQueue" class="match-queue-list"></div>
+                  </div>
+
+                  <div class="control-block court-control-block-simple">
+                    <span class="control-eyebrow">COURTS</span>
+                    <div id="controlCourtStatus" class="court-status-grid"></div>
+                  </div>
                 </div>
               </div>
 
-              <div class="ref-hero">
-                <div class="ref-live-card">
-                  <div class="hero-tag"><span class="pulse"></span> Live Game Plan</div>
-                  <h2>The Ultimate Room. <span>Control the game.</span></h2>
-                  <p>Create teams, schedule matches, update scores and keep the point table moving live from one referee-friendly screen.</p>
-                  <div class="game-mini-stat-grid">
-                    <div class="game-mini-stat"><p>Teams</p><h3 id="refTeamCount">0</h3></div>
-                    <div class="game-mini-stat"><p>Matches</p><h3 id="refMatchCount">0</h3></div>
-                    <div class="game-mini-stat"><p>Live</p><h3 id="refLiveCount">0</h3></div>
-                    <div class="game-mini-stat"><p>Done</p><h3 id="refDoneCount">0</h3></div>
-                  </div>
-                </div>
-
-                <div class="ref-scoreboard">
-                  <div class="card-head">
-                    <div>
-                      <h2>Current Live Match</h2>
-                      <p>Set a match to Live and it appears here.</p>
+              <div id="game-schedule" class="game-section">
+                <div class="fixtures-layout">
+                  <div class="card fixture-create-card">
+                    <div class="card-head">
+                      <div>
+                        <h2>Add Match</h2>
+                        <p>Create the fixture once. During the event, use Live Control for scores.</p>
+                      </div>
+                    </div>
+                    <div class="form-grid fixture-form-grid">
+                      <input id="matchLabel" placeholder="Match e.g. Match 01">
+                      <input id="matchTime" type="time">
+                      <select id="matchTeamA"></select>
+                      <select id="matchTeamB"></select>
+                      <input id="matchCourt" placeholder="Court / Ground">
+                      <select id="matchStatus">
+                        <option>Upcoming</option>
+                        <option>Live</option>
+                        <option>Completed</option>
+                      </select>
+                      <input id="matchScoreA" type="number" placeholder="Team A score">
+                      <input id="matchScoreB" type="number" placeholder="Team B score">
+                      <button class="span4" onclick="addTournamentMatch()">Add Match</button>
                     </div>
                   </div>
-                  <div id="refLiveMatchBoard" class="live-match-big"></div>
+
+                  <div class="card fixture-list-card">
+                    <div class="card-head">
+                      <div>
+                        <h2>Fixtures + Scores</h2>
+                        <p>Sorted by time. Set a match Live, edit score, or complete it.</p>
+                      </div>
+                    </div>
+                    <div id="tournamentMatchesList" class="match-timeline-list"></div>
+                  </div>
                 </div>
               </div>
 
-              <div class="ref-tabs">
-                <button class="ref-tab active" data-game-section="teams" onclick="openGameSection('teams', this)">Teams</button>
-                <button class="ref-tab" data-game-section="schedule" onclick="openGameSection('schedule', this)">Schedule + Scores</button>
-                <button class="ref-tab" data-game-section="standings" onclick="openGameSection('standings', this)">Point Table</button>
-                <button class="ref-tab" data-game-section="public" onclick="openGameSection('public', this)">View Board</button>
+              <div id="game-standings" class="game-section">
+                <div class="grid-2 standings-grid-v14">
+                  <div class="card">
+                    <div class="card-head">
+                      <div>
+                        <h2>Point Table</h2>
+                        <p>Auto-calculated from completed matches.</p>
+                      </div>
+                    </div>
+                    <div id="podiumBoard" class="podium-board"></div>
+                    <div class="table-wrap">
+                      <table class="standings-table">
+                        <thead><tr><th>Team</th><th>Played</th><th>Won</th><th>Lost</th><th>Draw</th><th>Points</th><th>Diff</th></tr></thead>
+                        <tbody id="tournamentStandingsMain"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-head">
+                      <div>
+                        <h2>Division Progress</h2>
+                        <p>See how much of each group is completed.</p>
+                      </div>
+                    </div>
+                    <div id="divisionProgressBoard" class="chart-list"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="game-teams" class="game-section">
+                <div class="card">
+                  <div class="card-head">
+                    <div>
+                      <h2>Teams</h2>
+                      <p>Use this before the event. Live Control is for game-day scoring.</p>
+                    </div>
+                    <div class="right-actions">
+                      <button onclick="seedFomoTeams(true)">Insert FOMO Teams</button>
+                      <button class="btn-ghost" onclick="addTournamentTeam()">+ Add Team</button>
+                    </div>
+                  </div>
+                  <div class="division-ref-grid" id="divisionRefGrid"></div>
+                  <div id="tournamentTeamsList" class="team-builder-grid"></div>
+                </div>
               </div>
 
               <div id="game-setup" class="game-section game-admin-setup hidden">
@@ -3772,82 +4033,6 @@
                     <textarea id="tournamentMessage" class="span4" placeholder="Public message / event note"></textarea>
                     <button class="span2" onclick="saveTournamentSettings()">Save Setup</button>
                     <button class="btn-ghost span2" onclick="createSixTeamSlots()">Create 6 Team Slots</button>
-                  </div>
-                </div>
-              </div>
-
-              <div id="game-teams" class="game-section active">
-                <div class="card">
-                  <div class="card-head">
-                    <div>
-                      <h2>Team Builder</h2>
-                      <p>Add names later. Captains, colors and players can be updated on the go.</p>
-                    </div>
-                    <div class="right-actions">
-                      <button onclick="seedFomoTeams(true)">Insert FOMO Teams</button>
-                      <button class="btn-ghost" onclick="addTournamentTeam()">+ Add Team</button>
-                    </div>
-                  </div>
-                  <div class="division-ref-grid" id="divisionRefGrid"></div>
-                  <div id="tournamentTeamsList" class="team-builder-grid"></div>
-                </div>
-              </div>
-
-              <div id="game-schedule" class="game-section">
-                <div class="card schedule-only-card">
-                  <div class="card-head">
-                    <div>
-                      <h2>Match Schedule</h2>
-                      <p>Create fixtures and update scores live.</p>
-                    </div>
-                  </div>
-
-                  <div class="form-grid">
-                    <input id="matchLabel" placeholder="Match e.g. Match 01">
-                    <input id="matchTime" type="time">
-                    <select id="matchTeamA"></select>
-                    <select id="matchTeamB"></select>
-                    <input id="matchCourt" placeholder="Court / Ground">
-                    <select id="matchStatus">
-                      <option>Upcoming</option>
-                      <option>Live</option>
-                      <option>Completed</option>
-                    </select>
-                    <input id="matchScoreA" type="number" placeholder="Team A score">
-                    <input id="matchScoreB" type="number" placeholder="Team B score">
-                    <button class="span4" onclick="addTournamentMatch()">Add Match</button>
-                  </div>
-
-                  <div style="height:16px"></div>
-                  <div id="tournamentMatchesList" class="match-timeline-list"></div>
-                </div>
-              </div>
-
-              <div id="game-standings" class="game-section">
-                <div class="grid-2">
-                  <div class="card">
-                    <div class="card-head">
-                      <div>
-                        <h2>Point Table</h2>
-                        <p>Auto-calculated from completed match scores.</p>
-                      </div>
-                    </div>
-                    <div id="podiumBoard" class="podium-board"></div>
-                    <div class="table-wrap">
-                      <table class="standings-table">
-                        <thead><tr><th>Team</th><th>Played</th><th>Won</th><th>Lost</th><th>Draw</th><th>Points</th><th>Diff</th></tr></thead>
-                        <tbody id="tournamentStandingsMain"></tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-head">
-                      <div>
-                        <h2>Division Progress</h2>
-                        <p>Updated as matches are completed.</p>
-                      </div>
-                    </div>
-                    <div id="divisionProgressBoard" class="chart-list"></div>
                   </div>
                 </div>
               </div>
@@ -3873,8 +4058,8 @@
               </div>
 
               <div id="game-public" class="game-section">
-                <div class="public-board public-board-v13">
-                  <div class="card public-live-card">
+                <div class="public-board public-board-v14">
+                  <div class="card public-live-card public-display-card">
                     <div class="card-head">
                       <div>
                         <h2 id="publicTournamentTitle">FOMO v2</h2>
@@ -3882,12 +4067,12 @@
                       </div>
                       <span class="live-badge"><span class="pulse"></span> Live</span>
                     </div>
-                    <div id="publicLiveBoard" class="live-match-big"></div>
+                    <div id="publicLiveBoard" class="live-match-big public-live-board-v14"></div>
                     <div id="publicTournamentMeta" class="list"></div>
                   </div>
 
-                  <div class="card">
-                    <div class="card-head"><div><h2>Live Leaderboard</h2><p>Updated as scores are entered.</p></div></div>
+                  <div class="card public-leaderboard-card">
+                    <div class="card-head"><div><h2>Leaderboard</h2><p>Updated as scores are entered.</p></div></div>
                     <div id="publicPodium" class="podium-board compact-podium"></div>
                     <div class="table-wrap">
                       <table class="standings-table">
@@ -5121,10 +5306,11 @@
       const match = tournamentMatches.find(m=>m.id===id);
       if(!match) return notify("Match not found.");
       const updates = { updatedAt: serverTimestamp() };
-      if(side === "A") updates.scoreA = Number(match.scoreA || 0) + amount;
-      if(side === "B") updates.scoreB = Number(match.scoreB || 0) + amount;
+      if(side === "A") updates.scoreA = Math.max(0, Number(match.scoreA || 0) + Number(amount || 0));
+      if(side === "B") updates.scoreB = Math.max(0, Number(match.scoreB || 0) + Number(amount || 0));
       await updateDoc(doc(db,"tournamentMatches",id), updates);
-      flashScore(`+${amount}`);
+      lastScoreAction = Number(amount || 0) > 0 ? { id, side, amount:Number(amount || 0) } : null;
+      flashScore(`${Number(amount || 0) > 0 ? "+" : ""}${amount}`);
     };
 
     window.saveTournamentMatch = async function(id){
@@ -5275,6 +5461,156 @@
       }
     }
 
+
+    let lastScoreAction = null;
+
+    function matchTeamNames(match){
+      return {
+        a: teamById(match?.teamAId).name || match?.teamAName || "Team A",
+        b: teamById(match?.teamBId).name || match?.teamBName || "Team B"
+      };
+    }
+
+    window.setMatchLive = async function(id){
+      if(!canManage()) return notify("Only Admin or Core Moderator can update matches.");
+      const matches = activeTournamentMatches();
+      const updates = matches
+        .filter(m=>m.status === "Live" && m.id !== id)
+        .map(m=>updateDoc(doc(db,"tournamentMatches",m.id), { status:"Upcoming", updatedAt:serverTimestamp() }));
+      updates.push(updateDoc(doc(db,"tournamentMatches",id), { status:"Live", updatedAt:serverTimestamp() }));
+      await Promise.all(updates);
+      notify("Match set to Live");
+    };
+
+    window.pauseLiveMatch = async function(id){
+      if(!canManage()) return notify("Only Admin or Core Moderator can update matches.");
+      await updateDoc(doc(db,"tournamentMatches",id), { status:"Upcoming", updatedAt:serverTimestamp() });
+      notify("Match moved back to Upcoming");
+    };
+
+    window.completeMatch = async function(id){
+      if(!canManage()) return notify("Only Admin or Core Moderator can update matches.");
+      await updateDoc(doc(db,"tournamentMatches",id), { status:"Completed", updatedAt:serverTimestamp() });
+      notify("Match completed");
+    };
+
+    window.startNextMatch = async function(){
+      const next = activeTournamentMatches().find(m=>m.status === "Upcoming");
+      if(!next) return notify("No upcoming match found.");
+      await setMatchLive(next.id);
+    };
+
+    window.undoLastScore = async function(){
+      if(!canManage()) return notify("Only Admin or Core Moderator can update scores.");
+      if(!lastScoreAction) return notify("No score action to undo yet.");
+      const {id, side, amount} = lastScoreAction;
+      const match = tournamentMatches.find(m=>m.id===id);
+      if(!match) return notify("Match not found.");
+      const updates = { updatedAt: serverTimestamp() };
+      if(side === "A") updates.scoreA = Math.max(0, Number(match.scoreA || 0) - Number(amount || 0));
+      if(side === "B") updates.scoreB = Math.max(0, Number(match.scoreB || 0) - Number(amount || 0));
+      await updateDoc(doc(db,"tournamentMatches",id), updates);
+      lastScoreAction = null;
+      flashScore("UNDO");
+    };
+
+    function renderLiveControl(match, matches, rows){
+      const panel = $("liveControlPanel");
+      if(!panel) return;
+      if(!match){
+        panel.innerHTML = `
+          <div class="live-empty-state">
+            <span class="live-label"><span class="pulse"></span> Ready</span>
+            <h2>No match selected yet.</h2>
+            <p>Add fixtures first, then press Start Next Match. Once a match is Live, this page becomes the main referee control screen.</p>
+            <div class="score-button-grid" style="grid-template-columns:1fr 1fr;">
+              <button onclick="openGameSection('schedule')">Create Fixtures</button>
+              <button class="btn-ghost" onclick="openGameSection('teams')">Check Teams</button>
+            </div>
+          </div>`;
+        return;
+      }
+      const names = matchTeamNames(match);
+      const status = match.status || "Upcoming";
+      const liveText = status === "Live" ? "LIVE NOW" : status === "Completed" ? "COMPLETED" : "READY TO START";
+      panel.innerHTML = `
+        <div>
+          <div class="live-status-row">
+            <span class="live-label"><span class="pulse"></span> ${clean(liveText)}</span>
+            <span class="live-meta-pill">${clean(match.label || "Match")} • ${formatMatchTime(match.time)} • ${clean(match.court || "Ground TBC")}</span>
+          </div>
+          <div class="live-match-title">${clean(names.a)} vs ${clean(names.b)}</div>
+        </div>
+        <div class="live-score-grid">
+          <div class="live-score-team" style="border-color:${clean(teamById(match.teamAId).color || '#c6f900')}">
+            <h3>${clean(names.a)}</h3>
+            <div class="live-score-number">${Number(match.scoreA||0)}</div>
+          </div>
+          <div class="live-vs">VS</div>
+          <div class="live-score-team" style="border-color:${clean(teamById(match.teamBId).color || '#27e8ff')}">
+            <h3>${clean(names.b)}</h3>
+            <div class="live-score-number">${Number(match.scoreB||0)}</div>
+          </div>
+        </div>
+        <div class="score-button-grid">
+          <button onclick="quickScore('${match.id}','A',1)">+1 ${clean(names.a)}</button>
+          <button class="score-minus" onclick="quickScore('${match.id}','A',-1)">-1 ${clean(names.a)}</button>
+          <button class="btn-ghost" onclick="undoLastScore()">Undo</button>
+          <button onclick="quickScore('${match.id}','B',1)">+1 ${clean(names.b)}</button>
+          <button class="score-minus" onclick="quickScore('${match.id}','B',-1)">-1 ${clean(names.b)}</button>
+          ${status === "Live" ? `<button class="btn-ghost" onclick="pauseLiveMatch('${match.id}')">Pause</button>` : `<button onclick="setMatchLive('${match.id}')">Set Live</button>`}
+          <button class="score-complete" onclick="completeMatch('${match.id}')">Complete Match</button>
+          <button class="btn-ghost" onclick="startNextMatch()">Start Next Match</button>
+          <button class="btn-ghost" onclick="openGameSection('schedule')">Fixtures</button>
+          <button class="btn-ghost" onclick="openGameSection('standings')">Point Table</button>
+        </div>`;
+    }
+
+    function renderLiveNextQueue(matches){
+      const target = $("liveNextQueue");
+      if(!target) return;
+      const currentLive = matches.find(m=>m.status === "Live");
+      const upcoming = matches.filter(m=>m.status !== "Completed" && m.id !== currentLive?.id).slice(0,3);
+      target.innerHTML = upcoming.length ? upcoming.map(m=>{
+        const n = matchTeamNames(m);
+        return `<div class="queue-row"><div class="queue-time">${formatMatchTime(m.time)}</div><div><h4>${clean(n.a)} vs ${clean(n.b)}</h4><p>${clean(m.label||"Match")} • ${clean(m.court||"Ground TBC")}</p></div><span class="pill status-${roleKey(m.status)}">${clean(m.status||"Upcoming")}</span></div>`;
+      }).join("") : `<div class="empty">No upcoming matches after this.</div>`;
+    }
+
+    function renderMiniStandings(rows){
+      const target = $("liveMiniStandings");
+      if(!target) return;
+      target.innerHTML = rows.length ? rows.slice(0,5).map((r,i)=>`
+        <div class="mini-standing-row">
+          <div class="mini-rank">${i+1}</div>
+          <div><h4>${clean(r.name)}</h4><p>${r.played} played • Diff ${r.diff}</p></div>
+          <div class="mini-points">${r.pts}</div>
+        </div>
+      `).join("") : `<div class="empty">Point table will appear once teams are added.</div>`;
+    }
+
+    function renderLiveMatchQueue(matches){
+      const target = $("liveMatchQueue");
+      if(!target) return;
+      target.innerHTML = matches.length ? matches.map(m=>{
+        const n = matchTeamNames(m);
+        const cls = m.status === "Live" ? "live-now" : m.status === "Completed" ? "completed" : "";
+        return `
+          <div class="match-queue-card ${cls}">
+            <div class="queue-time">${formatMatchTime(m.time)}</div>
+            <div>
+              <h4>${clean(n.a)} ${Number(m.scoreA||0)} — ${Number(m.scoreB||0)} ${clean(n.b)}</h4>
+              <p>${clean(m.label||"Match")} • ${clean(m.division||"Open")} • ${clean(m.court||"Ground TBC")} • Ref: ${clean(m.referee||"TBC")}</p>
+            </div>
+            <div class="match-queue-actions">
+              <span class="pill status-${roleKey(m.status)}">${clean(m.status||"Upcoming")}</span>
+              ${m.status !== "Live" && m.status !== "Completed" ? `<button class="mini-btn" onclick="setMatchLive('${m.id}')">Set Live</button>` : ""}
+              ${m.status !== "Completed" ? `<button class="mini-btn btn-yellow" onclick="completeMatch('${m.id}')">Complete</button>` : ""}
+            </div>
+          </div>`;
+      }).join("") : `<div class="empty">No fixtures yet. Go to Fixtures and add the match schedule.</div>`;
+    }
+
     function renderTournament(){
       if(!$("tournamentTeamsList")) return;
 
@@ -5293,6 +5629,7 @@
       if($("tournamentMessage")) $("tournamentMessage").value = tournamentSettings.message || selectedEvent?.description || "";
 
       if($("refTournamentTitle")) $("refTournamentTitle").textContent = `${tournamentSettings.title || selectedEvent?.title || "FOMO v2"} Game Plan`;
+      if($("refTournamentMetaLine")) $("refTournamentMetaLine").textContent = `${tournamentSettings.subtitle || "The Ultimate Room"} • ${tournamentSettings.venue || selectedEvent?.location || "Infinity Sports Arena"}`;
       if($("refTeamCount")) $("refTeamCount").textContent = teams.length;
       if($("refMatchCount")) $("refMatchCount").textContent = matches.length;
       if($("refLiveCount")) $("refLiveCount").textContent = matches.filter(m=>m.status==="Live").length;
@@ -5378,7 +5715,9 @@
               <div class="big-touch-actions">
                 <button class="mini-btn" onclick="quickScore('${m.id}','A',1)">+1 ${clean(aName)}</button>
                 <button class="mini-btn" onclick="quickScore('${m.id}','B',1)">+1 ${clean(bName)}</button>
-                <button class="mini-btn btn-yellow" onclick="saveTournamentMatch('${m.id}')">Save Score</button>
+                <button class="mini-btn btn-ghost" onclick="setMatchLive('${m.id}')">Set Live</button>
+                <button class="mini-btn btn-green" onclick="completeMatch('${m.id}')">Complete</button>
+                <button class="mini-btn btn-yellow" onclick="saveTournamentMatch('${m.id}')">Save</button>
                 <button class="mini-btn btn-danger" onclick="deleteTournamentMatch('${m.id}')">Delete</button>
               </div>
             </div>
@@ -5401,6 +5740,10 @@
       renderPodium(rows, "publicPodium");
       renderDivisionProgress(matches);
       renderControlCenter(matches, rows, tournamentSettings, selectedEvent);
+      renderLiveControl(liveOrNext, matches, rows);
+      renderLiveNextQueue(matches);
+      renderMiniStandings(rows);
+      renderLiveMatchQueue(matches);
       renderLiveBoard(liveOrNext, "refLiveMatchBoard");
       renderLiveBoard(liveOrNext, "publicLiveBoard");
 
@@ -5639,7 +5982,7 @@
       if(eventId) selectedEventId = eventId;
       document.body.classList.add("game-mode");
       openPage("gameplan", null);
-      openGameSection("teams");
+      openGameSection("live");
       initFrisbeeEngine();
       renderTournament();
       setTimeout(()=>ensureFomoTeamsSeeded(), 250);
