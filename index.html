@@ -3782,6 +3782,38 @@
     @media(max-width:1100px){body.game-mode #tournamentTeamsList.team-builder-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}body.game-mode .fomo-team-filters{grid-template-columns:1fr;}body.game-mode .fomo-team-toolbar{flex-direction:column;}body.game-mode .fomo-roster-summary{grid-template-columns:1fr;}}
     @media(max-width:720px){body.game-mode #tournamentTeamsList.team-builder-grid{grid-template-columns:1fr!important;}body.game-mode .game-mode-switch{overflow:auto;}.ref-brand h1{font-size:18px!important;}}
 
+  
+    /* FOMO final UX pass: softer colours, dashboard charts, popups */
+    :root{--fomo-lime-soft:#b9ff66;--fomo-cyan-soft:#5ee7f5;--fomo-card:#111925;--fomo-card-2:#0d141f;--fomo-border:rgba(255,255,255,.10)}
+    body.game-mode{background:radial-gradient(circle at top left,rgba(94,231,245,.10),transparent 28%),linear-gradient(135deg,#050910 0%,#07111b 45%,#0a1110 100%)!important;}
+    body.game-mode .ref-shell{background:rgba(5,9,16,.78)!important;border-color:rgba(185,255,102,.18)!important;}
+    body.game-mode .card, body.game-mode .control-block, body.game-mode .fomo-team-manager, body.game-mode .schedule-only-card{background:linear-gradient(180deg,rgba(16,25,37,.94),rgba(9,15,24,.98))!important;border-color:var(--fomo-border)!important;box-shadow:0 22px 55px rgba(0,0,0,.28)!important;}
+    body.game-mode button:not(.btn-danger), body.game-mode .mini-btn:not(.btn-danger){box-shadow:none!important;}
+    body.game-mode .game-mode-switch button, body.game-mode .btn-green, body.game-mode button:not(.btn-ghost):not(.btn-danger):not(.btn-purple):not(.btn-yellow){background:linear-gradient(135deg,var(--fomo-lime-soft),var(--fomo-cyan-soft))!important;color:#071018!important;}
+    body.game-mode input, body.game-mode select, body.game-mode textarea{background:#09111b!important;border:1px solid rgba(255,255,255,.12)!important;color:#f6f9ff!important;border-radius:16px!important;}
+    body.game-mode .fixture-form{display:none!important;}
+    body.game-mode .fixture-form.open{display:grid!important;animation:modalIn .22s ease both;}
+    body.game-mode #tournamentTeamsList.team-builder-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+    body.game-mode #tournamentTeamsList .team-card{padding:20px!important;background:linear-gradient(180deg,rgba(15,23,35,.96),rgba(9,15,24,.98))!important;border:1px solid rgba(255,255,255,.10)!important;border-top:5px solid var(--team-color,#b9ff66)!important;}
+    body.game-mode #tournamentTeamsList .team-card h4{font-size:28px!important;margin-bottom:4px!important;}
+    body.game-mode #tournamentTeamsList .team-card .player-chips{margin:14px 0!important;}
+    body.game-mode #tournamentTeamsList .team-card input, body.game-mode #tournamentTeamsList .team-card textarea{display:none!important;}
+    .yc-modal.hidden{display:none!important;}
+    .yc-modal{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:20px;}
+    .yc-modal-backdrop{position:absolute;inset:0;background:rgba(2,6,12,.76);backdrop-filter:blur(14px);}
+    .yc-modal-card{position:relative;width:min(760px,calc(100vw - 30px));max-height:90vh;overflow:auto;background:linear-gradient(180deg,rgba(17,26,39,.98),rgba(8,14,23,.99));border:1px solid rgba(185,255,102,.2);border-radius:30px;box-shadow:0 35px 90px rgba(0,0,0,.55);padding:24px;}
+    .yc-modal-head,.yc-modal-actions{display:flex;align-items:center;justify-content:space-between;gap:14px;}
+    .yc-modal-head h2{margin:6px 0 0;font-size:34px;}
+    .yc-modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0;}
+    .yc-modal-grid .span2{grid-column:1/-1;}
+    .yc-modal textarea{min-height:150px;resize:vertical;}
+    .dashboard-chart-grid{display:grid;gap:14px;}
+    .chart-stat-row{display:grid;grid-template-columns:130px 1fr 54px;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.07);}
+    .chart-stat-row:last-child{border-bottom:0}.chart-stat-row b{font-size:14px}.chart-stat-row span{color:#aeb8c9;font-size:12px;font-weight:700}.mini-bar{height:12px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}.mini-bar i{display:block;height:100%;width:var(--w);border-radius:inherit;background:linear-gradient(90deg,#b9ff66,#5ee7f5)}
+    .dash-actions-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.dash-action-card{padding:16px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}.dash-action-card h4{margin:0 0 6px}.dash-action-card p{margin:0 0 12px;color:#aeb8c9;font-size:13px;line-height:1.5}
+    @keyframes modalIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+    @media(max-width:980px){body.game-mode #tournamentTeamsList.team-builder-grid{grid-template-columns:1fr!important}.yc-modal-grid,.dash-actions-grid{grid-template-columns:1fr}}
+
   </style>
 </head>
 
@@ -3967,14 +3999,14 @@
           </div>
 
           <div class="grid-2">
-            <div class="card"><div class="card-head"><div><h2>Care Alerts</h2><p>People who need a call, message or leader follow-up.</p></div></div><div id="followupAlerts" class="list"></div></div>
-            <div class="card"><div class="card-head"><div><h2>Team Pulse</h2><p>People classified by teams and ministries.</p></div></div><div id="teamPulse" class="list"></div></div>
+            <div class="card"><div class="card-head"><div><h2>Attendance Analytics</h2><p>Quick view of attendance movement and newcomer flow.</p></div></div><div id="followupAlerts" class="list"></div></div>
+            <div class="card"><div class="card-head"><div><h2>Team Breakdown</h2><p>Member distribution across ministries and youth groups.</p></div></div><div id="teamPulse" class="list"></div></div>
           </div>
 
           <div style="height:16px"></div>
 
           <div class="grid-2">
-            <div class="card"><div class="card-head"><div><h2>Latest Tasks</h2><p>Fresh responsibilities from the team.</p></div></div><div id="latestTasks" class="list"></div></div>
+            <div class="card"><div class="card-head"><div><h2>Action Center</h2><p>Open tasks and event shortcuts for the team.</p></div></div><div id="latestTasks" class="list"></div></div>
             <div class="card"><div class="card-head"><div><h2>Notifications</h2><p>Task alerts and system updates.</p></div></div><div id="notificationList" class="list"></div></div>
           </div>
         </section>
@@ -4339,6 +4371,7 @@
                       <select id="fixtureDivisionFilter" class="game-filter-select" onchange="setFixtureDivisionFilter(this.value)">
                         <option value="">All Divisions</option>
                       </select>
+                      <button class="mini-btn btn-green" onclick="toggleFixtureForm()">+ Add Game</button>
                     </div>
                   </div>
 
@@ -4348,7 +4381,7 @@
                     <button class="btn-ghost mini-btn" onclick="setFixtureDivisionFilter('')">Clear Filter</button>
                   </div>
 
-                  <div class="form-grid fixture-form">
+                  <div class="form-grid fixture-form" id="fixtureFormPanel">
                     <input id="matchLabel" placeholder="Match e.g. Match 01">
                     <input id="matchTime" type="time">
                     <select id="matchTeamA"></select>
@@ -4571,6 +4604,25 @@
 
   <div id="toast" class="toast"></div>
 
+
+  <div id="teamEditModal" class="yc-modal hidden" role="dialog" aria-modal="true">
+    <div class="yc-modal-backdrop" onclick="closeTournamentTeamModal()"></div>
+    <div class="yc-modal-card">
+      <div class="yc-modal-head">
+        <div>
+          <span class="control-eyebrow">EDIT TEAM</span>
+          <h2 id="teamModalTitle">Team</h2>
+        </div>
+        <button class="mini-btn btn-ghost" onclick="closeTournamentTeamModal()">Close</button>
+      </div>
+      <div id="teamModalBody"></div>
+      <div class="yc-modal-actions">
+        <button class="mini-btn btn-green" onclick="saveTournamentTeamModal()">Save Team</button>
+        <button class="mini-btn btn-ghost" onclick="closeTournamentTeamModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
@@ -4614,6 +4666,51 @@
     const clean = v => String(v ?? "").replace(/[<>&'"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;',"'":'&#39;','"':'&quot;'}[c]));
     const todayISO = () => new Date().toISOString().slice(0,10);
     const roleKey = s => String(s||"").replace(/\s|\-/g,"");
+
+
+    const GOOGLE_SHEET_SYNC_URL = "https://script.google.com/macros/s/AKfycby3jUrgFnV97vU_Z_EUv1MmvNRbFjWuckByvsdOPPMpjRYOQZ7iBAyMW3fLrce29rc/exec";
+
+    function toSheetDate(value){
+      return value ? String(value) : "";
+    }
+
+    function memberToSheetRow(member){
+      return {
+        "id": member.id || "",
+        "Name (Name & Surname)": member.name || "",
+        "DOB": toSheetDate(member.dob),
+        "Age": member.age || "",
+        "Cell Leader": member.cellLeader || "",
+        "Gender": member.gender || "",
+        "Location (Town/ City)": member.location || "",
+        "Divisional Secretariats": member.divisionalSecretariat || "",
+        "Address": member.address || "",
+        "Contact Numb": member.contactNumber || "",
+        "Ministry": member.ministry || "",
+        "Team": member.team || ""
+      };
+    }
+
+    async function syncMemberToGoogleSheet(member, source="website"){
+      if(!GOOGLE_SHEET_SYNC_URL || !member?.id) return;
+      const payload = {
+        ...memberToSheetRow(member),
+        _source: source,
+        _updatedAt: new Date().toISOString(),
+        _updatedBy: currentProfile?.name || currentUser?.email || "Youth Central"
+      };
+      try{
+        await fetch(GOOGLE_SHEET_SYNC_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+      }catch(error){
+        console.warn("Google Sheet sync failed", error);
+        notify("Saved in Youth Central. Sheet sync will need checking.");
+      }
+    }
 
     function initials(value){
       const text = String(value || "YC").trim();
@@ -4976,10 +5073,12 @@
       if(!data.name) return notify("Name is required");
       if(editingMemberId){
         await updateDoc(doc(db,"youthMembers",editingMemberId), data);
+        await syncMemberToGoogleSheet({ id: editingMemberId, ...data }, "member-update");
         notify("Person updated");
       }else{
         data.createdAt = serverTimestamp();
-        await addDoc(collection(db,"youthMembers"), data);
+        const ref = await addDoc(collection(db,"youthMembers"), data);
+        await syncMemberToGoogleSheet({ id: ref.id, ...data }, "member-add");
         notify("Person added");
       }
       closeMemberModal();
@@ -5017,6 +5116,7 @@
         updatedAt:serverTimestamp()
       };
       const ref = await addDoc(collection(db,"youthMembers"), data);
+      await syncMemberToGoogleSheet({ id: ref.id, ...data }, "newcomer-add");
       await addDoc(collection(db,"followUps"),{
         memberId:ref.id,
         memberName:name,
@@ -5751,6 +5851,49 @@
       }
     };
 
+    let editingTournamentTeamId = "";
+
+    window.toggleFixtureForm = function(force){
+      const panel = $("fixtureFormPanel");
+      if(!panel) return;
+      const open = force === true || (force !== false && !panel.classList.contains("open"));
+      panel.classList.toggle("open", open);
+      if(open) panel.scrollIntoView({behavior:"smooth", block:"nearest"});
+    };
+
+    window.openTournamentTeamModal = function(id){
+      const t = activeTournamentTeams().find(team=>team.id===id) || tournamentTeams.find(team=>team.id===id);
+      if(!t) return notify("Team not found. Click Update Final Teams first.");
+      editingTournamentTeamId = id;
+      const body = $("teamModalBody");
+      if($("teamModalTitle")) $("teamModalTitle").textContent = t.name || "Team";
+      body.innerHTML = `
+        <div class="yc-modal-grid">
+          <input id="team-name-${id}" value="${clean(t.name||"")}" placeholder="Team name">
+          <input id="team-captain-${id}" value="${clean(t.captain||"")}" placeholder="Captain">
+          <input id="team-division-${id}" value="${clean(t.division||"")}" placeholder="Division">
+          <input id="team-referee-${id}" value="${clean(t.referee||"")}" placeholder="Referee">
+          <input id="team-color-${id}" type="color" value="${clean(t.color||"#b9ff66")}">
+          <input id="team-notes-${id}" value="${clean(t.notes||"")}" placeholder="Notes">
+          <textarea class="span2" id="players-${id}" placeholder="Players - one name per line">${clean((t.players||[]).join("\n"))}</textarea>
+        </div>
+      `;
+      $("teamEditModal").classList.remove("hidden");
+    };
+
+    window.closeTournamentTeamModal = function(){
+      editingTournamentTeamId = "";
+      const modal = $("teamEditModal");
+      if(modal) modal.classList.add("hidden");
+    };
+
+    window.saveTournamentTeamModal = async function(){
+      if(!editingTournamentTeamId) return;
+      await saveTournamentTeamById(editingTournamentTeamId, false);
+      closeTournamentTeamModal();
+      renderTournament();
+    };
+
     window.addTournamentMatch = async function(){
       if(!canManage()) return notify("Only Admin or Core Moderator can add matches.");
       const teamA = $("matchTeamA").value;
@@ -6138,28 +6281,15 @@
       if($("tournamentTeamsList")) {
         lastVisibleTournamentTeamIds = visibleTeams.map(t=>t.id);
         $("tournamentTeamsList").innerHTML = teams.length ? (visibleTeams.length ? visibleTeams.map(t=>{
-          const playersText = (t.players || []).join("\n");
-          const chips = (t.players || []).slice(0,12).map(p=>`<span class="player-chip">${clean(p)}</span>`).join("");
+          const chips = (t.players || []).map(p=>`<span class="player-chip">${clean(p)}</span>`).join("");
           return `
-            <div class="team-card" style="--team-color:${clean(t.color||"#c6f900")}">
-              <div class="team-color-strip"></div>
+            <div class="team-card team-summary-card" style="--team-color:${clean(t.color||"#b9ff66")}">
               <h4>${clean(t.name||"Unnamed Team")}</h4>
-              <div class="team-assignment"><span class="pill">${clean(t.division||"Division TBC")}</span><span class="pill">Ref: ${clean(t.referee||"TBC")}</span></div>
-              <div class="team-meta">
-                <input id="team-name-${t.id}" value="${clean(t.name||"")}" placeholder="Team name">
-                <div class="color-picker-row">
-                  <input id="team-captain-${t.id}" value="${clean(t.captain||"")}" placeholder="Captain">
-                  <input id="team-color-${t.id}" type="color" value="${clean(t.color||"#c6f900")}">
-                </div>
-                <input id="team-division-${t.id}" value="${clean(t.division||"")}" placeholder="Division e.g. Division 1">
-                <input id="team-referee-${t.id}" value="${clean(t.referee||"")}" placeholder="Referee">
-              </div>
-              <textarea id="players-${t.id}" placeholder="Players - one name per line">${clean(playersText)}</textarea>
-              <input id="team-notes-${t.id}" value="${clean(t.notes||"")}" placeholder="Team notes">
-              <div class="player-chips">${chips}</div>
+              <p class="team-summary-meta">Captain: ${clean(t.captain||"TBC")} • ${clean(t.division||"Division TBC")} • Ref: ${clean(t.referee||"TBC")}</p>
+              <div class="player-chips">${chips || `<span class="player-chip">Players coming soon</span>`}</div>
               <div class="team-card-actions">
                 <div class="team-save-group">
-                  <button class="mini-btn" onclick="saveTournamentTeam('${t.id}')">Save Team</button>
+                  <button class="mini-btn" onclick="openTournamentTeamModal('${t.id}')">Edit Team</button>
                   <button class="mini-btn btn-ghost" onclick="openGameSection('fixtures')">Fixtures</button>
                 </div>
                 <div class="team-delete-group">
@@ -6168,7 +6298,7 @@
               </div>
             </div>
           `;
-        }).join("") : `<div class="empty">No teams match this division/search filter. Clear filters to see all teams.</div>`) : `<div class="empty">No teams yet. Click Insert FOMO Teams.</div>`;
+        }).join("") : `<div class="empty">No teams match this division/search filter. Clear filters to see all teams.</div>`) : `<div class="empty">No teams yet. Click Update Final Teams.</div>`;
       }
 
       if($("tournamentMatchesList")) $("tournamentMatchesList").innerHTML = visibleFixtureMatches.length ? visibleFixtureMatches.map(m=>{
@@ -6372,16 +6502,45 @@
     }
 
     function renderDashboard(){
-      const thisMonth=new Date().toISOString().slice(0,7);
-      const attendedUnique=new Set(attendance.filter(a=>String(a.date||"").startsWith(thisMonth)&&["Present","Late","Newcomer"].includes(a.status)).map(a=>a.memberId)).size;
-      $("totalYouth").textContent=youthMembers.length;$("newcomersCount").textContent=youthMembers.filter(m=>m.memberType==="Newcomer").length;$("attendedMonth").textContent=attendedUnique;$("missingCount").textContent=youthMembers.filter(isMissing).length;$("openTaskCount").textContent=tasks.filter(t=>t.status!=="completed").length;
+      const thisMonth = new Date().toISOString().slice(0,7);
+      const presentMonth = attendance.filter(a=>String(a.date||"").startsWith(thisMonth)&&["Present","Late","Newcomer"].includes(a.status));
+      const attendedUnique = new Set(presentMonth.map(a=>a.memberId)).size;
+      const newcomers = youthMembers.filter(m=>m.memberType==="Newcomer").length;
+      const missing = youthMembers.filter(isMissing).length;
+      const openTasks = tasks.filter(t=>t.status!=="completed").length;
+      $("totalYouth").textContent = youthMembers.length;
+      $("newcomersCount").textContent = newcomers;
+      $("attendedMonth").textContent = attendedUnique;
+      $("missingCount").textContent = missing;
+      $("openTaskCount").textContent = openTasks;
 
-      const needFollow=youthMembers.filter(m=>m.followUpStatus==="Pending"||m.status==="Needs Follow-up"||isMissing(m)).slice(0,8);
-      $("followupAlerts").innerHTML=needFollow.length?needFollow.map(m=>`<div class="list-item"><div><h4>${clean(m.name)}</h4><p>${clean(m.contactNumber||"No phone")} • ${clean(m.cellLeader||"No leader")} • Last: ${clean(m.lastAttendedDate||"Never")}</p></div><button class="mini-btn" onclick="createFollowUp('${m.id}')">Add Follow-up</button></div>`).join(""):`<div class="empty">No care alerts right now.</div>`;
+      const maxBase = Math.max(1, youthMembers.length, attendance.length, tasks.length);
+      const attendanceRows = [
+        ["This Month", attendedUnique, Math.round(attendedUnique / Math.max(1,youthMembers.length) * 100)],
+        ["Newcomers", newcomers, Math.round(newcomers / Math.max(1,youthMembers.length) * 100)],
+        ["Care Needed", missing, Math.round(missing / Math.max(1,youthMembers.length) * 100)],
+        ["Open Tasks", openTasks, Math.round(openTasks / Math.max(1,tasks.length || openTasks || 1) * 100)]
+      ];
+      $("followupAlerts").innerHTML = `<div class="dashboard-chart-grid">${attendanceRows.map(([label,value,pct])=>`
+        <div class="chart-stat-row"><b>${clean(label)}</b><div class="mini-bar"><i style="--w:${Math.min(100,Math.max(4,pct))}%"></i></div><span>${value}</span></div>
+      `).join("")}</div>`;
 
-      const teamCounts={};youthMembers.forEach(m=>{const k=m.team||m.ministry||"No Team";teamCounts[k]=(teamCounts[k]||0)+1});
-      $("teamPulse").innerHTML=Object.entries(teamCounts).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([name,count])=>`<div class="list-item"><div><h4>${clean(name)}</h4><p>${count} people classified</p></div></div>`).join("")||`<div class="empty">No team classification yet.</div>`;
-      $("latestTasks").innerHTML=tasks.slice(0,6).map(t=>`<div class="list-item"><div><h4>${clean(t.title)}</h4><p>${clean(t.team||"General")} • ${clean(t.owner||"Unassigned")} • ${clean(t.priority||"Normal")}</p></div><span class="pill status-${roleKey(t.priority)}">${clean(t.status||"todo")}</span></div>`).join("")||`<div class="empty">No tasks yet.</div>`;
+      const teamCounts = {};
+      youthMembers.forEach(m=>{ const k=m.team||m.ministry||"No Team"; teamCounts[k]=(teamCounts[k]||0)+1; });
+      const teamEntries = Object.entries(teamCounts).sort((a,b)=>b[1]-a[1]).slice(0,8);
+      const maxTeam = Math.max(1, ...teamEntries.map(x=>x[1]));
+      $("teamPulse").innerHTML = teamEntries.length ? `<div class="dashboard-chart-grid">${teamEntries.map(([name,count])=>`
+        <div class="chart-stat-row"><b>${clean(name)}</b><div class="mini-bar"><i style="--w:${Math.max(6,Math.round(count/maxTeam*100))}%"></i></div><span>${count}</span></div>
+      `).join("")}</div>` : `<div class="empty">Team analytics will appear once people are classified.</div>`;
+
+      const fomoEvent = events.find(e=>/fomo|frisbee|ultimate/i.test(String(e.title||""))) || events[0];
+      $("latestTasks").innerHTML = `
+        <div class="dash-actions-grid">
+          <div class="dash-action-card"><h4>FOMO Game Plan</h4><p>Open the live referee control center.</p><button class="mini-btn btn-green" onclick="openGamePlanFromEvent()">Open Game Plan</button></div>
+          <div class="dash-action-card"><h4>Public Live Link</h4><p>Share the read-only tournament page.</p><button class="mini-btn btn-ghost" onclick="openPublicGamePlan()">Open Public Page</button></div>
+          <div class="dash-action-card"><h4>Attendance</h4><p>Mark attendance for Sundays and events.</p><button class="mini-btn btn-purple" onclick="openPageByName('attendance')">Mark Attendance</button></div>
+          <div class="dash-action-card"><h4>Tasks</h4><p>${openTasks} tasks currently open.</p><button class="mini-btn btn-ghost" onclick="openPageByName('tasks')">Open Tasks</button></div>
+        </div>`;
     }
 
     window.renderYouthTable=function(){
