@@ -1,18 +1,15 @@
-Youth Central CRM V3
+Youth Central Updated Package
 
-Files:
-- index.html: upload/replace in your GitHub Pages repo root
-- firebase-import-data.json: import through the Youth Database page after login
-- firestore-rules.txt: paste into Firebase Firestore Rules
-- README.txt
+Files included:
+- index.html       Main Youth Central website with updated FOMO game plan and finalized teams.
+- fomo-live.html   Separate public live page.
+- assets/          Images used by the public page.
 
-Setup:
-1. Firebase Console → Authentication → Sign-in method → Enable Email/Password.
-2. Open the live site and create your first account.
-3. Firebase Console → Firestore Database → Rules → paste firestore-rules.txt → Publish.
-4. Open Youth Database → choose firebase-import-data.json → Import JSON.
+Updates made:
+- Removed Public View / Big Screen section from the internal Game Plan page.
+- Kept separate public live page as fomo-live.html.
+- Updated default FOMO team rosters to the finalized team list.
+- Kept Public Live Page / Copy Public Link buttons available from the event details section.
 
-Imported from Excel:
-- Youth Members: 97
-- Cell Leaders: 31
-- Cell Groups: 6
+Upload:
+Replace the current files in your GitHub repo with these, then push.

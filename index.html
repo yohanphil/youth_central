@@ -4223,7 +4223,6 @@
               </div>
               <div class="ref-actions ref-actions-v14">
                 <button onclick="requestFullscreenGame()">Full Screen</button>
-                <button class="btn-purple" onclick="openGameSection('public')">Public View</button>
                 <button class="btn-ghost" onclick="playGameIntro(true)">Intro</button>
                 <button class="btn-ghost" onclick="exitGamePlanMode()">Exit</button>
               </div>
@@ -4235,7 +4234,6 @@
                 <button class="ref-tab" data-game-section="fixtures" onclick="openGameSection('fixtures', this)">Fixtures</button>
                 <button class="ref-tab" data-game-section="standings" onclick="openGameSection('standings', this)">Point Table</button>
                 <button class="ref-tab" data-game-section="teams" onclick="openGameSection('teams', this)">Teams</button>
-                <button class="ref-tab" data-game-section="public" onclick="openGameSection('public', this)">Big Screen</button>
               </div>
 
               <div id="game-control" class="game-section active">
@@ -4403,42 +4401,7 @@
                 </div>
               </div>
 
-              <div id="game-public" class="game-section">
-                <div class="public-board public-board-v14">
-                  <div class="card public-live-card">
-                    <div class="card-head">
-                      <div>
-                        <h2 id="publicTournamentTitle">FOMO 2.0</h2>
-                        <p id="publicTournamentSubtitle">The Ultimate Room</p>
-                      </div>
-                      <span class="live-badge"><span class="pulse"></span> Live</span>
-                    </div>
-                    <div id="publicLiveBoard" class="live-match-big"></div>
-                    <div id="publicTournamentMeta" class="list"></div>
-                  </div>
 
-                  <div class="card">
-                    <div class="card-head"><div><h2>Live Leaderboard</h2><p>Updated as scores are entered.</p></div></div>
-                    <div id="publicPodium" class="podium-board compact-podium"></div>
-                    <div class="table-wrap">
-                      <table class="standings-table">
-                        <thead><tr><th>Team</th><th>P</th><th>W</th><th>Pts</th><th>Diff</th></tr></thead>
-                        <tbody id="publicStandings"></tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div class="card">
-                    <div class="card-head"><div><h2>Teams</h2><p>Colors, captains and players.</p></div></div>
-                    <div id="publicTeams" class="list"></div>
-                  </div>
-
-                  <div class="card">
-                    <div class="card-head"><div><h2>Matches</h2><p>Schedule and scores.</p></div></div>
-                    <div id="publicMatches" class="match-timeline-list"></div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </section>
@@ -5550,11 +5513,11 @@
 
     const FOMO_DEFAULT_TEAMS = [
       {slot:1,name:"Dishan",captain:"Dishan",division:"Division 1",referee:"Shapthi",color:"#c6f900",players:["Lakeesha","Deanna","Andy","Shaven","Navindu","Joshua"]},
-      {slot:2,name:"Mishael",captain:"Mishael",division:"Division 1",referee:"Shapthi",color:"#27e8ff",players:["Nishmi","Ashcharya","Anuk W","Dilhaan","Lukesh","Dwane"]},
-      {slot:3,name:"Bhagya",captain:"Bhagya",division:"Division 1",referee:"Shapthi",color:"#9b6cff",players:["Abigail","Leon","Yohan","Sithanga","Anuk Het","Dilhan C"]},
-      {slot:4,name:"Ciara",captain:"Ciara",division:"Division 2",referee:"Yohan",color:"#ff5edb",players:["Tayara","Shem","Mario Silva","Yashen","Dulain","Shapthi"]},
-      {slot:5,name:"Samuel",captain:"Samuel",division:"Division 2",referee:"Yohan",color:"#f6b445",players:["Bianca","Onesh","Nuran","Kevin","Sahas","Shanara"]},
-      {slot:6,name:"Oshara",captain:"Oshara",division:"Division 2",referee:"Yohan",color:"#f5f0e6",players:["Dyleena","Shannal","Dan","Migara","Vinuja"]}
+      {slot:2,name:"Mishael",captain:"Mishael",division:"Division 1",referee:"Shapthi",color:"#27e8ff",players:["Nishmi","Ashcharya","Anuk W","Dilhan C","Sithanga","Dwane"]},
+      {slot:3,name:"Bhagya",captain:"Bhagya",division:"Division 1",referee:"Shapthi",color:"#9b6cff",players:["Abigail","Leon","Yohan","Lukesh","Anuk Het","Dilhan"]},
+      {slot:4,name:"Ciara",captain:"Ciara",division:"Division 2",referee:"Yohan",color:"#ff5edb",players:["Tayara","Shem","Mario silva","Yashen","Dulain","Shapthi"]},
+      {slot:5,name:"Samuel",captain:"Samuel",division:"Division 2",referee:"Yohan",color:"#f6b445",players:["Bianca","Onesh","Nuran","Andrew","Sahas"]},
+      {slot:6,name:"Oshara",captain:"Oshara",division:"Division 2",referee:"Yohan",color:"#f5f0e6",players:["Dyleena","Shannal","Dan","Migara","Vinuja","Vishal"]}
     ];
 
     function activeTournamentId(){
