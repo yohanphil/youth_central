@@ -1,15 +1,23 @@
-Youth Central Updated Package
+FOMO 2.0 Website Rework
 
-Files included:
-- index.html       Main Youth Central website with updated FOMO game plan and finalized teams.
-- fomo-live.html   Separate public live page.
-- assets/          Images used by the public page.
-
-Updates made:
-- Removed Public View / Big Screen section from the internal Game Plan page.
-- Kept separate public live page as fomo-live.html.
-- Updated default FOMO team rosters to the finalized team list.
-- Kept Public Live Page / Copy Public Link buttons available from the event details section.
+Files:
+- index.html: updated internal Youth Central / Game Plan page
+- fomo-live.html: updated separate public live page
+- assets/: logo and images used by fomo-live.html
+- FIREBASE_PUBLIC_READ_RULES.txt: only needed if the public page still cannot read Firebase data
 
 Upload:
-Replace the current files in your GitHub repo with these, then push.
+1. Replace your current index.html with this index.html.
+2. Add/replace fomo-live.html in the root of the same GitHub Pages repo.
+3. Upload the assets folder exactly as provided.
+4. Push to GitHub.
+
+Public link format:
+https://YOUR-USERNAME.github.io/YOUR-REPO/fomo-live.html
+or
+https://YOUR-USERNAME.github.io/YOUR-REPO/fomo-live.html?event=YOUR_EVENT_ID
+
+Important:
+- Public page is read-only.
+- Internal Game Plan is the only place where scores/teams/fixtures are edited.
+- Use the "Update Final Teams" button in the Game Plan Teams tab to overwrite saved teams with the finalized roster.

@@ -9,559 +9,77 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#03050a;
-      --ink:#f7fbff;
-      --muted:#a4b0c3;
-      --dim:#6f7d91;
-      --lime:#c7ff19;
-      --cyan:#42e5ff;
-      --mint:#7effdf;
-      --purple:#b18cff;
-      --pink:#ff65c8;
-      --card:rgba(7,13,23,.76);
-      --card2:rgba(10,18,30,.92);
-      --line:rgba(255,255,255,.09);
-      --glow:0 0 44px rgba(199,255,25,.22);
-      --shadow:0 28px 90px rgba(0,0,0,.42);
-      --radius:30px;
-      --max:1320px;
+      --bg:#03060a;--panel:#09111b;--panel2:#0d1722;--line:rgba(255,255,255,.09);--text:#f4f8ff;--muted:#9aa8bc;--lime:#bfff45;--cyan:#45d9ff;--soft-lime:#d6ff7a;--danger:#ff5572;--shadow:0 28px 80px rgba(0,0,0,.45);--r:28px;--max:1240px;
     }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:"Inter",system-ui,-apple-system,sans-serif;
-      color:var(--ink);
-      background:
-        radial-gradient(circle at 8% -8%, rgba(66,229,255,.18), transparent 26%),
-        radial-gradient(circle at 92% 0%, rgba(199,255,25,.16), transparent 22%),
-        radial-gradient(circle at 50% 35%, rgba(177,140,255,.08), transparent 35%),
-        linear-gradient(180deg,#020409 0%,#07111e 44%,#03050a 100%);
-      min-height:100vh;
-      overflow-x:hidden;
-    }
-    body:before{
-      content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
-      background:
-        linear-gradient(90deg, rgba(199,255,25,.034) 1px, transparent 1px),
-        linear-gradient(180deg, rgba(66,229,255,.024) 1px, transparent 1px);
-      background-size:56px 56px;
-      opacity:.5;
-      mask-image:linear-gradient(to bottom, #000 0%, rgba(0,0,0,.55) 45%, transparent 100%);
-    }
-    a{text-decoration:none;color:inherit}
-    img{display:block;max-width:100%}
-    button{font-family:inherit}
-    .wrap{width:min(var(--max), calc(100% - 28px));margin-inline:auto}
-    .topbar{position:sticky;top:0;z-index:50;background:rgba(3,6,12,.72);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06)}
-    .topbar-inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
-    .brand{display:flex;align-items:center;gap:13px;min-width:0}
-    .logo{width:46px;height:46px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(199,255,25,.2),rgba(66,229,255,.16));border:1px solid rgba(199,255,25,.22);box-shadow:inset 0 0 0 1px rgba(255,255,255,.04), var(--glow)}
-    .logo span{font-weight:900;color:var(--lime);letter-spacing:-.05em;font-size:18px}
-    .brand h1{margin:0;font-size:16px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .brand p{margin:3px 0 0;font-size:12px;color:var(--muted)}
-    .nav{display:flex;align-items:center;gap:10px;justify-content:flex-end;flex-wrap:wrap}
-    .nav a{padding:11px 14px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);font-size:13px;font-weight:800;color:#dce7f7;transition:.22s ease}
-    .nav a:hover{transform:translateY(-1px);background:rgba(255,255,255,.075)}
-    .nav .contact-btn{background:linear-gradient(135deg,var(--lime),var(--mint));color:#061018;border:0;box-shadow:0 16px 34px rgba(199,255,25,.18)}
-    .hero{padding:22px 0 18px}
-    .live-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:18px;align-items:stretch}
-    .panel{position:relative;overflow:hidden;border-radius:var(--radius);background:linear-gradient(180deg,rgba(8,15,26,.9),rgba(6,11,20,.95));border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow)}
-    .panel:after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(135deg,rgba(199,255,25,.14),rgba(66,229,255,.06) 35%,transparent 60%);opacity:.8}
-    .live-stage{padding:26px;min-height:620px;display:flex;flex-direction:column;justify-content:space-between}
-    .live-bg-disc{position:absolute;border-radius:50%;filter:blur(2px);opacity:.22;animation:floatDisc 9s ease-in-out infinite}
-    .live-bg-disc.one{width:190px;height:190px;background:var(--lime);right:8%;top:8%}
-    .live-bg-disc.two{width:130px;height:130px;background:var(--cyan);left:7%;bottom:15%;animation-delay:-4s}
-    .live-bg-disc.three{width:90px;height:90px;background:var(--pink);right:33%;bottom:7%;animation-delay:-2s}
-    @keyframes floatDisc{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(18deg)}}
-    .stage-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;position:relative;z-index:2}
-    .live-pill{display:inline-flex;align-items:center;gap:9px;padding:11px 14px;border-radius:999px;background:rgba(199,255,25,.12);border:1px solid rgba(199,255,25,.22);color:var(--lime);font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-    .live-dot{width:10px;height:10px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 7px rgba(199,255,25,.09);animation:pulse 1.35s ease-in-out infinite}
-    @keyframes pulse{50%{transform:scale(.72);opacity:.6}}
-    .event-mini{text-align:right;color:var(--muted);font-size:13px;line-height:1.65;font-weight:700}
-    .title-lock{position:relative;z-index:2;margin-top:26px}
-    .title-lock h2{margin:0;font-size:clamp(34px,5vw,70px);line-height:.92;font-weight:950;letter-spacing:-.065em;max-width:770px;text-wrap:balance}
-    .title-lock p{margin:16px 0 0;color:#dce7f7;font-size:15px;line-height:1.8;max-width:64ch}
-    .score-card{position:relative;z-index:2;margin-top:24px;padding:18px;border-radius:30px;background:rgba(2,5,10,.42);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(12px)}
-    .match-label{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;color:var(--muted);font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-    .scoreline{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center}
-    .team{min-height:185px;display:flex;flex-direction:column;justify-content:center;text-align:center;border-radius:24px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.08)}
-    .team small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;margin-bottom:9px}
-    .team h3{margin:0;font-size:clamp(20px,2.4vw,30px);line-height:1.1;font-weight:900;text-wrap:balance}
-    .score-num{margin-top:13px;font-size:clamp(56px,7vw,96px);font-weight:950;line-height:.86;letter-spacing:-.07em;color:#fff;text-shadow:0 0 34px rgba(66,229,255,.18)}
-    .versus{width:66px;height:66px;border-radius:22px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(199,255,25,.16),rgba(66,229,255,.12));border:1px solid rgba(255,255,255,.09);font-weight:950;color:var(--lime);letter-spacing:.04em}
-    .under-live{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:14px}
-    .mini-box{padding:15px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);min-height:84px}
-    .mini-box span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;margin-bottom:7px}
-    .mini-box strong{display:block;font-size:16px;line-height:1.45;color:#fff}
-    .side-stack{display:grid;gap:18px}
-    .card{position:relative;overflow:hidden;border-radius:var(--radius);background:linear-gradient(180deg,rgba(8,15,26,.9),rgba(6,11,20,.96));border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow);padding:20px}
-    .card h4{margin:0;font-size:22px;letter-spacing:-.03em}
-    .card p.sub{margin:8px 0 16px;color:var(--muted);font-size:13px;line-height:1.7}
-    .queue-list{display:grid;gap:11px;max-height:315px;overflow:auto;padding-right:4px}
-    .match-row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px;border-radius:18px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.065)}
-    .time{padding:9px 10px;border-radius:13px;background:rgba(66,229,255,.08);border:1px solid rgba(66,229,255,.15);color:var(--cyan);font-size:12px;font-weight:900;white-space:nowrap}
-    .match-row h5{margin:0 0 3px;font-size:14px;line-height:1.25}
-    .match-row p{margin:0;color:var(--muted);font-size:12px;line-height:1.55}
-    .status{padding:8px 9px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,.08);white-space:nowrap}
-    .status.live{background:rgba(199,255,25,.11);border-color:rgba(199,255,25,.2);color:var(--lime)}
-    .status.upcoming{background:rgba(66,229,255,.08);border-color:rgba(66,229,255,.16);color:var(--cyan)}
-    .status.completed{background:rgba(177,140,255,.08);border-color:rgba(177,140,255,.16);color:#d9c8ff}
-    .filter-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}
-    .filter-row button{padding:10px 13px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#dfe8f9;font-weight:800;cursor:pointer;transition:.22s ease}
-    .filter-row button:hover,.filter-row button.active{background:linear-gradient(135deg,rgba(199,255,25,.18),rgba(66,229,255,.11));border-color:rgba(199,255,25,.18);transform:translateY(-1px)}
-    table{width:100%;border-collapse:collapse}
-    th,td{text-align:left;padding:12px 8px;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px;white-space:nowrap}
-    th{color:var(--muted);font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-    .rank{font-weight:950;color:var(--lime);font-size:15px}
-    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.075);font-weight:800}
-    .color-dot{width:9px;height:9px;border-radius:50%}
-    .section{padding:22px 0}
-    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:18px}
-    .section-head h3{margin:0;font-size:clamp(28px,3.2vw,44px);letter-spacing:-.055em;font-weight:950}
-    .section-head p{margin:9px 0 0;color:var(--muted);font-size:14px;line-height:1.8;max-width:70ch}
-    .teams-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-    .team-card{padding:17px;border-radius:23px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden}
-    .team-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--teamColor,var(--lime))}
-    .team-card h5{margin:0 0 9px;font-size:18px;letter-spacing:-.02em}
-    .team-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
-    .photo-marquee{margin:6px 0 22px;overflow:hidden;border-radius:28px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.025);box-shadow:var(--shadow)}
-    .marquee-track{display:flex;gap:14px;width:max-content;padding:14px;animation:slideTrack 46s linear infinite}
-    .photo-marquee:hover .marquee-track{animation-play-state:paused}
-    @keyframes slideTrack{to{transform:translateX(-50%)}}
-    .marquee-photo{width:280px;height:184px;border-radius:22px;overflow:hidden;flex:0 0 auto;border:1px solid rgba(255,255,255,.08);background:#0a111c}
-    .marquee-photo.wide{width:350px}
-    .marquee-photo.tall{width:230px;height:184px}
-    .marquee-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.02)}
-    .youth-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:18px;align-items:stretch}
-    .youth-copy{padding:28px;display:flex;flex-direction:column;justify-content:space-between;min-height:520px}
-    .youth-copy .tag{align-self:flex-start;display:inline-flex;padding:10px 14px;border-radius:999px;background:rgba(66,229,255,.08);border:1px solid rgba(66,229,255,.16);color:var(--cyan);font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:.12em}
-    .youth-copy h3{margin:18px 0 12px;font-size:clamp(32px,4.2vw,58px);line-height:.96;letter-spacing:-.06em;font-weight:950}
-    .youth-copy p{margin:0;color:#e5eefc;font-size:15px;line-height:1.9;max-width:66ch}
-    .cta-line{display:flex;flex-wrap:wrap;gap:11px;margin-top:24px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.045);font-size:14px;font-weight:900;color:#f7fbff;cursor:pointer;transition:.24s ease}
-    .btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.075)}
-    .btn.main{background:linear-gradient(135deg,var(--lime),var(--mint));color:#061018;border:0;box-shadow:0 16px 34px rgba(199,255,25,.18)}
-    .btn svg{width:18px;height:18px;flex:0 0 auto}
-    .focus-gallery{display:grid;grid-template-rows:1fr auto;gap:12px;min-height:520px}
-    .focus-photo{position:relative;border-radius:30px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0a111c;min-height:420px;box-shadow:var(--shadow)}
-    .focus-photo img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transform:scale(1.06);transition:opacity .7s ease,transform .9s ease;filter:saturate(1.05) contrast(1.02)}
-    .focus-photo img.active{opacity:1;transform:scale(1)}
-    .focus-overlay{position:absolute;inset:auto 0 0;padding:24px;background:linear-gradient(180deg,transparent,rgba(3,6,12,.88));z-index:2}
-    .focus-overlay h4{margin:0 0 7px;font-size:24px;letter-spacing:-.03em}
-    .focus-overlay p{margin:0;color:#dbe8fb;font-size:14px;line-height:1.7;max-width:70ch}
-    .thumbs{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
-    .thumbs button{height:74px;border:1px solid rgba(255,255,255,.08);background:#0a111c;border-radius:16px;overflow:hidden;padding:0;cursor:pointer;opacity:.7;transition:.22s ease}
-    .thumbs button.active,.thumbs button:hover{opacity:1;transform:translateY(-2px);border-color:rgba(199,255,25,.24)}
-    .thumbs img{width:100%;height:100%;object-fit:cover}
-    .mini-info{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
-    .info-card{padding:18px;border-radius:22px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)}
-    .info-card h4{margin:0 0 9px;font-size:20px;letter-spacing:-.03em}
-    .info-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.75}
-    .pastor-strip{display:grid;grid-template-columns:.85fr 1.15fr;gap:16px;margin-top:18px}
-    .pastor-photos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .pastor-photo{border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.07);background:#0a111c;min-height:190px}
-    .pastor-photo img{width:100%;height:100%;object-fit:cover}
-    .pastor-copy{padding:24px;display:flex;flex-direction:column;justify-content:center}
-    .pastor-copy h3{margin:0 0 10px;font-size:31px;letter-spacing:-.05em}
-    .pastor-copy p{margin:0;color:#e5eefc;font-size:15px;line-height:1.88}
-    .float-contact{position:fixed;right:18px;bottom:18px;z-index:70;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
-    .float-pill{display:flex;align-items:center;gap:10px;padding:12px 15px;border-radius:999px;background:rgba(8,15,26,.86);border:1px solid rgba(255,255,255,.09);box-shadow:var(--shadow);backdrop-filter:blur(15px);font-size:13px;font-weight:900;color:#fff;transition:.22s ease}
-    .float-pill:hover{transform:translateY(-2px);background:rgba(14,24,38,.94)}
-    .float-pill.whatsapp{background:linear-gradient(135deg,rgba(199,255,25,.95),rgba(126,255,223,.92));color:#061018;border:0}
-    .float-pill svg{width:19px;height:19px}
-    .empty{padding:22px;border:1px dashed rgba(255,255,255,.13);background:rgba(255,255,255,.025);border-radius:20px;color:var(--muted);text-align:center}
-    .footer{padding:26px 0 44px;color:var(--dim);font-size:12px;text-align:center}
-    @media(max-width:1120px){
-      .live-grid,.youth-grid,.pastor-strip{grid-template-columns:1fr}
-      .live-stage{min-height:auto}
-      .teams-grid{grid-template-columns:1fr 1fr}
-    }
-    @media(max-width:780px){
-      .topbar-inner{height:auto;padding:13px 0;align-items:flex-start;flex-direction:column}
-      .nav{width:100%}.nav a{flex:1;text-align:center}
-      .stage-head,.section-head{align-items:flex-start;flex-direction:column}
-      .event-mini{text-align:left}
-      .live-stage,.youth-copy,.card{padding:18px}
-      .scoreline,.under-live,.mini-info,.pastor-photos{grid-template-columns:1fr}
-      .versus{margin:auto}
-      .teams-grid{grid-template-columns:1fr}
-      .marquee-photo{width:230px;height:160px}.marquee-photo.wide{width:280px}.marquee-photo.tall{width:210px}
-      .focus-photo{min-height:360px}
-      .thumbs{grid-template-columns:repeat(4,1fr)}
-      .thumbs button{height:64px}
-      .float-contact{right:12px;bottom:12px}.float-pill span{display:none}.float-pill{width:52px;height:52px;border-radius:18px;padding:0;justify-content:center}
-    }
+    *{box-sizing:border-box} html,body{min-height:100%} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);background:radial-gradient(circle at 18% -5%,rgba(69,217,255,.14),transparent 28%),radial-gradient(circle at 88% 0%,rgba(191,255,69,.13),transparent 24%),linear-gradient(180deg,#03060a 0%,#07111a 48%,#04070b 100%);overflow-x:hidden} img{display:block;max-width:100%} a{text-decoration:none;color:inherit} button,input,select{font:inherit}
+    .bg-frisbees{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}.disc{position:absolute;width:92px;height:30px;border-radius:50%;border:3px solid rgba(191,255,69,.18);box-shadow:inset 0 0 0 6px rgba(69,217,255,.07),0 0 40px rgba(191,255,69,.08);transform:rotate(-18deg);animation:floatDisc 18s linear infinite}.disc:after{content:"";position:absolute;inset:6px 18px;border-radius:50%;border:2px solid rgba(255,255,255,.18)}.disc.d1{left:-8%;top:18%;animation-duration:20s}.disc.d2{right:-9%;top:54%;animation-duration:24s;animation-delay:-7s}.disc.d3{left:12%;bottom:-8%;animation-duration:28s;animation-delay:-12s}.disc.d4{right:18%;top:-5%;animation-duration:22s;animation-delay:-4s}@keyframes floatDisc{0%{transform:translate3d(-6vw,0,0) rotate(-20deg)}50%{transform:translate3d(16vw,-6vh,0) rotate(200deg)}100%{transform:translate3d(110vw,8vh,0) rotate(540deg)}}
+    body:before{content:"";position:fixed;inset:0;background:linear-gradient(90deg,rgba(191,255,69,.028) 1px,transparent 1px),linear-gradient(180deg,rgba(191,255,69,.025) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;opacity:.35;mask-image:linear-gradient(to bottom,#000,transparent 70%);z-index:0}.container{width:min(var(--max),calc(100% - 28px));margin:0 auto;position:relative;z-index:1}.top{position:sticky;top:0;z-index:20;background:rgba(4,8,13,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.08)}.top-inner{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0}.brand{display:flex;align-items:center;gap:12px;min-width:0}.logo-wrap{width:58px;height:46px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(191,255,69,.16),rgba(69,217,255,.10));border:1px solid rgba(191,255,69,.16);overflow:hidden}.logo-wrap img{width:48px;height:auto;filter:drop-shadow(0 0 18px rgba(191,255,69,.22))}.brand h1{font-size:16px;margin:0;font-weight:900;white-space:nowrap}.brand p{margin:3px 0 0;color:var(--muted);font-size:12px}.nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}.nav button{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);color:#eaf3ff;border-radius:999px;padding:11px 15px;font-size:13px;font-weight:800;cursor:pointer;transition:.22s ease}.nav button:hover,.nav button.active{transform:translateY(-1px);background:linear-gradient(135deg,rgba(191,255,69,.24),rgba(69,217,255,.18));border-color:rgba(191,255,69,.18)}.nav .contact{background:linear-gradient(135deg,var(--lime),#63f2d8);color:#051018;border:0}.mobile-nav{display:none;width:100%;margin-top:8px;background:#07111b;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:16px;padding:12px 14px}
+    .page{display:none;min-height:calc(100vh - 76px);padding:24px 0 42px}.page.active{display:block;animation:pageIn .32s ease both}@keyframes pageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.pill{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-weight:800;font-size:12px;color:#eaf3ff}.dot{width:9px;height:9px;border-radius:50%;background:var(--lime);box-shadow:0 0 16px rgba(191,255,69,.5)}.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;padding:13px 18px;font-size:14px;font-weight:900;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);color:var(--text);transition:.22s ease}.btn:hover{transform:translateY(-1px)}.btn.primary{background:linear-gradient(135deg,var(--lime),#63f2d8);color:#061018;border:0}.btn svg{width:18px;height:18px}.grid{display:grid;gap:18px}.grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:linear-gradient(180deg,rgba(10,17,27,.94),rgba(8,13,21,.98));border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);position:relative;overflow:hidden}.card.pad{padding:24px}.card:before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(140deg,rgba(191,255,69,.16),rgba(69,217,255,.08),transparent 60%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}.section-title{margin:0 0 18px}.section-title h2{font-size:clamp(30px,4vw,54px);line-height:.98;letter-spacing:-.055em;margin:8px 0 10px}.section-title p{margin:0;color:var(--muted);line-height:1.75;font-size:15px;max-width:72ch}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:var(--soft-lime)}
+    .live-hero{display:grid;grid-template-columns:1.18fr .82fr;gap:18px;align-items:stretch}.score-card{padding:28px;min-height:480px;display:flex;flex-direction:column;justify-content:space-between}.score-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.score-head h2{font-size:clamp(28px,4vw,52px);line-height:.98;margin:14px 0 0;letter-spacing:-.055em}.event-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.scoreboard{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin:28px 0}.team-score{padding:22px 18px;border-radius:26px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);text-align:center}.team-score small{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.14em;font-weight:900;font-size:11px;margin-bottom:10px}.team-score h3{font-size:clamp(22px,3vw,34px);margin:0}.team-score .num{font-size:clamp(64px,7vw,110px);line-height:.92;font-weight:900;letter-spacing:-.07em;margin-top:12px;color:#fff;text-shadow:0 18px 40px rgba(0,0,0,.35)}.vs{font-size:13px;font-weight:900;color:var(--muted);letter-spacing:.2em}.live-actions{display:flex;gap:12px;flex-wrap:wrap}.status-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.status-tile{padding:16px;border-radius:20px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)}.status-tile span{display:block;color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.10em}.status-tile strong{display:block;font-size:24px;margin-top:6px}.queue-card{padding:22px}.queue-list{display:grid;gap:12px}.match-row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:14px;border-radius:20px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)}.time{padding:10px 12px;border-radius:14px;background:rgba(69,217,255,.08);border:1px solid rgba(69,217,255,.16);font-size:12px;font-weight:900;color:#b7f4ff}.match-row h4{margin:0 0 4px;font-size:15px}.match-row p{margin:0;color:var(--muted);font-size:12px;line-height:1.45}.state{font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}.state.live{color:var(--lime);background:rgba(191,255,69,.10);border-color:rgba(191,255,69,.20)}.state.completed{color:#c8b8ff;background:rgba(184,140,255,.08)}.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.filters button{cursor:pointer}.filters button.active{background:linear-gradient(135deg,var(--lime),#63f2d8);color:#061018;border:0}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse}th,td{padding:13px 10px;border-bottom:1px solid rgba(255,255,255,.07);text-align:left}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.12em}td{font-size:14px}.leader-name{display:inline-flex;align-items:center;gap:8px;font-weight:800}.color-dot{width:10px;height:10px;border-radius:50%}.teams-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.team-card{padding:18px;border-radius:24px;background:linear-gradient(180deg,rgba(12,18,28,.95),rgba(8,14,22,.98));border:1px solid rgba(255,255,255,.08);border-top:4px solid var(--teamColor,var(--lime));box-shadow:0 20px 55px rgba(0,0,0,.25);transition:.22s ease}.team-card:hover{transform:translateY(-4px);border-color:rgba(191,255,69,.22)}.team-card h3{margin:0 0 4px;font-size:28px;letter-spacing:-.04em}.team-card p{margin:0 0 14px;color:var(--muted);font-size:13px}.players{display:grid;gap:8px}.players span{padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);font-size:14px;font-weight:700}.division-band{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:20px 0 14px}.division-band h3{margin:0;font-size:24px}.division-band span{color:var(--muted);font-weight:800;font-size:13px}.youth-layout{display:grid;grid-template-columns:.82fr 1.18fr;gap:18px}.youth-copy{padding:28px}.youth-copy h2{font-size:clamp(32px,4vw,52px);letter-spacing:-.055em;margin:8px 0 12px;line-height:1}.youth-copy p{color:#e7f1ff;line-height:1.85;margin:0;font-size:15px}.youth-mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.mini{padding:16px;border-radius:18px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)}.mini strong{display:block;margin-bottom:6px}.mini span{color:var(--muted);font-size:13px;line-height:1.55}.photo-stage{position:relative;min-height:520px;border-radius:28px;overflow:hidden;background:#070c12;border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow)}.photo-stage:before{content:"";position:absolute;inset:0;background-image:var(--blurImg);background-size:cover;background-position:center;filter:blur(24px) brightness(.42);transform:scale(1.1);opacity:.9}.photo-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:10px;z-index:1}.photo-caption{position:absolute;left:18px;bottom:18px;right:18px;z-index:2;padding:14px 16px;border-radius:20px;background:rgba(0,0,0,.46);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08)}.photo-caption strong{display:block}.photo-caption span{display:block;color:#dce8fb;font-size:13px;margin-top:4px}.thumb-row{display:flex;gap:9px;overflow:auto;padding:10px 2px 2px;margin-top:12px}.thumb-row button{min-width:92px;height:66px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#07111b;padding:0;cursor:pointer;opacity:.68}.thumb-row button.active,.thumb-row button:hover{opacity:1;border-color:rgba(191,255,69,.5)}.thumb-row img{width:100%;height:100%;object-fit:cover}.pastor-strip{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:12px;margin-top:18px}.pastor-strip .photo{border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#07111b;min-height:220px}.pastor-strip img{width:100%;height:100%;object-fit:cover}.contact-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}.contact-card{padding:22px;text-align:left;min-height:220px;display:flex;flex-direction:column;justify-content:space-between}.contact-card h3{font-size:24px;margin:0 0 8px}.contact-card p{color:var(--muted);line-height:1.65;font-size:14px;margin:0}.float-contact{position:fixed;right:18px;bottom:18px;z-index:30;display:flex;flex-direction:column;gap:10px}.float-contact a{width:52px;height:52px;border-radius:18px;background:rgba(10,17,27,.88);border:1px solid rgba(255,255,255,.10);display:grid;place-items:center;box-shadow:var(--shadow);transition:.22s ease}.float-contact a:hover{transform:translateY(-3px);background:rgba(20,31,45,.94)}.float-contact svg{width:22px;height:22px}.empty{padding:22px;border-radius:20px;border:1px dashed rgba(255,255,255,.14);background:rgba(255,255,255,.025);color:var(--muted);text-align:center}.sync-note{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.6}.loader{position:fixed;inset:0;background:#000;z-index:999;display:grid;place-items:center;transition:.5s ease}.loader.hide{opacity:0;visibility:hidden}.loader img{width:min(340px,55vw);filter:drop-shadow(0 0 35px rgba(191,255,69,.22));opacity:.92;animation:pulseLogo 1.5s ease infinite alternate}@keyframes pulseLogo{to{transform:scale(1.025);opacity:1}}
+    @media(max-width:1100px){.live-hero,.grid2,.youth-layout{grid-template-columns:1fr}.teams-grid,.contact-grid{grid-template-columns:repeat(2,1fr)}.pastor-strip{grid-template-columns:1fr 1fr}}@media(max-width:760px){.top-inner{align-items:flex-start;flex-direction:column}.nav{display:none}.mobile-nav{display:block}.page{padding-top:18px}.scoreboard{grid-template-columns:1fr}.vs{text-align:center}.status-strip,.grid3,.teams-grid,.contact-grid,.youth-mini,.pastor-strip{grid-template-columns:1fr}.score-card,.card.pad,.queue-card,.youth-copy{padding:20px}.photo-stage{min-height:420px}.brand h1{font-size:14px}.brand p{font-size:11px}.float-contact{right:12px;bottom:12px}.float-contact a{width:48px;height:48px}}
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="wrap topbar-inner">
-      <a class="brand" href="#live">
-        <div class="logo"><span>F2</span></div>
-        <div>
-          <h1>FOMO 2.0 Live</h1>
-          <p>TGC Dehiwala Youth • public match board</p>
-        </div>
-      </a>
-      <nav class="nav">
-        <a href="#live">Live Game</a>
-        <a href="#teams">Teams</a>
-        <a href="#youth">Be Part Of Youth</a>
-        <a class="contact-btn" target="_blank" href="https://wa.me/94770509927?text=Hi%2C%20I%27d%20like%20to%20connect%20with%20TGC%20Dehiwala%20Youth">Contact</a>
-      </nav>
+  <div class="loader" id="loader"><img src="assets/logo-fomo.png" alt="FOMO 2.0"></div>
+  <div class="bg-frisbees"><div class="disc d1"></div><div class="disc d2"></div><div class="disc d3"></div><div class="disc d4"></div></div>
+  <header class="top">
+    <div class="container top-inner">
+      <div class="brand"><div class="logo-wrap"><img src="assets/logo-fomo.png" alt="FOMO"></div><div><h1>FOMO 2.0 Live</h1><p>TGC Dehiwala Youth • public match board</p></div></div>
+      <nav class="nav" id="nav"><button data-page="live" class="active">Live Game</button><button data-page="teams">Teams</button><button data-page="youth">Be Part Of Youth</button><button data-page="contact" class="contact">Contact</button></nav>
+      <select class="mobile-nav" id="mobileNav"><option value="live">Live Game</option><option value="teams">Teams</option><option value="youth">Be Part Of Youth</option><option value="contact">Contact</option></select>
     </div>
   </header>
-
   <main>
-    <section id="live" class="hero">
-      <div class="wrap live-grid">
-        <div class="panel live-stage">
-          <span class="live-bg-disc one"></span>
-          <span class="live-bg-disc two"></span>
-          <span class="live-bg-disc three"></span>
-          <div>
-            <div class="stage-head">
-              <div class="live-pill"><span class="live-dot"></span><span id="mainLiveStatus">Live Match Feed</span></div>
-              <div class="event-mini">
-                <div id="eventVenue">Infinity Sports Arena</div>
-                <div><span id="eventDate">27 June</span> • <span id="eventTime">3 PM onwards</span></div>
-              </div>
-            </div>
-            <div class="title-lock">
-              <h2>FOMO 2.0 — The Ultimate Room.</h2>
-              <p>Follow the game live, see who is playing next and keep up with the point table without logging in.</p>
-            </div>
-          </div>
-          <div>
-            <div class="score-card">
-              <div class="match-label"><span id="matchLabel">Current Match</span><span id="matchDivision">Division</span></div>
-              <div class="scoreline">
-                <div class="team">
-                  <small>Team A</small>
-                  <h3 id="teamAName">Loading</h3>
-                  <div class="score-num" id="scoreA">0</div>
-                </div>
-                <div class="versus">VS</div>
-                <div class="team">
-                  <small>Team B</small>
-                  <h3 id="teamBName">Loading</h3>
-                  <div class="score-num" id="scoreB">0</div>
-                </div>
-              </div>
-            </div>
-            <div class="under-live">
-              <div class="mini-box"><span>Up Next</span><strong id="upNextText">Loading queue…</strong></div>
-              <div class="mini-box"><span>Referee</span><strong id="refereeText">TBC</strong></div>
-              <div class="mini-box"><span>Matches Done</span><strong id="doneCount">0 completed</strong></div>
-            </div>
-          </div>
-        </div>
-        <div class="side-stack">
-          <div class="card">
-            <h4>Match Queue</h4>
-            <p class="sub">Live, next and upcoming matches in order.</p>
-            <div id="queueList" class="queue-list"><div class="empty">Loading matches…</div></div>
-          </div>
-          <div class="card">
-            <h4>Point Table</h4>
-            <p class="sub">Filter by division and track the leaders.</p>
-            <div id="divisionFilters" class="filter-row"></div>
-            <div style="overflow:auto">
-              <table>
-                <thead><tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>Pts</th><th>Diff</th></tr></thead>
-                <tbody id="standingsBody"><tr><td colspan="6">Loading standings…</td></tr></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="teams" class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h3>Teams & Fixtures</h3>
-            <p>See the teams, divisions and full match flow for FOMO 2.0.</p>
-          </div>
-        </div>
-        <div class="card">
-          <h4>Teams</h4>
-          <p class="sub">Team details from the live game plan.</p>
-          <div id="teamsList" class="teams-grid"><div class="empty" style="grid-column:1/-1">Loading teams…</div></div>
-        </div>
-        <div class="card" style="margin-top:18px">
-          <h4>Fixtures & Results</h4>
-          <p class="sub">The full match list updates as games move from upcoming to live to completed.</p>
-          <div id="fixturesList" class="queue-list" style="max-height:none"><div class="empty">Loading fixtures…</div></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="youth" class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h3>Be Part Of The Youth</h3>
-            <p>The game is just one part of it. This is a youth community you can actually be part of.</p>
-          </div>
-        </div>
-        <div class="photo-marquee" aria-label="TGC Dehiwala youth photo slider">
-          <div class="marquee-track" id="marqueeTrack"></div>
-        </div>
-        <div class="youth-grid">
-          <div class="panel youth-copy">
+    <section class="page active" id="page-live">
+      <div class="container">
+        <div class="live-hero">
+          <div class="card score-card">
             <div>
-              <span class="tag">TGC Dehiwala Youth</span>
-              <h3>Fun people. Real faith. A place to come through.</h3>
-              <p>TGC Dehiwala Youth is a fun, welcoming and Christ-centred space where you can meet real people, build friendships, grow in faith and feel at home without needing to act like you have everything figured out, so if you’re looking for a place to connect, come for Sunday church at Raffles Hall and we’ll help you settle in.</p>
-              <div class="mini-info">
-                <div class="info-card"><h4>Youth Cells</h4><p>Small groups where you can connect properly, talk honestly, pray together and grow with people who actually know you.</p></div>
-                <div class="info-card"><h4>Sunday Church</h4><p>Join us at Raffles Hall for church, community and a youth space that feels alive, warm and easy to step into.</p></div>
-              </div>
+              <div class="score-head"><div><span class="pill"><span class="dot"></span><span id="liveStateText">Live Game</span></span><h2 id="mainMatchTitle">Waiting for the first pull.</h2></div><span class="pill" id="connectionPill">Connecting Firebase</span></div>
+              <div class="event-meta"><span class="pill">📍 <span id="eventVenue">Infinity Sports Arena</span></span><span class="pill">🕒 <span id="eventTime">3:00 PM onwards</span></span><span class="pill">🥏 FOMO 2.0</span></div>
+              <div class="scoreboard"><div class="team-score"><small>Team A</small><h3 id="teamAName">Team A</h3><div class="num" id="scoreA">0</div></div><div class="vs">VS</div><div class="team-score"><small>Team B</small><h3 id="teamBName">Team B</h3><div class="num" id="scoreB">0</div></div></div>
             </div>
-            <div class="cta-line">
-              <a class="btn main" target="_blank" href="https://wa.me/94770509927?text=Hi%2C%20I%27d%20like%20to%20connect%20with%20TGC%20Dehiwala%20Youth" aria-label="Contact on WhatsApp">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.55 0 .24 5.3.24 11.82c0 2.08.54 4.11 1.57 5.9L0 24l6.48-1.7a11.77 11.77 0 0 0 5.59 1.42h.01c6.52 0 11.83-5.3 11.83-11.82 0-3.16-1.23-6.13-3.39-8.42ZM12.08 21.7h-.01a9.8 9.8 0 0 1-5-1.37l-.36-.21-3.84 1 1.02-3.74-.24-.38a9.79 9.79 0 0 1-1.52-5.18c0-5.42 4.42-9.84 9.86-9.84 2.63 0 5.1 1.02 6.96 2.9a9.76 9.76 0 0 1 2.88 6.95c0 5.42-4.42 9.84-9.85 9.84Zm5.4-7.33c-.29-.14-1.73-.85-2-.94-.27-.1-.46-.14-.65.14-.19.29-.75.94-.92 1.13-.17.19-.33.22-.62.08-.29-.14-1.2-.44-2.29-1.4-.85-.75-1.43-1.67-1.6-1.95-.16-.29-.02-.44.12-.59.13-.13.29-.34.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.65-1.57-.89-2.14-.24-.57-.48-.49-.65-.5h-.56c-.19 0-.5.07-.76.36-.26.29-1 1-.99 2.43 0 1.43 1.04 2.81 1.18 3 .14.19 2.04 3.1 4.93 4.35.69.3 1.23.47 1.64.6.69.22 1.31.19 1.8.12.55-.08 1.73-.71 1.97-1.39.24-.68.24-1.26.17-1.39-.07-.12-.27-.19-.56-.33Z" fill="currentColor"/></svg>
-                Contact on WhatsApp
-              </a>
-              <a class="btn" target="_blank" href="https://www.instagram.com/tgcdehiwala">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 1.9A3.86 3.86 0 0 0 3.9 7.75v8.5A3.86 3.86 0 0 0 7.75 20.1h8.5a3.86 3.86 0 0 0 3.85-3.85v-8.5A3.86 3.86 0 0 0 16.25 3.9h-8.5Zm8.95 1.43a1.17 1.17 0 1 1 0 2.34 1.17 1.17 0 0 1 0-2.34ZM12 6.62A5.38 5.38 0 1 1 6.62 12 5.39 5.39 0 0 1 12 6.62Zm0 1.9A3.48 3.48 0 1 0 15.48 12 3.49 3.49 0 0 0 12 8.52Z" fill="currentColor"/></svg>
-                Instagram
-              </a>
-              <a class="btn" target="_blank" href="https://share.google/SQzmVSIlsSh5KE4sk">Raffles Hall</a>
-            </div>
+            <div class="status-strip"><div class="status-tile"><span>Teams</span><strong id="teamCount">6</strong></div><div class="status-tile"><span>Matches</span><strong id="matchCount">0</strong></div><div class="status-tile"><span>Completed</span><strong id="doneCount">0</strong></div></div>
           </div>
-          <div class="focus-gallery">
-            <div class="focus-photo" id="focusPhoto">
-              <div class="focus-overlay"><h4>Come for the game. Stay for the people.</h4><p>If you like the energy here, you’ll probably love the youth room too.</p></div>
-            </div>
-            <div class="thumbs" id="thumbs"></div>
-          </div>
+          <div class="card queue-card"><div class="section-title"><span class="eyebrow">Up next</span><h2 style="font-size:32px">Match Queue</h2><p>The next matches will update automatically when the control page changes.</p></div><div id="queueList" class="queue-list"><div class="empty">Loading matches…</div></div></div>
         </div>
-        <div class="pastor-strip">
-          <div class="pastor-photos">
-            <div class="pastor-photo"><img src="assets/pastors/pastor_dale_michelle_01_web.jpg" alt="Pastor Dale and Michelle" /></div>
-            <div class="pastor-photo"><img src="assets/pastors/pastor_dale_michelle_stage_03_web.jpg" alt="Pastor Dale and Michelle at church" /></div>
-          </div>
-          <div class="panel pastor-copy">
-            <h3>Pastor Dale & Michelle</h3>
-            <p>Pastor Dale and Michelle are a huge blessing to TGC Dehiwala because they lead with warmth, faith and a real love for people, and that heart helps make the branch feel like family for anyone walking in for the first time.</p>
-          </div>
+        <div class="grid2" style="margin-top:18px">
+          <div class="card pad"><div class="section-title"><span class="eyebrow">Point table</span><h2 style="font-size:32px">Leaderboard</h2><p>Standings are calculated from completed matches.</p></div><div id="divisionFilters" class="filters"></div><div class="table-wrap"><table><thead><tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>Pts</th><th>Diff</th></tr></thead><tbody id="standingsBody"><tr><td colspan="6">Loading…</td></tr></tbody></table></div></div>
+          <div class="card pad"><div class="section-title"><span class="eyebrow">Schedule</span><h2 style="font-size:32px">Fixtures</h2><p>Live, upcoming and completed matches in one place.</p></div><div id="scheduleList" class="queue-list"><div class="empty">Loading fixtures…</div></div></div>
         </div>
       </div>
     </section>
+    <section class="page" id="page-teams"><div class="container"><div class="section-title"><span class="eyebrow">FOMO 2.0</span><h2>Teams</h2><p>Final captains and team members for each division. The layout stays simple so the youth can quickly find their team.</p></div><div id="teamDivisionPageFilters" class="filters"></div><div id="teamsPageList"></div></div></section>
+    <section class="page" id="page-youth"><div class="container"><div class="youth-layout"><div class="card youth-copy"><span class="eyebrow">Be Part Of Youth</span><h2>Come for the game. Stay for the people.</h2><p>TGC Dehiwala Youth is a fun, welcoming and Christ-centred space where you can make real friends, grow in faith and feel like you actually belong. Our youth cells are the smaller side of that family, where conversations get real, prayer feels personal and it becomes easier to walk into Sunday church with people who know you.</p><div class="youth-mini"><div class="mini"><strong>Youth Cells</strong><span>Smaller groups for friendship, prayer and real life with people your age.</span></div><div class="mini"><strong>Sunday Church</strong><span>Join us at Raffles Hall and we’ll help you settle in from the first visit.</span></div></div><div class="live-actions" style="margin-top:18px"><a class="btn primary" target="_blank" href="https://wa.me/94770509927?text=Hi%2C%20I%27d%20like%20to%20join%20TGC%20Dehiwala%20Youth">Contact on WhatsApp</a><a class="btn" target="_blank" href="https://share.google/SQzmVSIlsSh5KE4sk">Raffles Hall Location</a></div></div><div><div class="photo-stage" id="photoStage"><img id="mainYouthPhoto" src="assets/youth/youth_stair_big_13_web.jpg" alt="TGC Dehiwala Youth"><div class="photo-caption"><strong id="photoTitle">TGC Dehiwala Youth</strong><span id="photoText">A place with faith, friendship and actual joy.</span></div></div><div class="thumb-row" id="thumbRow"></div></div></div><div class="pastor-strip"><div class="photo"><img src="assets/pastors/pastor_dale_michelle_01_web.jpg" alt="Pastor Dale and Michelle"></div><div class="photo"><img src="assets/pastors/pastor_dale_michelle_stage_03_web.jpg" alt="Pastor Dale and Michelle"></div><div class="card pad"><span class="eyebrow">Associate Pastors</span><h2 style="font-size:30px;margin:8px 0 10px">Pastor Dale & Michelle</h2><p style="color:#dfe9f8;line-height:1.8;margin:0">Pastor Dale and Michelle are the Associate Pastors of the TGC Dehiwala branch, and they are such a blessing to the house because they lead with warmth, faith and genuine care for people, helping the branch feel like family for anyone walking in for the first time.</p></div></div></div></section>
+    <section class="page" id="page-contact"><div class="container"><div class="section-title"><span class="eyebrow">Contact</span><h2>Want to come through?</h2><p>Use any of these links to connect with us, follow the branch or find the Sunday location.</p></div><div class="contact-grid"><div class="card contact-card"><div><h3>Contact on WhatsApp</h3><p>Ask about youth, cells, Sunday church or how to join the next event.</p></div><a class="btn primary" target="_blank" href="https://wa.me/94770509927?text=Hi%2C%20I%27d%20like%20to%20connect%20with%20TGC%20Dehiwala%20Youth">Contact on WhatsApp</a></div><div class="card contact-card"><div><h3>Instagram</h3><p>Follow TGC Dehiwala for updates, youth moments and what’s happening next.</p></div><a class="btn" target="_blank" href="https://www.instagram.com/tgcdehiwala">Open Instagram</a></div><div class="card contact-card"><div><h3>Raffles Hall</h3><p>Our Sunday branch church location. Open the pin and come through.</p></div><a class="btn" target="_blank" href="https://share.google/SQzmVSIlsSh5KE4sk">Open Location</a></div></div></div></section>
   </main>
-
-  <div class="float-contact">
-    <a class="float-pill whatsapp" target="_blank" href="https://wa.me/94770509927?text=Hi%2C%20I%27d%20like%20to%20connect%20with%20TGC%20Dehiwala%20Youth" aria-label="Contact on WhatsApp">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.55 0 .24 5.3.24 11.82c0 2.08.54 4.11 1.57 5.9L0 24l6.48-1.7a11.77 11.77 0 0 0 5.59 1.42h.01c6.52 0 11.83-5.3 11.83-11.82 0-3.16-1.23-6.13-3.39-8.42ZM12.08 21.7h-.01a9.8 9.8 0 0 1-5-1.37l-.36-.21-3.84 1 1.02-3.74-.24-.38a9.79 9.79 0 0 1-1.52-5.18c0-5.42 4.42-9.84 9.86-9.84 2.63 0 5.1 1.02 6.96 2.9a9.76 9.76 0 0 1 2.88 6.95c0 5.42-4.42 9.84-9.85 9.84Zm5.4-7.33c-.29-.14-1.73-.85-2-.94-.27-.1-.46-.14-.65.14-.19.29-.75.94-.92 1.13-.17.19-.33.22-.62.08-.29-.14-1.2-.44-2.29-1.4-.85-.75-1.43-1.67-1.6-1.95-.16-.29-.02-.44.12-.59.13-.13.29-.34.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.65-1.57-.89-2.14-.24-.57-.48-.49-.65-.5h-.56c-.19 0-.5.07-.76.36-.26.29-1 1-.99 2.43 0 1.43 1.04 2.81 1.18 3 .14.19 2.04 3.1 4.93 4.35.69.3 1.23.47 1.64.6.69.22 1.31.19 1.8.12.55-.08 1.73-.71 1.97-1.39.24-.68.24-1.26.17-1.39-.07-.12-.27-.19-.56-.33Z" fill="currentColor"/></svg>
-      <span>Contact on WhatsApp</span>
-    </a>
-    <a class="float-pill" target="_blank" href="https://www.instagram.com/tgcdehiwala" aria-label="Instagram">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 1.9A3.86 3.86 0 0 0 3.9 7.75v8.5A3.86 3.86 0 0 0 7.75 20.1h8.5a3.86 3.86 0 0 0 3.85-3.85v-8.5A3.86 3.86 0 0 0 16.25 3.9h-8.5Zm8.95 1.43a1.17 1.17 0 1 1 0 2.34 1.17 1.17 0 0 1 0-2.34ZM12 6.62A5.38 5.38 0 1 1 6.62 12 5.39 5.39 0 0 1 12 6.62Zm0 1.9A3.48 3.48 0 1 0 15.48 12 3.49 3.49 0 0 0 12 8.52Z" fill="currentColor"/></svg>
-      <span>Instagram</span>
-    </a>
-    <a class="float-pill" target="_blank" href="https://share.google/SQzmVSIlsSh5KE4sk" aria-label="Raffles Hall location">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Zm0-9a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" fill="currentColor"/></svg>
-      <span>Raffles Hall</span>
-    </a>
-  </div>
-
-  <footer class="footer">FOMO 2.0 public live page • TGC Dehiwala Youth</footer>
-
+  <div class="float-contact"><a target="_blank" aria-label="Contact on WhatsApp" href="https://wa.me/94770509927?text=Hi%2C%20I%27d%20like%20to%20connect%20with%20TGC%20Dehiwala%20Youth"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.55 0 .24 5.3.24 11.82c0 2.08.54 4.11 1.57 5.9L0 24l6.48-1.7a11.77 11.77 0 0 0 5.59 1.42h.01c6.52 0 11.83-5.3 11.83-11.82 0-3.16-1.23-6.13-3.39-8.42ZM12.08 21.7h-.01a9.8 9.8 0 0 1-5-1.37l-.36-.21-3.84 1 1.02-3.74-.24-.38a9.79 9.79 0 0 1-1.52-5.18c0-5.42 4.42-9.84 9.86-9.84 2.63 0 5.1 1.02 6.96 2.9a9.76 9.76 0 0 1 2.88 6.95c0 5.42-4.42 9.84-9.85 9.84Zm5.4-7.33c-.29-.14-1.73-.85-2-.94-.27-.1-.46-.14-.65.14-.19.29-.75.94-.92 1.13-.17.19-.33.22-.62.08-.29-.14-1.2-.44-2.29-1.4-.85-.75-1.43-1.67-1.6-1.95-.16-.29-.02-.44.12-.59.13-.13.29-.34.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.65-1.57-.89-2.14-.24-.57-.48-.49-.65-.5h-.56c-.19 0-.5.07-.76.36-.26.29-1 1-.99 2.43 0 1.43 1.04 2.81 1.18 3 .14.19 2.04 3.1 4.93 4.35.69.3 1.23.47 1.64.6.69.22 1.31.19 1.8.12.55-.08 1.73-.71 1.97-1.39.24-.68.24-1.26.17-1.39-.07-.12-.27-.19-.56-.33Z"/></svg></a><a target="_blank" aria-label="Instagram" href="https://www.instagram.com/tgcdehiwala"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 1.9A3.86 3.86 0 0 0 3.9 7.75v8.5A3.86 3.86 0 0 0 7.75 20.1h8.5a3.86 3.86 0 0 0 3.85-3.85v-8.5A3.86 3.86 0 0 0 16.25 3.9h-8.5Zm8.95 1.43a1.17 1.17 0 1 1 0 2.34 1.17 1.17 0 0 1 0-2.34ZM12 6.62A5.38 5.38 0 1 1 6.62 12 5.39 5.39 0 0 1 12 6.62Zm0 1.9A3.48 3.48 0 1 0 15.48 12 3.49 3.49 0 0 0 12 8.52Z"/></svg></a><a target="_blank" aria-label="Raffles Hall" href="https://share.google/SQzmVSIlsSh5KE4sk"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Zm0-9a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/></svg></a></div>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
     import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCdMfitam8d7UwVfP2I3jbuDIYvW-lAB-c",
-      authDomain: "youth-tasks.firebaseapp.com",
-      projectId: "youth-tasks",
-      storageBucket: "youth-tasks.firebasestorage.app",
-      messagingSenderId: "824413713361",
-      appId: "1:824413713361:web:6c84c4ce1efab73b3c66f0",
-      measurementId: "G-PKMFQ4Z1PZ"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const $ = id => document.getElementById(id);
-    const clean = v => String(v ?? "").replace(/[<>&'\"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;',"'":'&#39;','\"':'&quot;'}[c]));
-
-    let events = [];
-    let tournamentTeams = [];
-    let tournamentMatches = [];
-    let tournamentSettingsList = [];
-    let selectedEventId = new URLSearchParams(location.search).get("event") || "fomo-v2";
-    let divisionFilter = "All";
-
-    const youthPhotos = [
-      "youth_new_stairs_big_13_web.jpg",
-      "youth_group_large_03_web.jpg",
-      "youth_new_mixed_fun_11_web.jpg",
-      "youth_new_mixed_fun_12_web.jpg",
-      "youth_new_girls_group_09_web.jpg",
-      "youth_new_girls_wall_10_web.jpg",
-      "youth_new_girls_whitewall_15_web.jpg",
-      "youth_new_close_group_14_web.jpg",
-      "youth_new_boys_prayer_08_web.jpg",
-      "youth_stairs_01_web.jpg",
-      "youth_group_stage_02_web.jpg",
-      "youth_brothers_04_web.jpg",
-      "youth_girls_05_web.jpg",
-      "youth_prayer_06_web.jpg",
-      "youth_guys_07_web.jpg"
-    ];
-
-    function setupPhotos(){
-      const marquee = [...youthPhotos, ...youthPhotos].map((name,index)=>{
-        const style = index % 5 === 0 ? "wide" : (index % 7 === 0 ? "tall" : "");
-        return `<div class="marquee-photo ${style}"><img src="assets/youth/${name}" alt="TGC Dehiwala Youth" loading="lazy"></div>`;
-      }).join("");
-      $("marqueeTrack").innerHTML = marquee;
-
-      const focus = $("focusPhoto");
-      focus.insertAdjacentHTML("afterbegin", youthPhotos.slice(0,8).map((name,i)=>`<img class="${i===0?'active':''}" src="assets/youth/${name}" alt="TGC Dehiwala Youth photo ${i+1}">`).join(""));
-      $("thumbs").innerHTML = youthPhotos.slice(0,8).map((name,i)=>`<button class="${i===0?'active':''}" data-index="${i}" aria-label="Show youth photo ${i+1}"><img src="assets/youth/${name}" alt="Youth thumbnail"></button>`).join("");
-
-      let current = 0;
-      function activate(index){
-        current = index;
-        focus.querySelectorAll("img").forEach((img,i)=>img.classList.toggle("active",i===current));
-        $("thumbs").querySelectorAll("button").forEach((btn,i)=>btn.classList.toggle("active",i===current));
-      }
-      $("thumbs").querySelectorAll("button").forEach(btn=>btn.addEventListener("click",()=>activate(Number(btn.dataset.index))));
-      setInterval(()=>activate((current+1)%8), 4200);
-    }
-
-    function formatDate(value){
-      if(!value) return "27 June";
-      const d = new Date(value);
-      return Number.isNaN(d.getTime()) ? value : d.toLocaleDateString(undefined,{day:"numeric",month:"long"});
-    }
-    function formatTime(value){
-      if(!value) return "TBC";
-      const [h,m] = String(value).split(":").map(Number);
-      if(Number.isNaN(h)||Number.isNaN(m)) return value;
-      const suffix = h >= 12 ? "PM" : "AM";
-      const hour = ((h + 11) % 12) + 1;
-      return `${hour}:${String(m).padStart(2,"0")} ${suffix}`;
-    }
-    function toMinutes(value){
-      const match = String(value||"").match(/^(\d{1,2}):(\d{2})/);
-      return match ? Number(match[1])*60 + Number(match[2]) : 99999;
-    }
-    function statusClass(value){
-      const key = String(value||"").toLowerCase();
-      if(key === "live") return "live";
-      if(key === "completed") return "completed";
-      return "upcoming";
-    }
-    function pickDefaultEvent(){
-      if(new URLSearchParams(location.search).get("event")) return;
-      const setting = tournamentSettingsList.find(x=>/fomo|ultimate room/i.test(`${x.title||""} ${x.subtitle||""}`));
-      const event = events.find(x=>/fomo|frisbee|ultimate room/i.test(`${x.title||""} ${x.description||""}`));
-      if(setting) selectedEventId = setting.id;
-      else if(event) selectedEventId = event.id;
-    }
-    function settings(){ return tournamentSettingsList.find(s=>s.id===selectedEventId) || {}; }
-    function teams(){ return tournamentTeams.filter(t=>(t.tournamentId||"fomo-v2")===selectedEventId).sort((a,b)=>(a.slot||0)-(b.slot||0)||String(a.name||"").localeCompare(String(b.name||""))); }
-    function matches(){ return tournamentMatches.filter(m=>(m.tournamentId||"fomo-v2")===selectedEventId).sort((a,b)=>toMinutes(a.time)-toMinutes(b.time)||String(a.label||"").localeCompare(String(b.label||""))); }
-    function teamById(id){ return teams().find(t=>t.id===id) || tournamentTeams.find(t=>t.id===id) || {}; }
-    function teamName(match,side){ const t = teamById(side === "A" ? match.teamAId : match.teamBId); return t.name || match[`team${side}Name`] || `Team ${side}`; }
-    function matchDivision(match){
-      const a = teamById(match.teamAId), b = teamById(match.teamBId);
-      return match.division || (a.division && a.division===b.division ? a.division : [a.division,b.division].filter(Boolean).join(" / ")) || "Open";
-    }
-    function matchReferee(match){
-      const a = teamById(match.teamAId), b = teamById(match.teamBId);
-      return match.referee || (a.referee && a.referee===b.referee ? a.referee : [a.referee,b.referee].filter(Boolean).join(" / ")) || "TBC";
-    }
-    function divisions(list){ return ["All", ...new Set(list.map(t=>String(t.division||"").trim()).filter(Boolean))]; }
-    function divisionMatches(value){ return divisionFilter === "All" || String(value||"") === divisionFilter; }
-    function standings(listTeams,listMatches){
-      const map = new Map();
-      listTeams.forEach(t=>map.set(t.id,{id:t.id,name:t.name||"Team",color:t.color||"#c7ff19",division:t.division||"Open",played:0,won:0,lost:0,draw:0,pts:0,scored:0,against:0,diff:0}));
-      listMatches.filter(m=>String(m.status||"").toLowerCase()==="completed").forEach(m=>{
-        const a = map.get(m.teamAId), b = map.get(m.teamBId);
-        if(!a || !b) return;
-        const sa=Number(m.scoreA||0), sb=Number(m.scoreB||0);
-        a.played++; b.played++; a.scored+=sa; a.against+=sb; b.scored+=sb; b.against+=sa; a.diff=a.scored-a.against; b.diff=b.scored-b.against;
-        if(sa>sb){ a.won++; a.pts+=3; b.lost++; }
-        else if(sb>sa){ b.won++; b.pts+=3; a.lost++; }
-        else { a.draw++; b.draw++; a.pts++; b.pts++; }
-      });
-      return [...map.values()].sort((a,b)=>b.pts-a.pts || b.diff-a.diff || b.won-a.won || a.name.localeCompare(b.name));
-    }
-    function renderFilters(listTeams){
-      $("divisionFilters").innerHTML = divisions(listTeams).map(div=>`<button class="${div===divisionFilter?'active':''}" data-div="${clean(div)}">${clean(div)}</button>`).join("");
-      $("divisionFilters").querySelectorAll("button").forEach(btn=>btn.addEventListener("click",()=>{divisionFilter=btn.dataset.div;render();}));
-    }
-    function renderMatchRow(m){
-      return `<div class="match-row"><div class="time">${clean(formatTime(m.time))}</div><div><h5>${clean(m.label||"Match")}: ${clean(teamName(m,"A"))} vs ${clean(teamName(m,"B"))}</h5><p>${clean(matchDivision(m))} • Ref: ${clean(matchReferee(m))} • ${clean(m.court||"Court TBC")} • Score ${Number(m.scoreA||0)} - ${Number(m.scoreB||0)}</p></div><div class="status ${statusClass(m.status)}">${clean(m.status||"Upcoming")}</div></div>`;
-    }
-    function render(){
-      pickDefaultEvent();
-      const s = settings();
-      const listTeams = teams();
-      const listMatches = matches();
-      const rows = standings(listTeams,listMatches);
-      const live = listMatches.find(m=>String(m.status||"").toLowerCase()==="live");
-      const next = listMatches.find(m=>String(m.status||"").toLowerCase()!=="completed" && m!==live);
-      const focus = live || next || listMatches[0];
-
-      $("eventVenue").textContent = s.venue || "Infinity Sports Arena";
-      $("eventDate").textContent = formatDate(s.date || "2026-06-27");
-      $("eventTime").textContent = s.startTime ? `${formatTime(s.startTime)} onwards` : "3 PM onwards";
-      $("mainLiveStatus").textContent = live ? "Live Now" : "Match Feed";
-      $("doneCount").textContent = `${listMatches.filter(m=>String(m.status||"").toLowerCase()==="completed").length} completed`;
-
-      if(focus){
-        $("matchLabel").textContent = focus.label || (live ? "Live Match" : "Next Match");
-        $("matchDivision").textContent = matchDivision(focus);
-        $("teamAName").textContent = teamName(focus,"A");
-        $("teamBName").textContent = teamName(focus,"B");
-        $("scoreA").textContent = Number(focus.scoreA||0);
-        $("scoreB").textContent = Number(focus.scoreB||0);
-        $("refereeText").textContent = matchReferee(focus);
-      }else{
-        $("matchLabel").textContent = "Waiting for fixtures";
-        $("matchDivision").textContent = "FOMO 2.0";
-        $("teamAName").textContent = "Team A";
-        $("teamBName").textContent = "Team B";
-        $("scoreA").textContent = "0";
-        $("scoreB").textContent = "0";
-        $("refereeText").textContent = "TBC";
-      }
-      $("upNextText").textContent = next ? `${formatTime(next.time)} • ${teamName(next,"A")} vs ${teamName(next,"B")}` : "No upcoming match yet";
-      $("queueList").innerHTML = listMatches.length ? listMatches.slice(0,7).map(renderMatchRow).join("") : `<div class="empty">Matches will appear here when the game plan is ready.</div>`;
-      renderFilters(listTeams);
-      const filteredRows = rows.filter(r=>divisionMatches(r.division));
-      $("standingsBody").innerHTML = filteredRows.length ? filteredRows.map((r,i)=>`<tr><td class="rank">${i+1}</td><td><span class="pill"><span class="color-dot" style="background:${clean(r.color)}"></span>${clean(r.name)}</span></td><td>${r.played}</td><td>${r.won}</td><td>${r.pts}</td><td>${r.diff}</td></tr>`).join("") : `<tr><td colspan="6">No standings for this division yet.</td></tr>`;
-      const filteredTeams = listTeams.filter(t=>divisionMatches(t.division));
-      $("teamsList").innerHTML = filteredTeams.length ? filteredTeams.map(t=>`<div class="team-card" style="--teamColor:${clean(t.color||'#c7ff19')}"><h5>${clean(t.name||"Team")}</h5><p>${clean(t.division||"Open")} • Captain: ${clean(t.captain||"TBC")} • Ref: ${clean(t.referee||"TBC")} • ${(t.players||[]).length} players</p></div>`).join("") : `<div class="empty" style="grid-column:1/-1">No teams found for this division.</div>`;
-      const filteredFixtures = listMatches.filter(m=>divisionMatches(matchDivision(m)));
-      $("fixturesList").innerHTML = filteredFixtures.length ? filteredFixtures.map(renderMatchRow).join("") : `<div class="empty">No fixtures found for this division.</div>`;
-    }
-    function listen(name, assign, ordered=true){
-      const ref = collection(db,name);
-      const source = ordered ? query(ref, orderBy("createdAt","desc")) : ref;
-      onSnapshot(source, snap=>{assign(snap.docs.map(d=>({id:d.id,...d.data()}))); render();}, err=>{
-        console.error(err);
-        const message = "Live data could not load yet. The public page may need Firestore read access for tournament collections.";
-        ["queueList","teamsList","fixturesList"].forEach(id=>$(id).innerHTML=`<div class="empty">${clean(message)}</div>`);
-        $("standingsBody").innerHTML = `<tr><td colspan="6">${clean(message)}</td></tr>`;
-      });
-    }
-
-    setupPhotos();
-    render();
-    listen("events", d=>events=d);
-    listen("tournamentTeams", d=>tournamentTeams=d);
-    listen("tournamentMatches", d=>tournamentMatches=d);
-    listen("tournamentSettings", d=>tournamentSettingsList=d, false);
+    const firebaseConfig={apiKey:"AIzaSyCdMfitam8d7UwVfP2I3jbuDIYvW-lAB-c",authDomain:"youth-tasks.firebaseapp.com",projectId:"youth-tasks",storageBucket:"youth-tasks.firebasestorage.app",messagingSenderId:"824413713361",appId:"1:824413713361:web:6c84c4ce1efab73b3c66f0",measurementId:"G-PKMFQ4Z1PZ"};
+    const app=initializeApp(firebaseConfig);const db=getFirestore(app);const $=id=>document.getElementById(id);const clean=v=>String(v??"").replace(/[<>&'"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;',"'":'&#39;','"':'&quot;'}[c]));
+    const FINAL_TEAMS=[{slot:1,name:"Dishan",captain:"Dishan",division:"Division 1",referee:"Shapthi",color:"#9be15d",players:["Lakeesha","Deanna","Andy","Shaven","Navindu","Joshua"]},{slot:2,name:"Mishael",captain:"Mishael",division:"Division 1",referee:"Shapthi",color:"#45d6ff",players:["Nishmi","Ashcharya","Anuk W","Dilhan C","Lukesh","Dwane"]},{slot:3,name:"Bhagya",captain:"Bhagya",division:"Division 1",referee:"Shapthi",color:"#b893ff",players:["Abigail","Leon","Yohan","Sithanga","Anuk Het","Dilhan"]},{slot:4,name:"Ciara",captain:"Ciara",division:"Division 2",referee:"Yohan",color:"#ff7bd8",players:["Tayara","Shem","Mario Silva","Yashen","Dulain","Shapthi"]},{slot:5,name:"Samuel",captain:"Samuel",division:"Division 2",referee:"Yohan",color:"#f7bd57",players:["Bianca","Onesh","Nuran","Andrew","Sahas"]},{slot:6,name:"Oshara",captain:"Oshara",division:"Division 2",referee:"Yohan",color:"#f5f0e6",players:["Dyleena","Shannal","Dan","Migara","Vinuja","Vishal"]}];
+    let selectedEventId=new URLSearchParams(location.search).get("event")||"fomo-v2",events=[],teamsRaw=[],matchesRaw=[],settingsRaw=[],activeDivision="All",firebaseOk=false;
+    function fmtTime(v){if(!v)return"TBC";const [h,m]=String(v).split(':').map(Number);if(Number.isNaN(h)||Number.isNaN(m))return v;return `${((h+11)%12)+1}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`}
+    function mins(v){const m=String(v||'').match(/^(\d{1,2}):(\d{2})/);return m?Number(m[1])*60+Number(m[2]):99999}
+    function stateClass(s){s=String(s||'').toLowerCase();return s==='live'?'live':s==='completed'?'completed':'upcoming'}
+    function findDefaultEvent(){if(new URLSearchParams(location.search).get("event"))return;const s=settingsRaw.find(x=>/fomo|ultimate/i.test(`${x.title||''} ${x.subtitle||''}`));const e=events.find(x=>/fomo|frisbee|ultimate/i.test(`${x.title||''}`));if(s)selectedEventId=s.id;else if(e)selectedEventId=e.id}
+    function rawTeamsForId(){return teamsRaw.filter(t=>(t.tournamentId||"fomo-v2")===selectedEventId)}
+    function teams(){const docs=rawTeamsForId();if(!docs.length)return FINAL_TEAMS.map(t=>({...t,id:`final-${t.slot}`,tournamentId:selectedEventId}));const bySlot=new Map(docs.map(t=>[Number(t.slot||0),t]));return FINAL_TEAMS.map(ft=>({...ft,...(bySlot.get(ft.slot)||{}),name:ft.name,captain:ft.captain,division:ft.division,referee:ft.referee,color:ft.color,players:ft.players,id:(bySlot.get(ft.slot)||{}).id||`final-${ft.slot}`}))}
+    function matches(){return matchesRaw.filter(m=>(m.tournamentId||"fomo-v2")===selectedEventId).sort((a,b)=>mins(a.time)-mins(b.time)||String(a.label||'').localeCompare(String(b.label||'')))}
+    function settings(){return settingsRaw.find(s=>s.id===selectedEventId)||{venue:"Infinity Sports Arena",startTime:"15:00",title:"FOMO 2.0"}}
+    function teamById(id){return teams().find(t=>t.id===id)||teamsRaw.find(t=>t.id===id)||FINAL_TEAMS.find(t=>t.id===id)||{}}
+    function teamName(m,side){const t=teamById(side==='A'?m.teamAId:m.teamBId);return t.name||m[`team${side}Name`]||`Team ${side}`}
+    function mDiv(m){const a=teamById(m.teamAId),b=teamById(m.teamBId);return m.division||(a.division&&a.division===b.division?a.division:[a.division,b.division].filter(Boolean).join(' / '))||'Open'}
+    function mRef(m){const a=teamById(m.teamAId),b=teamById(m.teamBId);return m.referee||(a.referee&&a.referee===b.referee?a.referee:[a.referee,b.referee].filter(Boolean).join(' / '))||'TBC'}
+    function rows(){const map=new Map(teams().map(t=>[t.id,{...t,played:0,won:0,lost:0,draw:0,pts:0,diff:0,scored:0,against:0}]));matches().filter(m=>String(m.status||'').toLowerCase()==='completed').forEach(m=>{const a=map.get(m.teamAId),b=map.get(m.teamBId);if(!a||!b)return;const sa=Number(m.scoreA||0),sb=Number(m.scoreB||0);a.played++;b.played++;a.scored+=sa;a.against+=sb;b.scored+=sb;b.against+=sa;a.diff=a.scored-a.against;b.diff=b.scored-b.against;if(sa>sb){a.won++;a.pts+=3;b.lost++}else if(sb>sa){b.won++;b.pts+=3;a.lost++}else{a.draw++;b.draw++;a.pts++;b.pts++}});return [...map.values()].sort((a,b)=>b.pts-a.pts||b.diff-a.diff||b.won-a.won||a.name.localeCompare(b.name))}
+    function renderNav(){document.querySelectorAll('#nav button').forEach(btn=>btn.onclick=()=>switchPage(btn.dataset.page));$('mobileNav').onchange=e=>switchPage(e.target.value)}function switchPage(page){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$(`page-${page}`).classList.add('active');document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('mobileNav').value=page}
+    function renderFilters(){const divs=['All',...new Set(teams().map(t=>t.division))];const html=divs.map(d=>`<button class="btn ${activeDivision===d?'primary':''}" data-div="${clean(d)}">${clean(d)}</button>`).join('');$('divisionFilters').innerHTML=html;$('teamDivisionPageFilters').innerHTML=html;document.querySelectorAll('[data-div]').forEach(b=>b.onclick=()=>{activeDivision=b.dataset.div;render()})}
+    function render(){findDefaultEvent();const t=teams(),m=matches(),r=rows(),s=settings();$('connectionPill').textContent=firebaseOk?'Firebase connected':'Firebase fallback view';$('connectionPill').style.color=firebaseOk?'#d6ff7a':'#ffd37a';$('eventVenue').textContent=s.venue||'Infinity Sports Arena';$('eventTime').textContent=s.startTime?`${fmtTime(s.startTime)} onwards`:'3:00 PM onwards';$('teamCount').textContent=t.length;$('matchCount').textContent=m.length;$('doneCount').textContent=m.filter(x=>String(x.status||'').toLowerCase()==='completed').length;const live=m.find(x=>String(x.status||'').toLowerCase()==='live');const focus=live||m.find(x=>String(x.status||'').toLowerCase()!=='completed')||m[0];if(focus){$('liveStateText').textContent=live?'Live now':'Next match';$('mainMatchTitle').textContent=`${teamName(focus,'A')} vs ${teamName(focus,'B')}`;$('teamAName').textContent=teamName(focus,'A');$('teamBName').textContent=teamName(focus,'B');$('scoreA').textContent=Number(focus.scoreA||0);$('scoreB').textContent=Number(focus.scoreB||0)}else{$('mainMatchTitle').textContent='Waiting for the first pull.';$('teamAName').textContent='Team A';$('teamBName').textContent='Team B';$('scoreA').textContent='0';$('scoreB').textContent='0'}const next=m.filter(x=>x!==focus).slice(0,5);$('queueList').innerHTML=next.length?next.map(x=>`<div class="match-row"><span class="time">${fmtTime(x.time)}</span><div><h4>${clean(teamName(x,'A'))} vs ${clean(teamName(x,'B'))}</h4><p>${clean(x.label||'Match')} • ${clean(mDiv(x))} • Ref: ${clean(mRef(x))} • ${Number(x.scoreA||0)}-${Number(x.scoreB||0)}</p></div><span class="state ${stateClass(x.status)}">${clean(x.status||'Upcoming')}</span></div>`).join(''):'<div class="empty">No matches in the queue yet.</div>';renderFilters();const rf=r.filter(x=>activeDivision==='All'||x.division===activeDivision);$('standingsBody').innerHTML=rf.map((x,i)=>`<tr><td>${i+1}</td><td><span class="leader-name"><span class="color-dot" style="background:${x.color}"></span>${clean(x.name)}</span></td><td>${x.played}</td><td>${x.won}</td><td>${x.pts}</td><td>${x.diff}</td></tr>`).join('')||'<tr><td colspan="6">No standings yet.</td></tr>';const mf=m.filter(x=>activeDivision==='All'||mDiv(x)===activeDivision);$('scheduleList').innerHTML=mf.length?mf.map(x=>`<div class="match-row"><span class="time">${fmtTime(x.time)}</span><div><h4>${clean(teamName(x,'A'))} vs ${clean(teamName(x,'B'))}</h4><p>${clean(mDiv(x))} • Ref: ${clean(mRef(x))} • ${clean(x.court||'Court TBC')} • Score ${Number(x.scoreA||0)}-${Number(x.scoreB||0)}</p></div><span class="state ${stateClass(x.status)}">${clean(x.status||'Upcoming')}</span></div>`).join(''):'<div class="empty">Fixtures will appear here when added.</div>';const grouped=['Division 1','Division 2'].map(div=>{const list=t.filter(x=>x.division===div);return `<div class="division-band"><h3>${div}</h3><span>Ref: ${div==='Division 1'?'Shapthi':'Yohan'}</span></div><div class="teams-grid">${list.map(team=>`<div class="team-card" style="--teamColor:${team.color}"><h3>${clean(team.name)}</h3><p>${clean(team.division)} • Captain: ${clean(team.captain)}</p><div class="players">${team.players.map(p=>`<span>${clean(p)}</span>`).join('')}</div></div>`).join('')}</div>`}).join('');$('teamsPageList').innerHTML=grouped}
+    const photos=[['assets/youth/youth_stair_big_13_web.jpg','Come for the game. Stay for the people.'],['assets/youth/youth_group_large_03_web.jpg','A youth family with room for one more.'],['assets/youth/youth_girls_group_09_web.jpg','Faith, friendship and good energy.'],['assets/youth/youth_fun_group_11_web.jpg','The kind of people who make Sundays better.'],['assets/youth/youth_stairs_01_web.jpg','Big room, good laughs, real community.'],['assets/youth/youth_girls_group_10_web.jpg','Pull up and find your people.'],['assets/youth/youth_fun_group_12_web.jpg','Joy is part of the culture.']];let pIndex=0;function setPhoto(i){pIndex=i%photos.length;const [src,cap]=photos[pIndex];$('mainYouthPhoto').src=src;$('photoStage').style.setProperty('--blurImg',`url(${src})`);$('photoText').textContent=cap;document.querySelectorAll('#thumbRow button').forEach((b,k)=>b.classList.toggle('active',k===pIndex))}function initPhotos(){$('thumbRow').innerHTML=photos.map(([src],i)=>`<button class="${i===0?'active':''}"><img src="${src}" alt="Youth photo ${i+1}"></button>`).join('');document.querySelectorAll('#thumbRow button').forEach((b,i)=>b.onclick=()=>setPhoto(i));setPhoto(0);setInterval(()=>setPhoto(pIndex+1),4300)}
+    function listen(name,assign,ordered=true){const ref=collection(db,name);const q=ordered?query(ref,orderBy('createdAt','desc')):ref;onSnapshot(q,snap=>{firebaseOk=true;assign(snap.docs.map(d=>({id:d.id,...d.data()})));render()},err=>{console.error(err);firebaseOk=false;render()})}
+    renderNav();initPhotos();setTimeout(()=>$('loader').classList.add('hide'),900);render();listen('events',d=>events=d);listen('tournamentTeams',d=>teamsRaw=d);listen('tournamentMatches',d=>matchesRaw=d);listen('tournamentSettings',d=>settingsRaw=d,false);
   </script>
 </body>
 </html>

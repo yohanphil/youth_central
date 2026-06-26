@@ -3745,6 +3745,43 @@
       .game-filter-select{width:100%!important;max-width:none!important;}
     }
 
+
+    /* FOMO UX refresh - softer control center */
+    body.game-mode{background:#05080d!important;}
+    body.game-mode .referee-shell-v14{background:radial-gradient(circle at top left,rgba(73,214,255,.10),transparent 30%),linear-gradient(135deg,#070b12 0%,#09141c 58%,#07100d 100%)!important;border-color:rgba(173,255,82,.16)!important;box-shadow:0 20px 70px rgba(0,0,0,.45)!important;}
+    body.game-mode .ref-top-v14{background:rgba(4,8,13,.86)!important;border-bottom:1px solid rgba(255,255,255,.08)!important;backdrop-filter:blur(16px)!important;}
+    body.game-mode .ref-content-v14{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01))!important;}
+    body.game-mode .game-mode-switch{gap:10px!important;padding:14px!important;background:rgba(2,5,9,.62)!important;border-bottom:1px solid rgba(255,255,255,.06)!important;position:sticky!important;top:0!important;z-index:6!important;}
+    body.game-mode .ref-tab,body.game-mode .ref-actions-v14 button,body.game-mode .card button,body.game-mode .mini-btn{background:rgba(255,255,255,.06)!important;color:#eaf6ff!important;border:1px solid rgba(255,255,255,.10)!important;box-shadow:none!important;}
+    body.game-mode .ref-tab.active,body.game-mode .ref-tab:hover,body.game-mode .card button:not(.btn-ghost):not(.btn-danger),body.game-mode .fomo-team-actions button:last-child,body.game-mode .fixture-form button{background:linear-gradient(135deg,#b8ff4d,#45d6ff)!important;color:#071016!important;border:0!important;}
+    body.game-mode .btn-danger{background:rgba(255,73,102,.12)!important;color:#ffdce3!important;border-color:rgba(255,73,102,.25)!important;}
+    body.game-mode .card,body.game-mode .control-block,body.game-mode .live-control-panel,body.game-mode .fomo-team-manager{background:linear-gradient(180deg,rgba(12,19,30,.92),rgba(7,12,20,.96))!important;border:1px solid rgba(255,255,255,.08)!important;box-shadow:0 20px 55px rgba(0,0,0,.35)!important;}
+    body.game-mode .schedule-only-card{max-width:1180px!important;margin:0 auto!important;}
+    body.game-mode .fixture-tool-row,body.game-mode .standings-tool-row{background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.07)!important;border-radius:22px!important;padding:14px!important;}
+    body.game-mode input,body.game-mode select,body.game-mode textarea{background:#070c14!important;color:#eef7ff!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:none!important;}
+    body.game-mode input:focus,body.game-mode select:focus,body.game-mode textarea:focus{border-color:rgba(69,214,255,.55)!important;outline:none!important;box-shadow:0 0 0 4px rgba(69,214,255,.08)!important;}
+    body.game-mode .match-card{background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.08)!important;border-left:4px solid var(--match-accent,#b8ff4d)!important;border-radius:24px!important;}
+    body.game-mode .match-time-chip{background:rgba(184,255,77,.10)!important;border-color:rgba(184,255,77,.20)!important;color:#d9ff86!important;}
+    body.game-mode .match-versus{background:rgba(255,255,255,.025)!important;border-radius:18px!important;}
+    body.game-mode .fomo-team-manager{padding:28px;border-radius:30px;max-width:1240px;margin:0 auto;}
+    body.game-mode .fomo-team-toolbar{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:18px;}
+    body.game-mode .fomo-team-toolbar h2{font-size:34px;margin:6px 0 6px;letter-spacing:-.04em;}
+    body.game-mode .fomo-team-toolbar p{color:#a9b7c8;margin:0;}
+    body.game-mode .fomo-team-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
+    body.game-mode .fomo-team-filters{display:grid;grid-template-columns:1fr minmax(260px,420px) auto;gap:12px;align-items:center;margin-bottom:14px;}
+    body.game-mode .fomo-roster-summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 20px;}
+    body.game-mode .fomo-roster-summary div{padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);}
+    body.game-mode .fomo-roster-summary strong{display:block;color:#eaf6ff;margin-bottom:4px;}
+    body.game-mode .fomo-roster-summary span{color:#aab7c8;font-size:13px;}
+    body.game-mode #tournamentTeamsList.team-builder-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important;}
+    body.game-mode #tournamentTeamsList .team-card{background:linear-gradient(180deg,rgba(13,20,30,.96),rgba(8,13,21,.98))!important;border:1px solid rgba(255,255,255,.08)!important;border-top:4px solid var(--team-color,#b8ff4d)!important;border-radius:24px!important;padding:18px!important;box-shadow:0 18px 45px rgba(0,0,0,.28)!important;}
+    body.game-mode #tournamentTeamsList .team-color-strip{display:none!important;}
+    body.game-mode #tournamentTeamsList .team-card h4{font-size:22px!important;margin:0 0 10px!important;}
+    body.game-mode #tournamentTeamsList textarea{min-height:132px!important;}
+    body.game-mode .team-card-actions{gap:10px!important;margin-top:12px!important;}
+    @media(max-width:1100px){body.game-mode #tournamentTeamsList.team-builder-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}body.game-mode .fomo-team-filters{grid-template-columns:1fr;}body.game-mode .fomo-team-toolbar{flex-direction:column;}body.game-mode .fomo-roster-summary{grid-template-columns:1fr;}}
+    @media(max-width:720px){body.game-mode #tournamentTeamsList.team-builder-grid{grid-template-columns:1fr!important;}body.game-mode .game-mode-switch{overflow:auto;}.ref-brand h1{font-size:18px!important;}}
+
   </style>
 </head>
 
@@ -4372,35 +4409,37 @@
               </div>
 
               <div id="game-teams" class="game-section">
-                <div class="card">
-                  <div class="card-head">
+                <div class="fomo-team-manager">
+                  <div class="fomo-team-toolbar">
                     <div>
+                      <span class="control-eyebrow">FINAL ROSTERS</span>
                       <h2>Teams</h2>
-                      <p>Prepare captains, divisions, referees and players before the tournament starts.</p>
+                      <p>Clean team control. Filter, search, edit and save the final FOMO team list without duplicate panels.</p>
                     </div>
-                    <div class="right-actions">
+                    <div class="fomo-team-actions">
                       <select id="teamDivisionFilter" class="game-filter-select" onchange="setTeamDivisionFilter(this.value)">
                         <option value="">All Divisions</option>
                       </select>
+                      <button class="btn-ghost" onclick="clearTeamFilters()">Clear</button>
                       <button class="btn-ghost" onclick="saveVisibleTournamentTeams()">Save Visible</button>
-                      <button onclick="seedFomoTeams(true)">Insert FOMO Teams</button>
-                      <button class="btn-ghost" onclick="addTournamentTeam()">+ Add Team</button>
+                      <button onclick="seedFomoTeams(true)">Update Final Teams</button>
                     </div>
                   </div>
-                  <div class="division-ref-grid" id="divisionRefGrid"></div>
-                  <div class="team-tool-row">
+
+                  <div class="fomo-team-filters">
                     <div id="teamDivisionQuickFilters" class="team-filter-pills"></div>
-                    <input id="teamSearchFilter" placeholder="Search team, captain, referee or player" oninput="setTeamSearchFilter(this.value)">
-                    <button class="btn-ghost mini-btn" onclick="clearTeamFilters()">Clear</button>
-                  </div>
-                  <div class="team-edit-hint">
-                    <span><b>Editable teams:</b> change any name, captain, division, referee, color, player list or notes. Press Save on one team or Save Visible for the filtered set.</span>
+                    <input id="teamSearchFilter" placeholder="Search captain, team, referee or player" oninput="setTeamSearchFilter(this.value)">
                     <span id="teamFilterCount" class="filter-count-badge">All teams</span>
                   </div>
+
+                  <div class="fomo-roster-summary">
+                    <div><strong>Division 1</strong><span>Ref: Shapthi • Dishan / Mishael / Bhagya</span></div>
+                    <div><strong>Division 2</strong><span>Ref: Yohan • Ciara / Samuel / Oshara</span></div>
+                  </div>
+
                   <div id="tournamentTeamsList" class="team-builder-grid"></div>
                 </div>
               </div>
-
 
             </div>
           </div>
@@ -5512,11 +5551,11 @@
     };
 
     const FOMO_DEFAULT_TEAMS = [
-      {slot:1,name:"Dishan",captain:"Dishan",division:"Division 1",referee:"Shapthi",color:"#c6f900",players:["Lakeesha","Deanna","Andy","Shaven","Navindu","Joshua"]},
-      {slot:2,name:"Mishael",captain:"Mishael",division:"Division 1",referee:"Shapthi",color:"#27e8ff",players:["Nishmi","Ashcharya","Anuk W","Dilhan C","Sithanga","Dwane"]},
-      {slot:3,name:"Bhagya",captain:"Bhagya",division:"Division 1",referee:"Shapthi",color:"#9b6cff",players:["Abigail","Leon","Yohan","Lukesh","Anuk Het","Dilhan"]},
-      {slot:4,name:"Ciara",captain:"Ciara",division:"Division 2",referee:"Yohan",color:"#ff5edb",players:["Tayara","Shem","Mario silva","Yashen","Dulain","Shapthi"]},
-      {slot:5,name:"Samuel",captain:"Samuel",division:"Division 2",referee:"Yohan",color:"#f6b445",players:["Bianca","Onesh","Nuran","Andrew","Sahas"]},
+      {slot:1,name:"Dishan",captain:"Dishan",division:"Division 1",referee:"Shapthi",color:"#9be15d",players:["Lakeesha","Deanna","Andy","Shaven","Navindu","Joshua"]},
+      {slot:2,name:"Mishael",captain:"Mishael",division:"Division 1",referee:"Shapthi",color:"#45d6ff",players:["Nishmi","Ashcharya","Anuk W","Dilhan C","Lukesh","Dwane"]},
+      {slot:3,name:"Bhagya",captain:"Bhagya",division:"Division 1",referee:"Shapthi",color:"#b893ff",players:["Abigail","Leon","Yohan","Sithanga","Anuk Het","Dilhan"]},
+      {slot:4,name:"Ciara",captain:"Ciara",division:"Division 2",referee:"Yohan",color:"#ff7bd8",players:["Tayara","Shem","Mario Silva","Yashen","Dulain","Shapthi"]},
+      {slot:5,name:"Samuel",captain:"Samuel",division:"Division 2",referee:"Yohan",color:"#f7bd57",players:["Bianca","Onesh","Nuran","Andrew","Sahas"]},
       {slot:6,name:"Oshara",captain:"Oshara",division:"Division 2",referee:"Yohan",color:"#f5f0e6",players:["Dyleena","Shannal","Dan","Migara","Vinuja","Vishal"]}
     ];
 
@@ -5607,7 +5646,7 @@
         };
         const existing = bySlot.get(team.slot);
         if(existing){
-          const merged = {
+          const merged = force ? data : {
             tournamentId:id,
             slot:existing.slot || team.slot,
             name:existing.name && !String(existing.name).startsWith("Team ") ? existing.name : team.name,
@@ -5624,7 +5663,7 @@
           await addDoc(collection(db,"tournamentTeams"), {...data, createdAt:serverTimestamp()});
         }
       }
-      notify("FOMO teams inserted. Existing edits were kept.");
+      notify(force ? "FOMO teams updated with the final roster." : "FOMO teams inserted. Existing edits were kept.");
     };
 
     async function ensureFomoTeamsSeeded(){
