@@ -5680,9 +5680,19 @@
       }
     }
 
+    function scoreValue(m, side){
+      const keys = side === "A"
+        ? ["scoreA","teamAScore","aScore","pointsA","teamAPoints"]
+        : ["scoreB","teamBScore","bScore","pointsB","teamBPoints"];
+      for(const key of keys){
+        if(m && m[key] !== undefined && m[key] !== null && m[key] !== "") return Number(m[key]) || 0;
+      }
+      return 0;
+    }
+
     function isMatchCountedForStandings(m){
       const status = String(m?.status || "").toLowerCase();
-      return status === "completed" || status === "live" || Number(m?.scoreA || 0) > 0 || Number(m?.scoreB || 0) > 0;
+      return status === "completed" || status === "live" || scoreValue(m,"A") > 0 || scoreValue(m,"B") > 0;
     }
 
     function activeTournamentTeams(){
@@ -5937,6 +5947,9 @@
         teamBName:b?.name || "Team B",
         scoreA:Number($("matchScoreA").value || 0),
         scoreB:Number($("matchScoreB").value || 0),
+        teamAScore:Number($("matchScoreA").value || 0),
+        teamBScore:Number($("matchScoreB").value || 0),
+        liveSyncVersion:Date.now(),
         status:$("matchStatus").value,
         createdAt:serverTimestamp(),
         updatedAt:serverTimestamp()
@@ -5961,10 +5974,10 @@
       if(!canManage()) return notify("Only Admin or Core Moderator can update scores.");
       const match = tournamentMatches.find(m=>m.id===id);
       if(!match) return notify("Match not found.");
-      const updates = { updatedAt: serverTimestamp() };
+      const updates = { updatedAt: serverTimestamp(), liveSyncVersion:Date.now() };
       const delta = Number(amount || 0);
-      if(side === "A") updates.scoreA = Math.max(0, Number(match.scoreA || 0) + delta);
-      if(side === "B") updates.scoreB = Math.max(0, Number(match.scoreB || 0) + delta);
+      if(side === "A") { updates.scoreA = Math.max(0, scoreValue(match,"A") + delta); updates.teamAScore = updates.scoreA; }
+      if(side === "B") { updates.scoreB = Math.max(0, scoreValue(match,"B") + delta); updates.teamBScore = updates.scoreB; }
       await updateDoc(doc(db,"tournamentMatches",id), updates);
       const idx = tournamentMatches.findIndex(m=>m.id===id);
       if(idx > -1){
@@ -5978,13 +5991,18 @@
 
     window.saveTournamentMatch = async function(id){
       if(!canManage()) return notify("Only Admin or Core Moderator can edit matches.");
+      const scoreAValue = Number($(`scoreA-${id}`).value || 0);
+      const scoreBValue = Number($(`scoreB-${id}`).value || 0);
       const updates = {
-        scoreA:Number($(`scoreA-${id}`).value || 0),
-        scoreB:Number($(`scoreB-${id}`).value || 0),
+        scoreA:scoreAValue,
+        scoreB:scoreBValue,
+        teamAScore:scoreAValue,
+        teamBScore:scoreBValue,
         status:$(`status-${id}`).value,
         court:$(`court-${id}`).value.trim(),
         time:$(`time-${id}`).value,
-        updatedAt:serverTimestamp()
+        updatedAt:serverTimestamp(),
+        liveSyncVersion:Date.now()
       };
       await updateDoc(doc(db,"tournamentMatches",id), updates);
       const idx = tournamentMatches.findIndex(m=>m.id===id);
@@ -6003,10 +6021,10 @@
       const matches = activeTournamentMatches();
       for(const m of matches){
         if(m.id !== id && m.status === "Live"){
-          await updateDoc(doc(db,"tournamentMatches",m.id), { status:"Upcoming", updatedAt:serverTimestamp() });
+          await updateDoc(doc(db,"tournamentMatches",m.id), { status:"Upcoming", updatedAt:serverTimestamp(), liveSyncVersion:Date.now() });
         }
       }
-      await updateDoc(doc(db,"tournamentMatches",id), { status:"Live", updatedAt:serverTimestamp() });
+      await updateDoc(doc(db,"tournamentMatches",id), { status:"Live", updatedAt:serverTimestamp(), liveSyncVersion:Date.now() });
       await bumpTournamentLiveSync();
       refreshTournamentLiveSync(true);
       notify("Match is now live");
@@ -6014,7 +6032,7 @@
 
     window.pauseTournamentMatch = async function(id){
       if(!canManage()) return notify("Only Admin or Core Moderator can pause matches.");
-      await updateDoc(doc(db,"tournamentMatches",id), { status:"Upcoming", updatedAt:serverTimestamp() });
+      await updateDoc(doc(db,"tournamentMatches",id), { status:"Upcoming", updatedAt:serverTimestamp(), liveSyncVersion:Date.now() });
       await bumpTournamentLiveSync();
       refreshTournamentLiveSync(true);
       notify("Match moved back to upcoming");
@@ -6022,7 +6040,7 @@
 
     window.completeTournamentMatch = async function(id){
       if(!canManage()) return notify("Only Admin or Core Moderator can complete matches.");
-      await updateDoc(doc(db,"tournamentMatches",id), { status:"Completed", updatedAt:serverTimestamp() });
+      await updateDoc(doc(db,"tournamentMatches",id), { status:"Completed", updatedAt:serverTimestamp(), liveSyncVersion:Date.now() });
       await bumpTournamentLiveSync();
       refreshTournamentLiveSync(true);
       notify("Match completed");
@@ -6061,7 +6079,7 @@
       matches.filter(isMatchCountedForStandings).forEach(m=>{
         if(!table[m.teamAId] || !table[m.teamBId]) return;
         const a = table[m.teamAId], b = table[m.teamBId];
-        const scoreA = Number(m.scoreA || 0), scoreB = Number(m.scoreB || 0);
+        const scoreA = scoreValue(m,"A"), scoreB = scoreValue(m,"B");
         a.played++; b.played++;
         a.diff += scoreA - scoreB;
         b.diff += scoreB - scoreA;
@@ -6112,7 +6130,7 @@
       const current = live || matches.find(m=>m.status==="Upcoming") || matches[0];
       const next = nextUpcomingMatch(matches);
       if($("controlCurrentMatch")){
-        $("controlCurrentMatch").textContent = current ? `${teamById(current.teamAId).name || current.teamAName || "Team A"} ${Number(current.scoreA||0)} — ${Number(current.scoreB||0)} ${teamById(current.teamBId).name || current.teamBName || "Team B"}` : "No live match yet";
+        $("controlCurrentMatch").textContent = current ? `${teamById(current.teamAId).name || current.teamAName || "Team A"} ${scoreValue(current,"A")} — ${scoreValue(current,"B")} ${teamById(current.teamBId).name || current.teamBName || "Team B"}` : "No live match yet";
       }
       if($("controlCurrentMeta")){
         $("controlCurrentMeta").textContent = current ? `${current.label || "Match"} • ${formatMatchTime(current.time)} • ${current.court || "Ground TBC"} • ${current.status || "Upcoming"}` : "Set a match to Live and it appears here.";
@@ -6159,12 +6177,12 @@
         target.innerHTML = `
           <div class="live-team">
             <h3>${clean(teamById(match.teamAId).name || match.teamAName || "Team A")}</h3>
-            <div class="score">${Number(match.scoreA||0)}</div>
+            <div class="score">${scoreValue(match,"A")}</div>
           </div>
           <div class="vs-pill">VS</div>
           <div class="live-team">
             <h3>${clean(teamById(match.teamBId).name || match.teamBName || "Team B")}</h3>
-            <div class="score">${Number(match.scoreB||0)}</div>
+            <div class="score">${scoreValue(match,"B")}</div>
           </div>
         `;
       }else{
@@ -6237,12 +6255,12 @@
             <div class="live-score-layout">
               <div class="score-team-panel" style="border-color:${clean(teamById(current.teamAId).color||"rgba(255,255,255,.10)")}">
                 <h3>${clean(aName)}</h3>
-                <div class="score-number">${Number(current.scoreA||0)}</div>
+                <div class="score-number">${scoreValue(current,"A")}</div>
               </div>
               <div class="score-versus">VS</div>
               <div class="score-team-panel" style="border-color:${clean(teamById(current.teamBId).color||"rgba(255,255,255,.10)")}">
                 <h3>${clean(bName)}</h3>
-                <div class="score-number">${Number(current.scoreB||0)}</div>
+                <div class="score-number">${scoreValue(current,"B")}</div>
               </div>
             </div>
             <div class="live-match-meta-bar">
@@ -6315,7 +6333,7 @@
           const bName = teamById(m.teamBId).name || m.teamBName || "Team B";
           return `<div class="queue-card ${m.status==="Live"?"live":""}">
             <div class="queue-time">${formatMatchTime(m.time)}</div>
-            <div><h4>${clean(aName)} vs ${clean(bName)}</h4><p>${clean(m.label||"Match")} • ${clean(m.court||"Ground TBC")} • ${clean(m.status||"Upcoming")} • ${Number(m.scoreA||0)} - ${Number(m.scoreB||0)}</p></div>
+            <div><h4>${clean(aName)} vs ${clean(bName)}</h4><p>${clean(m.label||"Match")} • ${clean(m.court||"Ground TBC")} • ${clean(m.status||"Upcoming")} • ${scoreValue(m,"A")} - ${scoreValue(m,"B")}</p></div>
             <button class="mini-btn ${m.status==="Live"?"btn-yellow":""}" onclick="${m.status==="Live" ? `completeTournamentMatch('${m.id}')` : `setTournamentMatchLive('${m.id}')`}">${m.status==="Live" ? "Complete" : "Set Live"}</button>
           </div>`;
         }).join("") : `<div class="empty">Match queue is empty.</div>`;
@@ -6359,20 +6377,20 @@
               </div>
               <div class="match-versus">
                 <span class="match-team-name">${clean(aName)}</span>
-                <span class="match-score-pill">${Number(m.scoreA||0)} - ${Number(m.scoreB||0)}</span>
+                <span class="match-score-pill">${scoreValue(m,"A")} - ${scoreValue(m,"B")}</span>
                 <span class="match-team-name">${clean(bName)}</span>
               </div>
               <div class="match-edit-grid">
-                <input id="time-${m.id}" type="time" value="${clean(m.time||"")}">
-                <input id="scoreA-${m.id}" type="number" value="${Number(m.scoreA||0)}">
-                <input id="scoreB-${m.id}" type="number" value="${Number(m.scoreB||0)}">
-                <select id="status-${m.id}">
+                <input id="time-${m.id}" type="time" value="${clean(m.time||"")}" onchange="saveTournamentMatch('${m.id}')">
+                <input id="scoreA-${m.id}" type="number" value="${scoreValue(m,"A")}" onchange="saveTournamentMatch('${m.id}')">
+                <input id="scoreB-${m.id}" type="number" value="${scoreValue(m,"B")}" onchange="saveTournamentMatch('${m.id}')">
+                <select id="status-${m.id}" onchange="saveTournamentMatch('${m.id}')">
                   <option ${m.status==="Upcoming"?"selected":""}>Upcoming</option>
                   <option ${m.status==="Live"?"selected":""}>Live</option>
                   <option ${m.status==="Completed"?"selected":""}>Completed</option>
                 </select>
               </div>
-              <input id="court-${m.id}" value="${clean(m.court||"")}" placeholder="Court / Ground" style="margin-top:8px;">
+              <input id="court-${m.id}" value="${clean(m.court||"")}" placeholder="Court / Ground" style="margin-top:8px;" onchange="saveTournamentMatch('${m.id}')">
               <div class="big-touch-actions">
                 <button class="mini-btn" onclick="setTournamentMatchLive('${m.id}')">Set Live</button>
                 <button class="mini-btn" onclick="quickScore('${m.id}','A',1)">+1 ${clean(aName)}</button>
@@ -6413,7 +6431,7 @@
       if($("publicMatches")) $("publicMatches").innerHTML = matches.length ? matches.map(m=>`
         <div class="timeline-card">
           <div class="timeline-time">${formatMatchTime(m.time)}</div>
-          <div><h4>${clean(m.label||"Match")}: ${clean(teamById(m.teamAId).name||m.teamAName||"Team A")} vs ${clean(teamById(m.teamBId).name||m.teamBName||"Team B")}</h4><p>${clean(m.division||"Open")} • Ref: ${clean(m.referee||"TBC")} • ${clean(m.court||"Ground TBC")} • ${clean(m.status||"Upcoming")} • Score ${Number(m.scoreA||0)} - ${Number(m.scoreB||0)}</p></div>
+          <div><h4>${clean(m.label||"Match")}: ${clean(teamById(m.teamAId).name||m.teamAName||"Team A")} vs ${clean(teamById(m.teamBId).name||m.teamBName||"Team B")}</h4><p>${clean(m.division||"Open")} • Ref: ${clean(m.referee||"TBC")} • ${clean(m.court||"Ground TBC")} • ${clean(m.status||"Upcoming")} • Score ${scoreValue(m,"A")} - ${scoreValue(m,"B")}</p></div>
         </div>
       `).join("") : `<div class="empty">Match schedule will appear here.</div>`;
     }
@@ -7177,12 +7195,17 @@
       return snap.docs.map(d=>({id:d.id,...d.data()}));
     }
 
+    async function fetchCollectionFresh(name){
+      try{ return await getDocsFromServer(collection(db,name)); }
+      catch(err){ console.warn("Server tournament fetch failed, using normal Firestore fetch for", name, err); return await getDocs(collection(db,name)); }
+    }
+
     async function refreshTournamentLiveSync(silent=false){
       try{
         const [teamSnap, matchSnap, settingsSnap] = await Promise.all([
-          getDocsFromServer(collection(db,"tournamentTeams")),
-          getDocsFromServer(collection(db,"tournamentMatches")),
-          getDocsFromServer(collection(db,"tournamentSettings"))
+          fetchCollectionFresh("tournamentTeams"),
+          fetchCollectionFresh("tournamentMatches"),
+          fetchCollectionFresh("tournamentSettings")
         ]);
         tournamentTeams = toDocArray(teamSnap);
         tournamentMatches = toDocArray(matchSnap);
@@ -7204,7 +7227,11 @@
 
     function listen(name,assign,sort=false){
       const col=collection(db,name), q=sort?query(col,orderBy("createdAt","desc")):col;
-      onSnapshot(q,snap=>{assign(snap.docs.map(d=>({id:d.id,...d.data()})));render()},err=>{console.error(err);notify("Firestore issue. Check Authentication and Rules.")});
+      onSnapshot(q,snap=>{
+        assign(snap.docs.map(d=>({id:d.id,...d.data()})));
+        if(["tournamentTeams","tournamentMatches","tournamentSettings","events"].includes(name)) renderTournament();
+        render();
+      },err=>{console.error(err);notify("Firestore issue. Check Authentication and Rules.")});
     }
 
     function startListeners(){
