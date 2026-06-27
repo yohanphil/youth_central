@@ -4626,7 +4626,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, setDoc, getDoc, getDocs, onSnapshot, serverTimestamp, query, orderBy, where, writeBatch } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, setDoc, getDoc, getDocs, getDocsFromServer, onSnapshot, serverTimestamp, query, orderBy, where, writeBatch } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCdMfitam8d7UwVfP2I3jbuDIYvW-lAB-c",
@@ -5667,6 +5667,24 @@
       return tournamentSettingsList.find(s=>s.id===activeTournamentId()) || {};
     }
 
+    async function bumpTournamentLiveSync(){
+      const id = activeTournamentId();
+      try{
+        await setDoc(doc(db,"tournamentSettings",id), {
+          eventId:id,
+          lastLiveSyncAt:serverTimestamp(),
+          liveSyncVersion:Date.now()
+        }, { merge:true });
+      }catch(e){
+        console.warn("Live sync bump failed", e);
+      }
+    }
+
+    function isMatchCountedForStandings(m){
+      const status = String(m?.status || "").toLowerCase();
+      return status === "completed" || status === "live" || Number(m?.scoreA || 0) > 0 || Number(m?.scoreB || 0) > 0;
+    }
+
     function activeTournamentTeams(){
       const id = activeTournamentId();
       return tournamentTeams.filter(t => (t.tournamentId || "fomo-v2") === id);
@@ -5923,6 +5941,8 @@
         createdAt:serverTimestamp(),
         updatedAt:serverTimestamp()
       });
+      await bumpTournamentLiveSync();
+      await refreshTournamentLiveSync(true);
       ["matchLabel","matchTime","matchCourt","matchScoreA","matchScoreB"].forEach(id=>$(id).value="");
       notify("Match added");
     };
@@ -5946,19 +5966,34 @@
       if(side === "A") updates.scoreA = Math.max(0, Number(match.scoreA || 0) + delta);
       if(side === "B") updates.scoreB = Math.max(0, Number(match.scoreB || 0) + delta);
       await updateDoc(doc(db,"tournamentMatches",id), updates);
+      const idx = tournamentMatches.findIndex(m=>m.id===id);
+      if(idx > -1){
+        tournamentMatches[idx] = { ...tournamentMatches[idx], ...updates, updatedAt:new Date().toISOString() };
+        renderTournament();
+      }
+      await bumpTournamentLiveSync();
+      refreshTournamentLiveSync(true);
       flashScore(`${delta > 0 ? "+" : ""}${delta}`);
     };
 
     window.saveTournamentMatch = async function(id){
       if(!canManage()) return notify("Only Admin or Core Moderator can edit matches.");
-      await updateDoc(doc(db,"tournamentMatches",id), {
+      const updates = {
         scoreA:Number($(`scoreA-${id}`).value || 0),
         scoreB:Number($(`scoreB-${id}`).value || 0),
         status:$(`status-${id}`).value,
         court:$(`court-${id}`).value.trim(),
         time:$(`time-${id}`).value,
         updatedAt:serverTimestamp()
-      });
+      };
+      await updateDoc(doc(db,"tournamentMatches",id), updates);
+      const idx = tournamentMatches.findIndex(m=>m.id===id);
+      if(idx > -1){
+        tournamentMatches[idx] = { ...tournamentMatches[idx], ...updates, updatedAt:new Date().toISOString() };
+        renderTournament();
+      }
+      await bumpTournamentLiveSync();
+      refreshTournamentLiveSync(true);
       notify("Match updated");
     };
 
@@ -5972,18 +6007,24 @@
         }
       }
       await updateDoc(doc(db,"tournamentMatches",id), { status:"Live", updatedAt:serverTimestamp() });
+      await bumpTournamentLiveSync();
+      refreshTournamentLiveSync(true);
       notify("Match is now live");
     };
 
     window.pauseTournamentMatch = async function(id){
       if(!canManage()) return notify("Only Admin or Core Moderator can pause matches.");
       await updateDoc(doc(db,"tournamentMatches",id), { status:"Upcoming", updatedAt:serverTimestamp() });
+      await bumpTournamentLiveSync();
+      refreshTournamentLiveSync(true);
       notify("Match moved back to upcoming");
     };
 
     window.completeTournamentMatch = async function(id){
       if(!canManage()) return notify("Only Admin or Core Moderator can complete matches.");
       await updateDoc(doc(db,"tournamentMatches",id), { status:"Completed", updatedAt:serverTimestamp() });
+      await bumpTournamentLiveSync();
+      refreshTournamentLiveSync(true);
       notify("Match completed");
     };
 
@@ -5998,6 +6039,8 @@
       if(!canAdmin()) return notify("Only Admin can delete matches.");
       if(confirm("Delete this match?")){
         await deleteDoc(doc(db,"tournamentMatches",id));
+        await bumpTournamentLiveSync();
+        refreshTournamentLiveSync(true);
         notify("Match deleted");
       }
     };
@@ -6015,7 +6058,7 @@
         table[t.id] = { id:t.id, name:t.name || `Team ${t.slot||""}`, color:t.color || "#c6f900", division:t.division||"", referee:t.referee||"", played:0, won:0, lost:0, draw:0, pts:0, diff:0 };
       });
 
-      matches.filter(m=>m.status==="Completed").forEach(m=>{
+      matches.filter(isMatchCountedForStandings).forEach(m=>{
         if(!table[m.teamAId] || !table[m.teamBId]) return;
         const a = table[m.teamAId], b = table[m.teamBId];
         const scoreA = Number(m.scoreA || 0), scoreB = Number(m.scoreB || 0);
@@ -7130,6 +7173,35 @@
 
     function renderNotifications(){$("notificationList").innerHTML=notifications.slice(0,8).map(n=>`<div class="list-item"><div><h4>${clean(n.title)}</h4><p>${clean(n.body)} • ${clean(n.team||"All")} • By ${clean(n.createdBy||"Team")}</p></div></div>`).join("")||`<div class="empty">No notifications yet.</div>`}
 
+    function toDocArray(snap){
+      return snap.docs.map(d=>({id:d.id,...d.data()}));
+    }
+
+    async function refreshTournamentLiveSync(silent=false){
+      try{
+        const [teamSnap, matchSnap, settingsSnap] = await Promise.all([
+          getDocsFromServer(collection(db,"tournamentTeams")),
+          getDocsFromServer(collection(db,"tournamentMatches")),
+          getDocsFromServer(collection(db,"tournamentSettings"))
+        ]);
+        tournamentTeams = toDocArray(teamSnap);
+        tournamentMatches = toDocArray(matchSnap);
+        tournamentSettingsList = toDocArray(settingsSnap);
+        renderTournament();
+        render();
+      }catch(err){
+        console.error("5-second tournament sync failed", err);
+        if(!silent) notify("Live sync issue. Check Firebase rules for tournament collections.");
+      }
+    }
+
+    let tournamentPollTimer = null;
+    function startTournamentLivePolling(){
+      if(tournamentPollTimer) return;
+      refreshTournamentLiveSync(true);
+      tournamentPollTimer = setInterval(()=>refreshTournamentLiveSync(true), 5000);
+    }
+
     function listen(name,assign,sort=false){
       const col=collection(db,name), q=sort?query(col,orderBy("createdAt","desc")):col;
       onSnapshot(q,snap=>{assign(snap.docs.map(d=>({id:d.id,...d.data()})));render()},err=>{console.error(err);notify("Firestore issue. Check Authentication and Rules.")});
@@ -7137,7 +7209,7 @@
 
     function startListeners(){
       if(listenersStarted)return; listenersStarted=true;
-      listen("youthMembers",d=>youthMembers=d);listen("cellLeaders",d=>cellLeaders=d);listen("cellGroups",d=>cellGroups=d);listen("attendance",d=>attendance=d);listen("followUps",d=>followUps=d);listen("userProfiles",d=>{userProfiles=d; if(currentUser){const me=d.find(u=>(u.uid||u.id)===currentUser.uid); if(me){currentProfile=me; $("currentUserLabel").textContent=`${currentProfile.name || currentUser.email} • ${currentProfile.role}`; updateProfileUI();}}});listen("notifications",d=>notifications=d);listen("events",d=>events=d);listen("tournamentTeams",d=>tournamentTeams=d);listen("tournamentMatches",d=>tournamentMatches=d);listen("tournamentSettings",d=>tournamentSettingsList=d,false);
+      listen("youthMembers",d=>youthMembers=d);listen("cellLeaders",d=>cellLeaders=d);listen("cellGroups",d=>cellGroups=d);listen("attendance",d=>attendance=d);listen("followUps",d=>followUps=d);listen("userProfiles",d=>{userProfiles=d; if(currentUser){const me=d.find(u=>(u.uid||u.id)===currentUser.uid); if(me){currentProfile=me; $("currentUserLabel").textContent=`${currentProfile.name || currentUser.email} • ${currentProfile.role}`; updateProfileUI();}}});listen("notifications",d=>notifications=d);listen("events",d=>events=d);listen("tournamentTeams",d=>tournamentTeams=d);listen("tournamentMatches",d=>tournamentMatches=d);listen("tournamentSettings",d=>tournamentSettingsList=d,false);startTournamentLivePolling();
       const qTasks=query(collection(db,"tasks"),orderBy("createdAt","desc"));
       onSnapshot(qTasks,snap=>{
         const newTasks=snap.docs.map(d=>({id:d.id,...d.data()}));
