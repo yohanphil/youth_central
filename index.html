@@ -6615,7 +6615,8 @@
       url.search = "";
       url.hash = "";
       url.pathname = url.pathname.replace(/[^\/]*$/, "fomo-live.html");
-      if(eventId) url.searchParams.set("event", eventId);
+      const liveEventId = eventId || (typeof activeTournamentId === "function" ? activeTournamentId() : selectedEventId) || "fomo-v2";
+      url.searchParams.set("event", liveEventId);
       return url.toString();
     }
 
@@ -6677,13 +6678,13 @@
 
 
     window.openPublicGamePlan = function(){
-      if(!selectedEventId && $("eventReportSelect")) selectedEventId = $("eventReportSelect").value;
-      if(!selectedEventId) return notify("Open an event first.");
-      window.open(publicGamePlanUrl(selectedEventId), "_blank");
+      const liveEventId = (typeof activeTournamentId === "function" ? activeTournamentId() : selectedEventId) || "fomo-v2";
+      window.open(publicGamePlanUrl(liveEventId), "_blank");
     };
 
     window.copyPublicGamePlanLink = async function(){
-      const link = publicGamePlanUrl(selectedEventId);
+      const liveEventId = (typeof activeTournamentId === "function" ? activeTournamentId() : selectedEventId) || "fomo-v2";
+      const link = publicGamePlanUrl(liveEventId);
       try{
         await navigator.clipboard.writeText(link);
         notify("Public live link copied");
