@@ -6275,7 +6275,7 @@
             <div class="score-action-grid">
               <button class="score-main-action" onclick="quickScore('${current.id}','A',1)">+1 ${clean(aName)}</button>
               <button class="btn-ghost" onclick="quickScore('${current.id}','A',-1)">-1 ${clean(aName)}</button>
-              <button class="btn-yellow" onclick="current.status==='Live'?pauseTournamentMatch('${current.id}'):setTournamentMatchLive('${current.id}')">${current.status==="Live" ? "Pause" : "Start Live"}</button>
+              <button class="btn-yellow" onclick="${current.status === 'Live' ? `pauseTournamentMatch('${current.id}')` : `setTournamentMatchLive('${current.id}')`}">${current.status==="Live" ? "Pause" : "Start Live"}</button>
               <button class="btn-purple" onclick="completeTournamentMatch('${current.id}')">Complete</button>
               <button class="btn-ghost" onclick="quickScore('${current.id}','B',-1)">-1 ${clean(bName)}</button>
               <button class="score-main-action" onclick="quickScore('${current.id}','B',1)">+1 ${clean(bName)}</button>
